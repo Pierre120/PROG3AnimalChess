@@ -21,8 +21,8 @@ public class Board {
         return animalPieces[playerSide][animalRank];
     }
 
-    public Tiles getTiles() {
-        return boardTiles;
+    public Terrain[][] getTiles() {
+        return boardTiles.getTerrains();
     }
     
     private Animal[][] animalPieces;
