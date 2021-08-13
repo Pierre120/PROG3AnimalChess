@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game {
     
@@ -10,6 +11,196 @@ public class Game {
 
     public void executeGame () {
         // execute the whole game play
+        Scanner sc = new Scanner(System.in);
+        final String[] TEAM_COLOR = new String [] {"Red", "Blue"}; // index[0] for red team and index[1] for blue team
+        final int[] PLYR_SIDE = new int[2]; // contains player number
+        int personNum = 0; // temporarily assigns Player 1 to person 1
+        int numChoice; // will be used throughout the game for number inputs of players
+
+        // temporary variables
+        int[] playerPiece = new int[2]; // to store the index values that the players got. 
+                                        // Will be used as index in the animalChoices
+
+        // ===================== START OF GAME ==============================================
+
+        // both players will pick a random animal piece to determine who will be Player 1
+        pickRandomAnimalPieces(playerPiece, sc);
+
+        // changes the Player 1 to person 2 if he/she got a higher ranked animal, otherwise stay to person 1
+        if(gameBoard.getAnimals()[playerPiece[0]][0].getRank() < gameBoard.getAnimals()[playerPiece[1]][0].getRank())
+            personNum = 1;
+
+        // display who will be player 1
+        System.out.print("\n\nPerson " + (personNum + 1) + " will be Player 1\n");
+        System.out.println();
+
+        // assign null to the values that will not be used anymore
+        playerPiece = null;
+
+        personNum = pickTeamColor(sc);
+
+        PLYR_SIDE[personNum] = 1; // personNum index for Player 1
+        PLYR_SIDE[(personNum + 1) % 2] = 2; // personNum index for PLayer 2
+
+
+
+        // ===================== GAMEPLAY ===================================================
+        
+        boolean movePiece;
+        int animalPieceIndex;
+        char charChoice;
+
+        // updates the contents of the display board
+        gameGUI.updateDisplayContents(gameBoard.getTiles().getTerrains());
+
+        // loops until one of the animal den is conquered
+        // as long as neither of the animal dens are captured and 
+        // neither of the player has no uncaptured animals left, the game goes on 
+        while(!gameBoard.getTiles().getTerrains()[0][3].getState() && 
+            !gameBoard.getTiles().getTerrains()[8][3].getState() && 
+            Animal.getAnimalCount(0) > 0 && Animal.getAnimalCount(1) > 0 )
+        {   
+            movePiece = false;
+    
+            while(!movePiece) {
+                // displays whose turn is it
+                System.out.print("\nPlayer " + PLYR_SIDE[personNum] + "'s turn! (" + TEAM_COLOR[personNum] + ")\n");
+                gameGUI.displayBoard(); // displays the board
+                    
+                gameGUI.displayAvailableAnimals(gameBoard.getAnimals(), personNum);
+                do {
+                    do {
+                        System.out.print("Enter animal: ");
+                        numChoice = sc.nextInt();
+    
+                        if(numChoice < 1 || numChoice > 2)
+                            System.out.println("Invalid Input!");
+                    } while(numChoice < 1 || numChoice > 2); // to avoid index out of bounds
+                        
+                    animalPieceIndex = numChoice - 1;
+                } while(gameBoard.getAnimals()[animalPieceIndex][personNum].isCaptured());
+                // ^^ asks user for a valid animal piece (it means not captured)
+    
+                sc.nextLine(); // gets newline char left in buffer
+    
+                // updates the contents of board to display the
+                // available moves of the chosen animal
+                gameGUI.updateDisplayContents(gameBoard.getTiles().getTerrains(), 
+                        gameBoard.getAnimals()[animalPieceIndex][personNum]);
+                // displays whose turn is it
+                System.out.print("\nPlayer " + PLYR_SIDE[personNum] + "'s turn! (" + TEAM_COLOR[personNum] + ")\n");
+                gameGUI.displayBoard(); // displays the board
+    
+                // asks player which direction to move the chosen animal piece
+                System.out.print("Chosen animal piece: " + gameBoard.getAnimals()[animalPieceIndex][personNum] + "\n");
+                gameGUI.displayMovementKeys(); // display the 'L', 'R', 'U', 'D' and 'X' options for movement controls
+                do {
+                    System.out.print("Enter key: ");
+                    charChoice = sc.nextLine().toUpperCase().charAt(0);
+    
+                    // cancel move of animal with 'X' input
+                } while(!isValidMove(charChoice, gameBoard.getAnimals()[animalPieceIndex][personNum]));
+    
+                // checks whether player moved a piece or cancels to move animal piece
+                movePiece = executeMovements(charChoice, gameBoard.getAnimals()[animalPieceIndex][personNum]);
+                // updates the contents of gameboard display
+                gameGUI.updateDisplayContents(gameBoard.getTiles().getTerrains());
+            }
+                
+            // switch player turn if one of the animal den is not yet captured 
+            // or either of the players still has animal pieces left
+            if(!gameBoard.getTiles().getTerrains()[0][3].getState() && 
+                !gameBoard.getTiles().getTerrains()[8][3].getState() && 
+                Animal.getAnimalCount(0) > 0 && Animal.getAnimalCount(1) > 0)
+                personNum = (personNum + 1) % 2;
+        }
+
+        sc.close(); // closes the scanner
+
+        // last display of the current state of the board
+        gameGUI.displayBoard();
+        // display winner
+        gameGUI.displayWinner(PLYR_SIDE[personNum], TEAM_COLOR[personNum]);
+
+        // null the variables used
+        gameBoard = null;
+        gameGUI = null;
+        personNum = 0;
+        numChoice = 0;
+        movePiece = false;
+        animalPieceIndex = 0;
+        charChoice = '\0';
+        System.gc();
+    }
+
+
+    private int pickTeamColor(Scanner sc) {
+        int numChoice;
+
+        // asks Player 1 which color side he/she will use
+        do {
+            gameGUI.displayTeamColorChoice();
+            System.out.print("Pick a color Player 1: ");
+            numChoice = sc.nextInt();
+            
+            if(numChoice < 1 || numChoice > 2)
+                System.out.print("Invalid Input!\n\n");
+            
+        }while(numChoice < 1 || numChoice > 2);
+
+        /*
+        changes the index for Player 1 (assuming his playerNum is 1) 
+        to 0 because all the index 0 for Animals and teamColor 
+        would be for team RED and index 1 for team BLUE, but
+        if Player 1 chooses BLUE team and his current
+        playerNum is 1 then there is no need to change */
+        if(numChoice == 1)
+            return 0;
+        else return 1;
+    }
+
+    private void pickRandomAnimalPieces(int[] playerPiece, Scanner sc) {
+        int k;
+        int numChoice;
+        int[] randomIndexes = new int[] {-1, -1}; // contains the random index values for the players to choose
+        int[] validChoices = new int[] {1, 2}; // valid number inputs that the player could choose during the start of the game
+
+        // randomizes the index for the animalChoices for the players to choose
+        randomizePieces(randomIndexes);
+
+        // asks the players for a random animal piece to be used 
+        // in determining who will be player 1
+        for(k = 0; k < 2; k++) {
+            do {
+                gameGUI.displayRandomAnimalChoice(2, validChoices);
+                
+                do {
+                    System.out.print("Person " + (k+1) + " pick a random animal piece: ");
+                    numChoice = sc.nextInt();
+
+                    if(numChoice < 1 || numChoice > 2)
+                        System.out.println("Invalid Input!");
+                } while(numChoice < 1 || numChoice > 2); // to avoid index out of bounds
+                
+                if(validChoices[numChoice - 1] == 0)
+                    System.out.print("Piece is already taken!\n\n");
+                
+            }while(validChoices[numChoice - 1] == 0); 
+            // asks user for a valid input for a random animal piece
+
+            validChoices[numChoice - 1] = 0;
+            playerPiece[k] = randomIndexes[numChoice - 1];
+            System.out.println();
+        }
+
+        // assign null to the values that will not be used anymore
+        randomIndexes = null;
+        validChoices = null;
+
+        // displays the animal pieces that each player got
+        System.out.println("Animal Pieces:");
+        for(k = 0; k < 2; k++)
+            System.out.println("Person " + (k + 1) + " got " + gameBoard.getAnimals()[playerPiece[k]][0]);
     }
 
 
@@ -109,6 +300,7 @@ public class Game {
             pieceIndex[q] = num;
         }
 
+        randomizer = null;
     }
 
     private Board gameBoard;
