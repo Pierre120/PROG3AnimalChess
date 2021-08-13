@@ -24,19 +24,19 @@ public class Game {
     private boolean executeMovements(char moveKey, Animal movingAnimal) {
         switch(moveKey) {
             case 'L':
-                movingAnimal.moveLeft(gameBoard.getTiles()); // moves animal piece to the left
+                movingAnimal.moveLeft(gameBoard.getTiles().getTerrains()); // moves animal piece to the left
                 return true; // successfully moved
 
             case 'R':
-                movingAnimal.moveRight(gameBoard.getTiles()); // moves animal piece to the right
+                movingAnimal.moveRight(gameBoard.getTiles().getTerrains()); // moves animal piece to the right
                 return true; // successfully moved
 
             case 'U':
-                movingAnimal.moveUp(gameBoard.getTiles()); // moves animal piece upwards
+                movingAnimal.moveUp(gameBoard.getTiles().getTerrains()); // moves animal piece upwards
                 return true; // successfully moved
 
             case 'D':
-                movingAnimal.moveDown(gameBoard.getTiles()); // moves animal piece downwards
+                movingAnimal.moveDown(gameBoard.getTiles().getTerrains()); // moves animal piece downwards
                 return true; // successfully moved
 
             default:
@@ -57,10 +57,10 @@ public class Game {
     private boolean isValidMove(char moveKey, Animal movingAnimal) {
         // true - character input is correct and chosen movement can be done by animal
         // false - neither the character input is correct or the animal can't move in the desired direction
-        return moveKey == 'L' && movingAnimal.canMoveLeft(gameBoard.getTiles()) ||
-                moveKey == 'R' && movingAnimal.canMoveRight(gameBoard.getTiles()) ||
-                moveKey == 'U' && movingAnimal.canMoveUp(gameBoard.getTiles()) ||
-                moveKey == 'D' && movingAnimal.canMoveDown(gameBoard.getTiles()) ||
+        return moveKey == 'L' && movingAnimal.canMoveLeft(gameBoard.getTiles().getTerrains()) ||
+                moveKey == 'R' && movingAnimal.canMoveRight(gameBoard.getTiles().getTerrains()) ||
+                moveKey == 'U' && movingAnimal.canMoveUp(gameBoard.getTiles().getTerrains()) ||
+                moveKey == 'D' && movingAnimal.canMoveDown(gameBoard.getTiles().getTerrains()) ||
                 moveKey == 'X';
     }
 
