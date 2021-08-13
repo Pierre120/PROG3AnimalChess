@@ -4,6 +4,7 @@
  * @author Pierre Vincent Hernandez
  * @author Matthew James Villarica
  */
+//change
 public class Tiger extends Animal {
     
     /** This contructor instantiates which side the Lion object is, and where its starting
