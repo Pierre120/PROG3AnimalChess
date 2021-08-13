@@ -292,6 +292,7 @@ public class Game {
         for(q = 0; q < 8; q++) {
             do{
                 num = randomizer.nextInt(2);
+                System.out.print("1");
             
             }while(!isIndexUnique(pieceIndex, num));
             // continues to produce random number until produced
