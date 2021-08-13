@@ -17,10 +17,6 @@ public class Board {
         boardTiles.getTerrains()[8][6].animalMovesIn(animalPieces[1][1]);
     }
 
-    public Animal getAnimalPiece(int playerSide, int animalRank) {
-        return animalPieces[playerSide][animalRank];
-    }
-
     public Animal[][] getAnimals() {
         return animalPieces;
     }
