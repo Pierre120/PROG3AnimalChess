@@ -13,7 +13,7 @@ public class Tiles {
     private void instantiateTiles() {
         int r;
         int c;
-        int p = 0;
+        int p = 1;
 
         for(r = 0; r < 9; r++) {
             for(c = 0; c < 7; c++) {
