@@ -289,7 +289,7 @@ public class Game {
         int num;
         int q;
         
-        for(q = 0; q < 8; q++) {
+        for(q = 0; q < 2; q++) {
             do{
                 num = randomizer.nextInt(2);
                 System.out.print("1");
