@@ -1,10 +1,10 @@
 /**
- * This Lion class is a subclass of Animal class that represents the Lion piece on the gameboard.
+ * This tiger class is a subclass of Animal class that represents the Tiger piece on the gameboard.
  * 
  * @author Pierre Vincent Hernandez
  * @author Matthew James Villarica
  */
-//change
+
 public class Tiger extends Animal {
     
     /** This contructor instantiates which side the Lion object is, and where its starting
