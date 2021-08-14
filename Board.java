@@ -20,6 +20,8 @@ public class Board {
 
         boardTiles.getTerrains()[3][1].animalMovesIn(animalPieces[2][0]);
         boardTiles.getTerrains()[4][1].animalMovesIn(animalPieces[2][1]);
+
+        System.out.println(boardTiles.getTerrains()[3][1].getState());
     }
 
     public Animal[][] getAnimals() {
