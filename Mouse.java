@@ -10,4 +10,13 @@ public class Mouse extends Animal {
         super(playerNum, startingRow, startingCol, 1); // RANK = 1
     }
     
+    /** This method returns the string representation of the Mouse object 
+     * and its rank.
+     *  
+     * @return string representation of the Mouse object and its rank
+     */
+    @Override
+    public String toString() {
+        return "MOUSE ( rank: 1 )";
+    }
 }

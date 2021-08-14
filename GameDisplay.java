@@ -28,6 +28,9 @@ public class GameDisplay {
 				// using the rank of the occupying animal object in the terrain object for
 				// assigning their designated characters
 				switch(rowArea[c].getAnimal().getRank()) {
+					case 1: //for Mouse
+						rowContents[c] = MOUSE_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
+						break;
 					case 4: // for Dog Objects
 						rowContents[c] = DOG_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
 						break;
@@ -225,8 +228,12 @@ public class GameDisplay {
 	 */
 	private final char[] DOG_ICON = {'D','d'};
 
+	private final char[] MOUSE_ICON = {'M', 'm'};
+
 	/** This constant attribute contains the character icon for signifying where the animal object could move
 	 */
 	private final char MOVE_ICON = '#';
+
+	
 	
 }
