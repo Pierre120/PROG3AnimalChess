@@ -4,7 +4,7 @@
  * @author Pierre Vincent Hernandez
  * @author Matthew James Villarica
  */
-public class Lion extends Animal {
+public class Lion extends Animal { 
     
     /** This contructor instantiates which side the Lion object is, and where its starting
      * position in row and column format..
@@ -37,12 +37,12 @@ public class Lion extends Animal {
             
             // increments the spaces it could move upwards while the terrain
             // checked is still a river and there is no mouse
-            while(gameArea[rowPosition][colPosition + upwardSpace].isRiver() && gameArea[rowPosition][colPosition + upwardSpace].getAnimal() == null)
+            while(gameArea[rowPosition][colPosition + upwardSpace].isRiver() && !gameArea[rowPosition][colPosition + upwardSpace].getState())
                 upwardSpace++;
 
             // checks again if that terrain is still occupiable
-            //if its not 3, then upward space did not reach 3 which means there is a mouse in the way
-            if (upwardSpace != 3)
+            //if its occupied, there is a mouse in the way
+            if (gameArea[rowPosition][colPosition + upwardSpace].getState())
                 return false;
             else if(isValidTerrain(gameArea[rowPosition][colPosition + upwardSpace]) 
                 && canOccupy(gameArea[rowPosition][colPosition + upwardSpace]))
@@ -74,12 +74,12 @@ public class Lion extends Animal {
             
             // increments the spaces it could move upwards while the terrain
             // checked is still a river and there is no mouse
-            while(gameArea[rowPosition][colPosition - downwardSpace].isRiver() && gameArea[rowPosition][colPosition - downwardSpace].getAnimal() == null)
+            while(gameArea[rowPosition][colPosition - downwardSpace].isRiver() && !gameArea[rowPosition][colPosition - downwardSpace].getState())
                 downwardSpace++;
 
             // checks again if that terrain is still occupiable
-            //if downward space is not 3, then there is a mouse in the river
-            if(downwardSpace != 3)
+            //if there is a mouse in the way, return false
+            if(gameArea[rowPosition][colPosition - downwardSpace].getState())
                 return false;
             else if(isValidTerrain(gameArea[rowPosition][colPosition - downwardSpace]) 
                 && canOccupy(gameArea[rowPosition][colPosition - downwardSpace]))
@@ -112,12 +112,12 @@ public class Lion extends Animal {
             
             // increments the spaces it could move upwards while the terrain
             // checked is still a river and while there is no mouse
-            while(gameArea[rowPosition - leftSpace][colPosition].isRiver() && gameArea[rowPosition - leftSpace][colPosition].getAnimal() == null)
+            while(gameArea[rowPosition - leftSpace][colPosition].isRiver() && !gameArea[rowPosition - leftSpace][colPosition].getState())
                 leftSpace++;
 
             // checks again if that terrain is still occupiable
-            //if leftspace is not 3, there is a mouse in the river
-            if(leftSpace != 4)
+            //if there is a mouse in the way, return false
+            if(gameArea[rowPosition - leftSpace][colPosition].getState())
                 return false;
             else if(isValidTerrain(gameArea[rowPosition - leftSpace][colPosition])
                 && canOccupy(gameArea[rowPosition - leftSpace][colPosition]))
@@ -149,13 +149,13 @@ public class Lion extends Animal {
                 return true;
             
             // increments the spaces it could move upwards while the terrain
-            // checked is still a river and while there is no mouse
-            while(gameArea[rowPosition + rightSpace][colPosition].isRiver()  && gameArea[rowPosition + rightSpace][colPosition].getAnimal() == null)
+            // checked while it is still a river and while there is no mouse
+            while(gameArea[rowPosition + rightSpace][colPosition].isRiver()  && gameArea[rowPosition + rightSpace][colPosition].getState())
                 rightSpace++;
 
             // checks again if that terrain is still occupiable
             //if rightspace is not 4, there is a mouse in the river
-            if(rightSpace != 4)
+            if(gameArea[rowPosition + rightSpace][colPosition].getState())
                 return false;
             else if(isValidTerrain(gameArea[rowPosition + rightSpace][colPosition])
                 && canOccupy(gameArea[rowPosition + rightSpace][colPosition]))
@@ -172,7 +172,7 @@ public class Lion extends Animal {
     /** This method returns the string representation of the Lion object 
      * and its rank.
      * 
-     * @return string representation of the Dog object (as a name) and its rank
+     * @return string representation of the Lion object (as a name) and its rank
      */
     @Override
     public String toString() {
