@@ -6,7 +6,7 @@
  */
 public class Tiger extends Animal { 
     
-    /** This contructor instantiates which side the Lion object is, and where its starting
+    /** This contructor instantiates which side the Tiger object is, and where its starting
      * position in row and column format..
      * 
      * @param playerNum player side the animal is on, which can be 1 (player 1) or 2 (player 2)
