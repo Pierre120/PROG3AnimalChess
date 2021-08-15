@@ -31,7 +31,9 @@ public class GameDisplay {
 					case 4: // for Dog Objects
 						rowContents[c] = DOG_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
 						break;
-						
+					case 6: //for Tiger objects
+						rowContents[c] = TIGER_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
+						break;
 					case 7: // for Lion Objects
 						rowContents[c] = LION_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
 						break;
@@ -224,6 +226,8 @@ public class GameDisplay {
 	 * Index [0] for player in red team, and index [1] for player in blue team.
 	 */
 	private final char[] DOG_ICON = {'D','d'};
+
+	private final char[] TIGER_ICON = {'T', 't'};
 
 	/** This constant attribute contains the character icon for signifying where the animal object could move
 	 */

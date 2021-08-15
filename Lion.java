@@ -36,12 +36,15 @@ public class Lion extends Animal {
                 return true;
             
             // increments the spaces it could move upwards while the terrain
-            // checked is still a river
-            while(gameArea[rowPosition][colPosition + upwardSpace].isRiver())
+            // checked is still a river and there is no mouse
+            while(gameArea[rowPosition][colPosition + upwardSpace].isRiver() && gameArea[rowPosition][colPosition + upwardSpace].getAnimal() == null)
                 upwardSpace++;
 
             // checks again if that terrain is still occupiable
-            if(isValidTerrain(gameArea[rowPosition][colPosition + upwardSpace]) 
+            //if its not 3, then upward space did not reach 3 which means there is a mouse in the way
+            if (upwardSpace != 3)
+                return false;
+            else if(isValidTerrain(gameArea[rowPosition][colPosition + upwardSpace]) 
                 && canOccupy(gameArea[rowPosition][colPosition + upwardSpace]))
                 return true;
         }
@@ -70,12 +73,15 @@ public class Lion extends Animal {
                 return true;
             
             // increments the spaces it could move upwards while the terrain
-            // checked is still a river
-            while(gameArea[rowPosition][colPosition - downwardSpace].isRiver())
+            // checked is still a river and there is no mouse
+            while(gameArea[rowPosition][colPosition - downwardSpace].isRiver() && gameArea[rowPosition][colPosition - downwardSpace].getAnimal() == null)
                 downwardSpace++;
 
             // checks again if that terrain is still occupiable
-            if(isValidTerrain(gameArea[rowPosition][colPosition - downwardSpace]) 
+            //if downward space is not 3, then there is a mouse in the river
+            if(downwardSpace != 3)
+                return false;
+            else if(isValidTerrain(gameArea[rowPosition][colPosition - downwardSpace]) 
                 && canOccupy(gameArea[rowPosition][colPosition - downwardSpace]))
                 return true;
         } 
@@ -105,12 +111,15 @@ public class Lion extends Animal {
                 return true;
             
             // increments the spaces it could move upwards while the terrain
-            // checked is still a river
-            while(gameArea[rowPosition - leftSpace][colPosition].isRiver())
+            // checked is still a river and while there is no mouse
+            while(gameArea[rowPosition - leftSpace][colPosition].isRiver() && gameArea[rowPosition - leftSpace][colPosition].getAnimal() == null)
                 leftSpace++;
 
             // checks again if that terrain is still occupiable
-            if(isValidTerrain(gameArea[rowPosition - leftSpace][colPosition])
+            //if leftspace is not 3, there is a mouse in the river
+            if(leftSpace != 4)
+                return false;
+            else if(isValidTerrain(gameArea[rowPosition - leftSpace][colPosition])
                 && canOccupy(gameArea[rowPosition - leftSpace][colPosition]))
                 return true;
         }
@@ -140,12 +149,15 @@ public class Lion extends Animal {
                 return true;
             
             // increments the spaces it could move upwards while the terrain
-            // checked is still a river
-            while(gameArea[rowPosition + rightSpace][colPosition].isRiver())
+            // checked is still a river and while there is no mouse
+            while(gameArea[rowPosition + rightSpace][colPosition].isRiver()  && gameArea[rowPosition + rightSpace][colPosition].getAnimal() == null)
                 rightSpace++;
 
             // checks again if that terrain is still occupiable
-            if(isValidTerrain(gameArea[rowPosition + rightSpace][colPosition])
+            //if rightspace is not 4, there is a mouse in the river
+            if(rightSpace != 4)
+                return false;
+            else if(isValidTerrain(gameArea[rowPosition + rightSpace][colPosition])
                 && canOccupy(gameArea[rowPosition + rightSpace][colPosition]))
                 return true;
             
