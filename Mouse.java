@@ -11,6 +11,20 @@ public class Mouse extends Animal {
     }
     
 
+    /** This method determines the terrain that the animal is going to move into. 
+     * It's going to check if it is a land, a river, a trap or an animal den (and who's animal den).
+     * 
+     * @param specificArea the area that the animal is checking if it could move into it
+     * @return true if terrain is not its own animal den, false otherwise
+     */
+    @Override
+    public boolean isValidTerrain(Terrain specificArea) {
+        if(specificArea.isAnimalDen() && specificArea.getOwner() == getPlayerSide())
+            return false;
+        return true;
+    }
+
+
     /** This method determines if an enemy animal is capturable by the animal based on 
      * the animal rank and current terrain.
      * 
