@@ -172,7 +172,7 @@ public class Lion extends Animal {
     /** This method returns the string representation of the Lion object 
      * and its rank.
      * 
-     * @return string representation of the Dog object (as a name) and its rank
+     * @return string representation of the Lion object (as a name) and its rank
      */
     @Override
     public String toString() {
