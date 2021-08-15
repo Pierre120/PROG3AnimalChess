@@ -10,4 +10,18 @@ public class Mouse extends Animal {
         super(playerNum, startingRow, startingCol, 1); // RANK = 1
     }
     
+
+    /** This method determines if an enemy animal is capturable by the animal based on 
+     * the animal rank and current terrain.
+     * 
+     * @param enemyAnimal the enemy animal 
+     * @return true if the enemy animal is capturable, false otherwise
+     */
+    @Override
+    public boolean canCapture(Animal enemyAnimal) {
+        if(enemyAnimal != null && enemyAnimal.getPlayerSide() != getPlayerSide() &&
+            (enemyAnimal.getRank() == RANK || enemyAnimal.getRank() == 8 )) 
+            return true;
+        return false;
+    }
 }
