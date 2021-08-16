@@ -29,29 +29,8 @@ public class Lion extends Animal {
         // checks if index out of bounce
         if(colPosition + 1 <= 6) {
             upwardSpace = 1; 
-            
-            // ----------- LATEST VERSION
-            /*
-            //checks 1 space up if it animal can move
-            if(isValidTerrain(gameArea[rowPosition][colPosition + 1]) 
-            && canOccupy(gameArea[rowPosition][colPosition + 1]))
-                return true;
-            
-            // increments the spaces it could move upwards while the terrain
-            // checked is still a river and there is no mouse
-            while(gameArea[rowPosition][colPosition + upwardSpace].isRiver() && !gameArea[rowPosition][colPosition + upwardSpace].getState())
-                upwardSpace++;
 
-            // checks again if that terrain is still occupiable
-            //if its occupied, there is a mouse in the way
-            if (gameArea[rowPosition][colPosition + upwardSpace].getState())
-                return false;
-            else if(isValidTerrain(gameArea[rowPosition][colPosition + upwardSpace]) 
-                && canOccupy(gameArea[rowPosition][colPosition + upwardSpace]))
-                return true;
-            */
-
-            // ----------- ALTERNATIVE VERSION
+         
             // checks if terrain to be occupied is a River terrain. If true it
             // increments the spaces it could move upwards while the terrain
             // checked is still a river and there is no mouse. Otherwise, skip this.
@@ -91,26 +70,29 @@ public class Lion extends Animal {
         if(colPosition - 1 >= 0) {
             downwardSpace = 1; 
             
-            //checks 1 space down if it animal can move
-            if(isValidTerrain(gameArea[rowPosition][colPosition - 1]) 
-            && canOccupy(gameArea[rowPosition][colPosition - 1]))
-                return true;
-            
+            // checks if terrain to be occupied is a River terrain. If true it
             // increments the spaces it could move upwards while the terrain
-            // checked is still a river and there is no mouse
-            while(gameArea[rowPosition][colPosition - downwardSpace].isRiver() && !gameArea[rowPosition][colPosition - downwardSpace].getState())
-                downwardSpace++;
+            // checked is still a river and there is no mouse. Otherwise, skip this.
+            while(gameArea[rowPosition][colPosition - downwardSpace].isRiver()) {
+                // checks if there is a mouse
+                if(gameArea[rowPosition][colPosition - downwardSpace].getState()) {
+                    downwardSpace = 0; // no valid upward movement
+                    return false; // can't move up
+                }
 
-            // checks again if that terrain is still occupiable
-            //if there is a mouse in the way, return false
-            if(gameArea[rowPosition][colPosition - downwardSpace].getState())
-                return false;
-            else if(isValidTerrain(gameArea[rowPosition][colPosition - downwardSpace]) 
+                downwardSpace++;
+            }
+
+            // checks if terrain can be captured or occupied
+            if(isValidTerrain(gameArea[rowPosition][colPosition - downwardSpace]) 
                 && canOccupy(gameArea[rowPosition][colPosition - downwardSpace]))
                 return true;
+
+            // if it reached this part then animal can't move 
+            downwardSpace = 0;
         } 
         // animal can't move down
-        downwardSpace = 0;
+       
         return false;
 
     }
@@ -129,26 +111,29 @@ public class Lion extends Animal {
         if(rowPosition - 1 >= 0) {
             leftSpace = 1; 
             
-            //checks 1 space to the left if it animal can move
-            if(isValidTerrain(gameArea[rowPosition - 1][colPosition])
-            && canOccupy(gameArea[rowPosition - 1][colPosition]))
-                return true;
-            
+            // checks if terrain to be occupied is a River terrain. If true it
             // increments the spaces it could move upwards while the terrain
-            // checked is still a river and while there is no mouse
-            while(gameArea[rowPosition - leftSpace][colPosition].isRiver() && !gameArea[rowPosition - leftSpace][colPosition].getState())
-                leftSpace++;
+            // checked is still a river and there is no mouse. Otherwise, skip this.
+            while(gameArea[rowPosition - leftSpace][colPosition].isRiver()) {
+                // checks if there is a mouse
+                if(gameArea[rowPosition - leftSpace][colPosition].getState()) {
+                    leftSpace = 0; // no valid upward movement
+                    return false; // can't move up
+                }
 
-            // checks again if that terrain is still occupiable
-            //if there is a mouse in the way, return false
-            if(gameArea[rowPosition - leftSpace][colPosition].getState())
-                return false;
-            else if(isValidTerrain(gameArea[rowPosition - leftSpace][colPosition])
+                leftSpace++;
+            }
+
+            // checks if terrain can be captured or occupied
+            if(isValidTerrain(gameArea[rowPosition - leftSpace][colPosition]) 
                 && canOccupy(gameArea[rowPosition - leftSpace][colPosition]))
                 return true;
+
+            // if it reached this part then animal can't move up
+             leftSpace = 0;
         }
         // animal can't move to the left
-        leftSpace = 0;
+     
         return false;
         
     }
@@ -167,27 +152,30 @@ public class Lion extends Animal {
         if(rowPosition + 1 <= 8) {
             rightSpace = 1; 
             
-            //checks 1 space to the right if it animal can move
-            if(isValidTerrain(gameArea[rowPosition + 1][colPosition])
-            && canOccupy(gameArea[rowPosition + 1][colPosition]))
-                return true;
-            
+            // checks if terrain to be occupied is a River terrain. If true it
             // increments the spaces it could move upwards while the terrain
-            // checked while it is still a river and while there is no mouse
-            while(gameArea[rowPosition + rightSpace][colPosition].isRiver()  && gameArea[rowPosition + rightSpace][colPosition].getState())
-                rightSpace++;
+            // checked is still a river and there is no mouse. Otherwise, skip this.
+            while(gameArea[rowPosition + rightSpace][colPosition].isRiver()) {
+                // checks if there is a mouse
+                if(gameArea[rowPosition + rightSpace][colPosition].getState()) {
+                    rightSpace = 0; // no valid upward movement
+                    return false; // can't move up
+                }
 
-            // checks again if that terrain is still occupiable
-            //if rightspace is not 4, there is a mouse in the river
-            if(gameArea[rowPosition + rightSpace][colPosition].getState())
-                return false;
-            else if(isValidTerrain(gameArea[rowPosition + rightSpace][colPosition])
+                rightSpace++;
+            }
+
+            // checks if terrain can be captured or occupied
+            if(isValidTerrain(gameArea[rowPosition + rightSpace][colPosition]) 
                 && canOccupy(gameArea[rowPosition + rightSpace][colPosition]))
                 return true;
+
+            // if it reached this part then animal can't move up
+            rightSpace = 0;
+          
             
         }
         // animal can't move to the right
-        rightSpace = 0;
         return false;
         
     }
