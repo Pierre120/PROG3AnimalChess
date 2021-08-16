@@ -30,6 +30,8 @@ public class Lion extends Animal {
         if(colPosition + 1 <= 6) {
             upwardSpace = 1; 
             
+            // ----------- LATEST VERSION
+            /*
             //checks 1 space up if it animal can move
             if(isValidTerrain(gameArea[rowPosition][colPosition + 1]) 
             && canOccupy(gameArea[rowPosition][colPosition + 1]))
@@ -47,10 +49,32 @@ public class Lion extends Animal {
             else if(isValidTerrain(gameArea[rowPosition][colPosition + upwardSpace]) 
                 && canOccupy(gameArea[rowPosition][colPosition + upwardSpace]))
                 return true;
+            */
+
+            // ----------- ALTERNATIVE VERSION
+            // checks if terrain to be occupied is a River terrain. If true it
+            // increments the spaces it could move upwards while the terrain
+            // checked is still a river and there is no mouse. Otherwise, skip this.
+            while(gameArea[rowPosition][colPosition + upwardSpace].isRiver()) {
+                // checks if there is a mouse
+                if(gameArea[rowPosition][colPosition + upwardSpace].getState()) {
+                    upwardSpace = 0; // no valid upward movement
+                    return false; // can't move up
+                }
+
+                upwardSpace++;
+            }
+
+            // checks if terrain can be captured or occupied
+            if(isValidTerrain(gameArea[rowPosition][colPosition + upwardSpace]) 
+                && canOccupy(gameArea[rowPosition][colPosition + upwardSpace]))
+                return true;
+
+            // if it reached this part then animal can't move up
+            upwardSpace = 0;
         }
-        // animal can't move up
-        upwardSpace = 0;
-        return false; 
+        
+        return false; // index out of bounds or animal can't move up
     }
 
 
