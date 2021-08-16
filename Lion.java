@@ -69,10 +69,12 @@ public class Lion extends Animal {
             if(isValidTerrain(gameArea[rowPosition][colPosition + upwardSpace]) 
                 && canOccupy(gameArea[rowPosition][colPosition + upwardSpace]))
                 return true;
+
+            // if it reached this part then animal can't move up
+            upwardSpace = 0;
         }
-        // animal can't move up
-        //upwardSpace = 0; // this is no need na (i guess ??)
-        return false; // index out of bounds
+        
+        return false; // index out of bounds or animal can't move up
     }
 
 
