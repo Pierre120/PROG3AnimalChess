@@ -217,17 +217,45 @@ public class GameDisplay {
 	 */
 	private final char RIVER_ICON = '~';
 
-	/**	This constant attribute holds the character icon for the Lion objects for both players.
+	/**	This constant attribute holds the character icon for the Mouse objects for both players.
 	 * Index [0] for player in red team, and index [1] for player in blue team.
 	 */
-	private final char[] LION_ICON = {'L','l'};
+	private final char[] MOUSE_ICON = {'M', 'm'};
+
+	/**	This constant attribute holds the character icon for the Cat objects for both players.
+	 * Index [0] for player in red team, and index [1] for player in blue team.
+	 */
+	private final char[] CAT_ICON = {'C', 'c'};
+	
+	/**	This constant attribute holds the character icon for the Wolf objects for both players.
+	 * Index [0] for player in red team, and index [1] for player in blue team.
+	 */
+	private final char[] WOLF_ICON = {'W', 'w'};
 
 	/** This constant attribute holds the character icon for the Dog objects for both players. 
 	 * Index [0] for player in red team, and index [1] for player in blue team.
 	 */
 	private final char[] DOG_ICON = {'D','d'};
+	 
+	/**	This constant attribute holds the character icon for the Leopard objects for both players.
+	 * Index [0] for player in red team, and index [1] for player in blue team.
+	 */
+	private final char[] LEOPARD_ICON = {'T', 't'};
 
+	/**	This constant attribute holds the character icon for the Tiger objects for both players.
+	 * Index [0] for player in red team, and index [1] for player in blue team.
+	 */
 	private final char[] TIGER_ICON = {'T', 't'};
+
+	/**	This constant attribute holds the character icon for the Lion objects for both players.
+	 * Index [0] for player in red team, and index [1] for player in blue team.
+	 */
+	private final char[] LION_ICON = {'L','l'};
+
+	/**	This constant attribute holds the character icon for the Elephant objects for both players.
+	 * Index [0] for player in red team, and index [1] for player in blue team.
+	 */
+	private final char[] ELEPHANT_ICON = {'E', 'e'};
 
 	/** This constant attribute contains the character icon for signifying where the animal object could move
 	 */
