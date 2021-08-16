@@ -240,7 +240,7 @@ public class GameDisplay {
 	/**	This constant attribute holds the character icon for the Leopard objects for both players.
 	 * Index [0] for player in red team, and index [1] for player in blue team.
 	 */
-	private final char[] LEOPARD_ICON = {'T', 't'};
+	private final char[] LEOPARD_ICON = {'O', 'o'};
 
 	/**	This constant attribute holds the character icon for the Tiger objects for both players.
 	 * Index [0] for player in red team, and index [1] for player in blue team.
