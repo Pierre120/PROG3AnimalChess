@@ -158,7 +158,7 @@ public class GameDisplay {
 
 		System.out.print("Animal pieces:\n\n");
 		for(p = 0; p < numChoices; p++) {
-			System.out.print(p+1 + ".) Random animal piece ");
+			System.out.print(p + 1 + ".) Random animal piece ");
 
 			// checks if random animal piece is already taken
 			if(validPiece[p] == 0)
