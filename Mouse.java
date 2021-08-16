@@ -167,4 +167,15 @@ public class Mouse extends Animal {
         
     }
 
+
+    /** This method returns the string representation of the Mouse object 
+     * and its rank.
+     *  
+     * @return string representation of the Mouse object and its rank
+     */
+    @Override
+    public String toString() {
+        return "MOUSE ( rank: 1 )";
+    }
+
 }
