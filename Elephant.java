@@ -24,4 +24,15 @@ public class Elephant extends Animal {
             return true;
         return false;
     }
+
+
+    /** This method returns the string representation of the Elephant object 
+     * and its rank.
+     *  
+     * @return string representation of the Elephant object and its rank
+     */
+    @Override
+    public String toString() {
+        return "ELEPHANT ( rank: 8 )";
+    }
 }
