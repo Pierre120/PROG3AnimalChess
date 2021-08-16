@@ -22,11 +22,12 @@ public class Board {
         animalPieces[5][1] = new Tiger(2, 8, 0);
         animalPieces[6][1] = new Lion(2, 8, 6);
         animalPieces[7][1] = new Elephant(2, 6, 0);
+
         // assign animal pieces to designated starting terrain tile
-        boardTiles.getTerrains()[1][1].animalMovesIn(animalPieces[0][0]);
-        boardTiles.getTerrains()[0][0].animalMovesIn(animalPieces[1][0]);
-        boardTiles.getTerrains()[7][5].animalMovesIn(animalPieces[0][1]);
-        boardTiles.getTerrains()[8][6].animalMovesIn(animalPieces[1][1]);
+        for(int row = 0; row < 8; row++)
+            for(int col = 0; col < 2; col++)
+                boardTiles.getTerrains()[animalPieces[row][col].getRow()][animalPieces[row][col].getCol()].
+                    animalMovesIn(animalPieces[row][col]);
     }
 
     public Animal[][] getAnimals() {
