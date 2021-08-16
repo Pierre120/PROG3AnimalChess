@@ -162,8 +162,8 @@ public class Game {
     private void pickRandomAnimalPieces(int[] playerPiece, Scanner sc) {
         int k;
         int numChoice;
-        int[] randomIndexes = new int[] {-1, -1}; // contains the random index values for the players to choose
-        int[] validChoices = new int[] {1, 2}; // valid number inputs that the player could choose during the start of the game
+        int[] randomIndexes = new int[] {-1, -1, -1, -1, -1, -1, -1, -1}; // contains the random index values for the players to choose
+        int[] validChoices = new int[] {1, 2, 3, 4, 5, 6, 7, 8}; // valid number inputs that the player could choose during the start of the game
 
         // randomizes the index for the animalChoices for the players to choose
         randomizePieces(randomIndexes);
@@ -172,15 +172,15 @@ public class Game {
         // in determining who will be player 1
         for(k = 0; k < 2; k++) {
             do {
-                gameGUI.displayRandomAnimalChoice(2, validChoices);
+                gameGUI.displayRandomAnimalChoice(8, validChoices);
                 
                 do {
-                    System.out.print("Person " + (k+1) + " pick a random animal piece: ");
+                    System.out.print("Person " + (k + 1) + " pick a random animal piece: ");
                     numChoice = sc.nextInt();
 
-                    if(numChoice < 1 || numChoice > 2)
+                    if(numChoice < 1 || numChoice > 8)
                         System.out.println("Invalid Input!");
-                } while(numChoice < 1 || numChoice > 2); // to avoid index out of bounds
+                } while(numChoice < 1 || numChoice > 8); // to avoid index out of bounds
                 
                 if(validChoices[numChoice - 1] == 0)
                     System.out.print("Piece is already taken!\n\n");
@@ -289,9 +289,9 @@ public class Game {
         int num;
         int q;
         
-        for(q = 0; q < 2; q++) {
+        for(q = 0; q < 8; q++) {
             do{
-                num = randomizer.nextInt(2);
+                num = randomizer.nextInt(8);
                 System.out.print("1");
             
             }while(!isIndexUnique(pieceIndex, num));
