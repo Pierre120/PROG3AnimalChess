@@ -73,9 +73,9 @@ public class Game {
                         System.out.print("Enter animal: ");
                         numChoice = sc.nextInt();
     
-                        if(numChoice < 1 || numChoice > 2)
+                        if(numChoice < 1 || numChoice > 8)
                             System.out.println("Invalid Input!");
-                    } while(numChoice < 1 || numChoice > 2); // to avoid index out of bounds
+                    } while(numChoice < 1 || numChoice > 8); // to avoid index out of bounds
                         
                     animalPieceIndex = numChoice - 1;
                 } while(gameBoard.getAnimals()[animalPieceIndex][personNum].isCaptured());
