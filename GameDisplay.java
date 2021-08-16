@@ -28,14 +28,29 @@ public class GameDisplay {
 				// using the rank of the occupying animal object in the terrain object for
 				// assigning their designated characters
 				switch(rowArea[c].getAnimal().getRank()) {
+					case 1: // for Mouse Objects
+						rowContents[c] = MOUSE_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
+						break;
+					case 2: // for Cat Objects
+						rowContents[c] = CAT_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
+						break;
+					case 3: // for Wolf Objects
+						rowContents[c] = WOLF_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
+						break;
 					case 4: // for Dog Objects
 						rowContents[c] = DOG_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
+						break;
+					case 5: // for Leopard Objects
+						rowContents[c] = LEOPARD_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
 						break;
 					case 6: //for Tiger objects
 						rowContents[c] = TIGER_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
 						break;
 					case 7: // for Lion Objects
 						rowContents[c] = LION_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
+						break;
+					case 8: // for Elephant Objects
+						rowContents[c] = ELEPHANT_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
 						break;
 				}
 
