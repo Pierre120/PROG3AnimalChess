@@ -36,7 +36,15 @@ public class Trap extends Terrain {
     @Override
     public void animalMovesIn(Animal newAnimal) {
         animalInhabiting = newAnimal;
-        animalInhabiting.setTrapState(true);
+        /* Can also be:
+                if(newAnimal.getPlayerSide() != PLAYER_SIDE)
+
+                but PLAYER_SIDE needs to be protected in Terrain class
+                for it to be inherited
+            */
+        if(newAnimal.getPlayerSide() != this.getOwner())
+            animalInhabiting.setTrapState(true);
+            
         occupied = true;
     }
 
@@ -47,7 +55,9 @@ public class Trap extends Terrain {
      */
     @Override
     public void animalMovesOut() {
-        animalInhabiting.setTrapState(false);
+
+        if(animalInhabiting.getPlayerSide() != this.getOwner())
+            animalInhabiting.setTrapState(false);
         animalInhabiting = null;
         occupied = false;
     }
