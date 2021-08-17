@@ -408,4 +408,9 @@ public class Animal {
      */
     protected boolean captured;
     
+    /**
+     * This attribute stores true value if the animal is in the enemy's traps,
+     * false otherwise.
+     */
+    protected boolean trapped;
 }
