@@ -71,7 +71,8 @@ public class Animal {
      * @return true if the area doesn't have any animal occupying it or if it can capture the animal occupying the area, otherwise false.
      */
     public boolean canOccupy(Terrain specificArea) {
-        if(!specificArea.getState() || (specificArea.getState() && canCapture(specificArea.getAnimal())))
+        if((specificArea.getState() && (canCapture(specificArea.getAnimal()) || specificArea.isTrap()))
+            || !specificArea.getState())
             return true;
 
         return false;
