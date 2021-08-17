@@ -25,4 +25,30 @@ public class Trap extends Terrain {
     public boolean isTrap() {
         return true;
     }
+
+
+    /** This method assigns a new animal object to the animalInhabiting attribute
+     * and updates its occupation status to true to show that the new animal 
+     * object will be moving in or occupying or inhabiting the current terrain.
+     * 
+     * @param newAnimal the new animal object who will be occupying the terrain
+     */
+    @Override
+    public void animalMovesIn(Animal newAnimal) {
+        animalInhabiting = newAnimal;
+        animalInhabiting.setTrapState(true);
+        occupied = true;
+    }
+
+
+    /** This method removes the animal object who is occupying or inhabiting
+     * it and updates its occupation status to false to show that an animal object
+     * left or moved out of the terrain.
+     */
+    @Override
+    public void animalMovesOut() {
+        animalInhabiting.setTrapState(false);
+        animalInhabiting = null;
+        occupied = false;
+    }
 }

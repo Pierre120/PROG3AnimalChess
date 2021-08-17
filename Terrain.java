@@ -122,10 +122,10 @@ public class Terrain {
     /** This attribute stores a boolean value of the occupation status of the terrain object.
      * It stores true if an animal object is inhabiting it, otherwise it stores false.
      */
-    private boolean occupied;
+    protected boolean occupied;
 
     /** This attribute stores the address of the animal object who is inhabiting the
      * terrain.
      */
-    private Animal animalInhabiting;
+    protected Animal animalInhabiting;
 }
