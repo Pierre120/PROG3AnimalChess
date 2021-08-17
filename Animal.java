@@ -266,6 +266,24 @@ public class Animal {
     }
 
 
+    /** This method sets the trap state of the animal.
+     * 
+     * @param b trap state of the animal. True if animal is trapped, otherwise false
+     */
+    public void setTrapState(boolean b) {
+        trapped = b;
+    }
+
+
+    /** This method gets the trap state of the animal.
+     * 
+     * @return true if animal is trapped, otherwise false
+     */
+    public boolean getTrapState() {
+        return trapped;
+    }
+
+
     /** This method gets the rank of the animal.
      * 
      * @return rank of the animal
