@@ -23,6 +23,7 @@ public class Animal {
         colPosition = startingCol;
         RANK = animalRank;
         captured = false;
+        trapped = false;
         upwardSpace = 0;
         downwardSpace = 0;
         rightSpace = 0;
@@ -409,7 +410,7 @@ public class Animal {
     protected boolean captured;
     
     /**
-     * This attribute stores true value if the animal is in the enemy's traps,
+     * This attribute stores true value if the animal is in one of the enemy's traps,
      * false otherwise.
      */
     protected boolean trapped;
