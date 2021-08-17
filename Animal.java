@@ -60,7 +60,8 @@ public class Animal {
      * @return true if the enemy animal is capturable, false otherwise
      */
     public boolean canCapture(Animal enemyAnimal) {
-        if(enemyAnimal != null && enemyAnimal.getRank() <= RANK && enemyAnimal.getPlayerSide() != PLAYER_SIDE) 
+        if(enemyAnimal != null && enemyAnimal.getPlayerSide() != PLAYER_SIDE && 
+            (enemyAnimal.getRank() <= RANK || enemyAnimal.isTrapped())) 
             return true;
         return false;
     }
@@ -277,7 +278,7 @@ public class Animal {
      * 
      * @return true if animal is trapped, otherwise false
      */
-    public boolean getTrapState() {
+    public boolean isTrapped() {
         return trapped;
     }
 
