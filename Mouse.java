@@ -34,7 +34,8 @@ public class Mouse extends Animal {
     @Override
     public boolean canCapture(Animal enemyAnimal) {
         if(enemyAnimal != null && enemyAnimal.getPlayerSide() != getPlayerSide()
-        && (enemyAnimal.getRank() == 8 || enemyAnimal.isCaptured()))  
+            && (enemyAnimal.getRank() == 8 || enemyAnimal.getRank() == RANK || 
+            enemyAnimal.isTrapped()))  
             return true;
         return false;
         

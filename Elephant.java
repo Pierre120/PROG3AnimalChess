@@ -21,7 +21,7 @@ public class Elephant extends Animal {
     public boolean canCapture(Animal enemyAnimal) {
         if(enemyAnimal != null && enemyAnimal.getPlayerSide() != getPlayerSide()
         && (enemyAnimal.getRank() > 1 && enemyAnimal.getRank() <= RANK 
-        || enemyAnimal.isCaptured())) 
+        || enemyAnimal.isTrapped())) 
             return true;
         return false;
     }
