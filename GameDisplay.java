@@ -65,6 +65,9 @@ public class GameDisplay {
 			if(rowArea[c].isRiver() && !rowArea[c].getState())
 				rowContents[c] = RIVER_ICON;
 
+			if(rowArea[c].isTrap() && !rowArea[c].getState())
+				rowContents[c] = TRAP_ICON;
+
 		}
 	}
 
@@ -276,4 +279,6 @@ public class GameDisplay {
 	 */
 	private final char MOVE_ICON = '#';
 	
+
+	private final char TRAP_ICON = '8';
 }
