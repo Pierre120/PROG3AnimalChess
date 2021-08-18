@@ -3,9 +3,9 @@ import java.util.Scanner;
 
 public class Game {
     
-    public Game () {
-        gameBoard = new Board(); // instantiate the Board object
-        gameGUI = new GameDisplay();
+    public Game (Board board, GameDisplay gui) {
+        gameBoard = board; // instantiate the Board object
+        gameGUI = gui;
         // Board object automatically instantiates Tiles and Animal objects it contains
     }
 
