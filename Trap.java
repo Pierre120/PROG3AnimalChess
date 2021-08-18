@@ -56,8 +56,7 @@ public class Trap extends Terrain {
     @Override
     public void animalMovesOut() {
 
-        if(animalInhabiting.getPlayerSide() != this.getOwner())
-            animalInhabiting.setTrapState(false);
+        animalInhabiting.setTrapState(false);
         animalInhabiting = null;
         occupied = false;
     }
