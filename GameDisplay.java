@@ -11,68 +11,79 @@ import java.awt.*;
  */
 public class GameDisplay extends JFrame {
 	
-	JLabel background;
+	JPanel background;
+	JButton startButton;
 
 	public GameDisplay() {
 		
 		this.setTitle("Animal Chess"); // title for the window
 		//this.setIconImage(new ImageIcon("image\\").getImage()); // icon for the window
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(1033, 770);
+		this.setSize(1033, 773); // original size
 		this.setResizable(false); // not resizable
     	this.setLocationRelativeTo(null); // center of screen
 		this.setLayout(new BorderLayout());
 		this.setVisible(true);
 
 		// temporary container for the start button and random animal pieces button
-		JLabel tempContainer = new JLabel();
+		JPanel tempContainer = new JPanel();
 		tempContainer.setPreferredSize(new Dimension(100, 400));
 		tempContainer.setBackground(new Color(0, 0, 0, 0));
 		tempContainer.setLayout(new FlowLayout());
 
 		// start button
-		JButton start = new JButton();
+		startButton = new JButton();
 		/*
 			To Do:
 			Design the button
 		*/
-		start.setText("START");
-		start.setFocusable(false);
+		startButton.setText("START");
+		startButton.setFocusable(false);
 		// click action
-		start.addActionListener( e -> {
+		startButton.addActionListener( (e) -> {
 			System.out.println("You just clicked the start button.");
 			System.out.println("Game will start now.");
 
 			// removes the start button from tempContainer
-			tempContainer.remove(start);
+			tempContainer.remove(startButton);
+			startButton = null;
 
 			// change the size of tempContainer
 
 			// add the buttons for random animal pieces
 
-			// Refresh
-			this.setSize(1032, 769);
-			this.setSize(1033, 770);
+			// Refresh contents
+			refresh();
 		});
-		start.setVerticalTextPosition(JButton.CENTER);
-		start.setHorizontalTextPosition(JButton.CENTER);
-
+		startButton.setVerticalTextPosition(JButton.CENTER);
+		startButton.setHorizontalTextPosition(JButton.CENTER);
 
 		// background
-		background = new JLabel(new ImageIcon("images\\background.png"));
+		background = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				Graphics2D bg = (Graphics2D) g;
+				bg.drawImage(new ImageIcon("images\\background.png").getImage(), 0, 0, null);
+			}
+		};
 		background.setLayout(new BorderLayout());
 		
 		// add components
 		this.add(background, BorderLayout.CENTER);
 		background.add(tempContainer, BorderLayout.SOUTH);
-		tempContainer.add(start);
+		tempContainer.add(startButton);
+		background.repaint();
 
-		// Refresh
-		this.setSize(1032, 769);
-		this.setSize(1033, 770);
+		// Refresh contents
+		refresh();
 	}
 	
 	
+	private void refresh() {
+		this.setSize(1032, 771);
+		this.setSize(1033, 772);
+	}
 }
 
 // -------------------------- TERMINAL/CONSOLE VERSION --------------------------
