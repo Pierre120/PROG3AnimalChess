@@ -1,3 +1,6 @@
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * This GameDisplay class is responsible for the displays or outputs in the terminal.
  * It is used by the driver class to provide information and UI/UX for the players of 
@@ -10,9 +13,30 @@ public class GameDisplay {
 
 
 
+	JFrame gameFrame;
+	Image background;
+
+	public GameDisplay() {
+		background = Toolkit.getDefaultToolkit().getImage("images\\background.png");
 	
-
-
+		gameFrame = new JFrame("Animal Chess");
+		gameFrame.setSize(1017, 734);
+		//gameFrame.setResizable(false); // not resizable
+		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	gameFrame.setLocationRelativeTo(null); // center of screen
+		gameFrame.setContentPane(new JPanel() {
+        	@Override
+        	public void paintComponent(Graphics g) {
+            	super.paintComponent(g);
+            	g.drawImage(background, 0, 0, null);
+        	}
+      	});
+      	gameFrame.pack();
+      	gameFrame.setVisible(true);
+	}
+	
+	
+}
 
 // -------------------------- TERMINAL/CONSOLE VERSION --------------------------
 
@@ -292,4 +316,3 @@ public class GameDisplay {
 // 	private final char TRAP_ICON = '8';
 // 
 // 
-}
