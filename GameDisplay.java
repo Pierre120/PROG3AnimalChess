@@ -10,26 +10,66 @@ import java.awt.*;
  * @author Matthew James Villarica
  */
 public class GameDisplay extends JFrame {
-
-
-
 	
+	JLabel background;
 
 	public GameDisplay() {
-		this.setTitle("Animal Chess");
+		
+		this.setTitle("Animal Chess"); // title for the window
+		//this.setIconImage(new ImageIcon("image\\").getImage()); // icon for the window
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(1017, 734);
+		this.setSize(1033, 770);
 		this.setResizable(false); // not resizable
     	this.setLocationRelativeTo(null); // center of screen
-      	this.setVisible(true);
+		this.setLayout(new BorderLayout());
+		this.setVisible(true);
+
+		// temporary container for the start button and random animal pieces button
+		JLabel tempContainer = new JLabel();
+		tempContainer.setPreferredSize(new Dimension(100, 400));
+		tempContainer.setBackground(new Color(0, 0, 0, 0));
+		tempContainer.setLayout(new FlowLayout());
+
+		// start button
+		JButton start = new JButton();
+		/*
+			To Do:
+			Design the button
+		*/
+		start.setText("START");
+		start.setFocusable(false);
+		// click action
+		start.addActionListener( e -> {
+			System.out.println("You just clicked the start button.");
+			System.out.println("Game will start now.");
+
+			// removes the start button from tempContainer
+			tempContainer.remove(start);
+
+			// change the size of tempContainer
+
+			// add the buttons for random animal pieces
+
+			// Refresh
+			this.setSize(1032, 769);
+			this.setSize(1033, 770);
+		});
+		start.setVerticalTextPosition(JButton.CENTER);
+		start.setHorizontalTextPosition(JButton.CENTER);
+
+
+		// background
+		background = new JLabel(new ImageIcon("images\\background.png"));
+		background.setLayout(new BorderLayout());
 		
-		this.setContentPane(new JPanel() {
-        	@Override
-        	public void paintComponent(Graphics g) {
-            	super.paintComponent(g);
-            	g.drawImage(Toolkit.getDefaultToolkit().getImage("images\\background.png"), 0, 0, null);
-        	}
-      	});
+		// add components
+		this.add(background, BorderLayout.CENTER);
+		background.add(tempContainer, BorderLayout.SOUTH);
+		tempContainer.add(start);
+
+		// Refresh
+		this.setSize(1032, 769);
+		this.setSize(1033, 770);
 	}
 	
 	
