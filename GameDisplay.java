@@ -9,30 +9,27 @@ import java.awt.*;
  * @author Pierre Vincent Hernandez
  * @author Matthew James Villarica
  */
-public class GameDisplay {
+public class GameDisplay extends JFrame {
 
 
 
-	JFrame gameFrame;
-	Image background;
+	
 
 	public GameDisplay() {
-		background = Toolkit.getDefaultToolkit().getImage("images\\background.png");
-	
-		gameFrame = new JFrame("Animal Chess");
-		gameFrame.setSize(1017, 734);
-		//gameFrame.setResizable(false); // not resizable
-		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	gameFrame.setLocationRelativeTo(null); // center of screen
-		gameFrame.setContentPane(new JPanel() {
+		this.setTitle("Animal Chess");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(1017, 734);
+		this.setResizable(false); // not resizable
+    	this.setLocationRelativeTo(null); // center of screen
+      	this.setVisible(true);
+		
+		this.setContentPane(new JPanel() {
         	@Override
         	public void paintComponent(Graphics g) {
             	super.paintComponent(g);
-            	g.drawImage(background, 0, 0, null);
+            	g.drawImage(Toolkit.getDefaultToolkit().getImage("images\\background.png"), 0, 0, null);
         	}
       	});
-      	gameFrame.pack();
-      	gameFrame.setVisible(true);
 	}
 	
 	
