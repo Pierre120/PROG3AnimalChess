@@ -7,8 +7,11 @@ public class Game {
         gameBoard = board; // instantiate the Board object
         gameGUI = gui;
         // Board object automatically instantiates Tiles and Animal objects it contains
+
+
     }
 
+    /*
     public void executeGame () {
         // execute the whole game play
         Scanner sc = new Scanner(System.in);
@@ -132,8 +135,9 @@ public class Game {
         charChoice = '\0';
         System.gc();
     }
+    */
 
-
+    /*
     private int pickTeamColor(Scanner sc) {
         int numChoice;
 
@@ -153,12 +157,14 @@ public class Game {
         to 0 because all the index 0 for Animals and teamColor 
         would be for team RED and index 1 for team BLUE, but
         if Player 1 chooses BLUE team and his current
-        playerNum is 1 then there is no need to change */
+        playerNum is 1 then there is no need to change 
         if(numChoice == 1)
             return 0;
         else return 1;
     }
+    */
 
+    /* 
     private void pickRandomAnimalPieces(int[] playerPiece, Scanner sc) {
         int k;
         int numChoice;
@@ -202,6 +208,7 @@ public class Game {
         for(k = 0; k < 2; k++)
             System.out.println("Person " + (k + 1) + " got " + gameBoard.getAnimals()[playerPiece[k]][0]);
     }
+    */
 
 
     /** This method is responsible for transcribing the input of the players into
