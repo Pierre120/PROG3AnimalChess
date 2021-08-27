@@ -13,6 +13,7 @@ public class GameDisplay extends JFrame {
 	
 	JPanel background;
 	JButton startButton;
+	JLabel startButton2;
 
 	public GameDisplay() {
 		
@@ -31,13 +32,13 @@ public class GameDisplay extends JFrame {
 		tempContainer.setBackground(new Color(0, 0, 0, 0));
 		tempContainer.setLayout(new FlowLayout());
 
-		// start button
-		startButton = new JButton();
 		/*
-			To Do:
-			Design the button
-		*/
-		startButton.setText("START");
+		// start button
+		startButton = new JButton("START");
+		//
+		To Do:
+		Design the button
+		//
 		startButton.setFocusable(false);
 		// click action
 		startButton.addActionListener( (e) -> {
@@ -47,7 +48,7 @@ public class GameDisplay extends JFrame {
 			// removes the start button from tempContainer
 			tempContainer.remove(startButton);
 			startButton = null;
-
+			
 			// change the size of tempContainer
 
 			// add the buttons for random animal pieces
@@ -55,10 +56,21 @@ public class GameDisplay extends JFrame {
 			// Refresh contents
 			refresh();
 		});
-		startButton.setVerticalTextPosition(JButton.CENTER);
+		startButton.setBackground(new Color(0x05a814));
+		startButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
+		startButton.setVerticalTextPosition(JButton.BOTTOM);
 		startButton.setHorizontalTextPosition(JButton.CENTER);
-		//startButton.setIcon(new ImageIcon());
+		startButton.setSize(new Dimension(500, 400));
+		startButton.setBorder(BorderFactory.createLineBorder(new Color(0x662410), 7));
+		*/
 
+		
+		startButton2 = new JLabel()  {
+
+		};
+		startButton2.setIcon(new ImageIcon("images\\start.png"));
+		startButton2.setBounds(641, 450, 250, 150);
+		
 		// background
 		background = new JPanel() {
 			@Override
@@ -72,8 +84,9 @@ public class GameDisplay extends JFrame {
 		
 		// add components
 		this.add(background, BorderLayout.CENTER);
-		background.add(tempContainer, BorderLayout.SOUTH);
-		tempContainer.add(startButton);
+		// background.add(tempContainer, BorderLayout.SOUTH);
+		// tempContainer.add(startButton);
+		background.add(startButton2);
 
 		// Refresh contents
 		refresh();
