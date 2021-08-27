@@ -57,6 +57,7 @@ public class GameDisplay extends JFrame {
 		});
 		startButton.setVerticalTextPosition(JButton.CENTER);
 		startButton.setHorizontalTextPosition(JButton.CENTER);
+		//startButton.setIcon(new ImageIcon());
 
 		// background
 		background = new JPanel() {
@@ -73,7 +74,6 @@ public class GameDisplay extends JFrame {
 		this.add(background, BorderLayout.CENTER);
 		background.add(tempContainer, BorderLayout.SOUTH);
 		tempContainer.add(startButton);
-		background.repaint();
 
 		// Refresh contents
 		refresh();
