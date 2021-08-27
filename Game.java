@@ -11,7 +11,7 @@ public class Game implements MouseInputListener{
         gameBoard = board; // instantiate the Board object
         gameGUI = gui;
         // Board object automatically instantiates Tiles and Animal objects it contains
-        gui.setListener(this);
+        gameGUI.setListener(this);
 
     }
 
