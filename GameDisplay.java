@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
  * @author Pierre Vincent Hernandez
  * @author Matthew James Villarica
  */
-public class GameDisplay extends JFrame implements MouseInputListener {
+public class GameDisplay extends JFrame  {
 	
 	JPanel background;
 	JLabel startButton;
@@ -51,7 +51,7 @@ public class GameDisplay extends JFrame implements MouseInputListener {
 		startButton = new JLabel();
 		startButton.setIcon(new ImageIcon("images\\start.png"));
 		startButton.setBounds(416, 350, 250, 150);
-		startButton.addMouseListener(this);
+		
 		
 		
 		// add components
@@ -63,62 +63,29 @@ public class GameDisplay extends JFrame implements MouseInputListener {
 	}
 	
 	
-	private void refresh() {
+	public void refresh() {
 		this.setSize(1032, 771);
 		this.setSize(1033, 772);
 	}
 
+	public void setListener(MouseInputListener listener) {
+		startButton.addMouseListener(listener);
+	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		if(e.getSource() == startButton) {
-			System.out.println("You just clicked the start button.");
-			System.out.println("Game will start now.");
-			refresh();
+	public JLabel getStart() {
+		return startButton;
+	}
 
-			background.remove(startButton);
-			startButton = null;
-		}
+	public void setStartToNull() {
+		startButton = null;
+	}
+
+	public void removeStartButton() {
+		background.remove(startButton);
 	}
 
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		if(e.getSource() == startButton)
-			startButton.setIcon(new ImageIcon("images\\startPressed.png"));
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// do nothing
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		if(e.getSource() == startButton)
-			startButton.setIcon(new ImageIcon("images\\startHighlight.png"));
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		if(e.getSource() == startButton)
-			startButton.setIcon(new ImageIcon("images\\start.png"));
-	}
-
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// do nothing
-	}
-
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// do nothing
-	}
+	
 }
 
 // -------------------------- TERMINAL/CONSOLE VERSION --------------------------

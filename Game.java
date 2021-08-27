@@ -1,15 +1,70 @@
 import java.util.Random;
 import java.util.Scanner;
+import javax.swing.*;
+import javax.swing.event.MouseInputListener;
+import java.awt.*;
+import java.awt.event.MouseEvent;
 
-public class Game {
+public class Game implements MouseInputListener{
     
     public Game (Board board, GameDisplay gui) {
         gameBoard = board; // instantiate the Board object
         gameGUI = gui;
         // Board object automatically instantiates Tiles and Animal objects it contains
-
+        gui.setListener(this);
 
     }
+
+    @Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getSource() == gameGUI.getStart()) {
+			System.out.println("You just clicked the start button.");
+			System.out.println("Game will start now.");
+			gameGUI.refresh();
+
+			gameGUI.removeStartButton();
+			gameGUI.setStartToNull();
+		}
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if(e.getSource() == gameGUI.getStart())
+			gameGUI.getStart().setIcon(new ImageIcon("images\\startPressed.png"));
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// do nothing
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		if(e.getSource() == gameGUI.getStart())
+			gameGUI.getStart().setIcon(new ImageIcon("images\\startHighlight.png"));
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		if(e.getSource() == gameGUI.getStart())
+			gameGUI.getStart().setIcon(new ImageIcon("images\\start.png"));
+	}
+
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// do nothing
+	}
+
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// do nothing
+	}
 
     /*
     public void executeGame () {
