@@ -1,5 +1,7 @@
 import javax.swing.*;
+import javax.swing.event.MouseInputListener;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 /**
  * This GameDisplay class is responsible for the displays or outputs in the terminal.
@@ -9,10 +11,10 @@ import java.awt.*;
  * @author Pierre Vincent Hernandez
  * @author Matthew James Villarica
  */
-public class GameDisplay extends JFrame {
+public class GameDisplay extends JFrame implements MouseInputListener {
 	
 	JPanel background;
-	JButton startButton;
+	JLabel startButton;
 
 	public GameDisplay() {
 		
@@ -30,35 +32,8 @@ public class GameDisplay extends JFrame {
 		tempContainer.setPreferredSize(new Dimension(100, 400));
 		tempContainer.setBackground(new Color(0, 0, 0, 0));
 		tempContainer.setLayout(new FlowLayout());
-
-		// start button
-		startButton = new JButton();
-		/*
-			To Do:
-			Design the button
-		*/
-		startButton.setText("START");
-		startButton.setFocusable(false);
-		// click action
-		startButton.addActionListener( (e) -> {
-			System.out.println("You just clicked the start button.");
-			System.out.println("Game will start now.");
-
-			// removes the start button from tempContainer
-			tempContainer.remove(startButton);
-			startButton = null;
-
-			// change the size of tempContainer
-
-			// add the buttons for random animal pieces
-
-			// Refresh contents
-			refresh();
-		});
-		startButton.setVerticalTextPosition(JButton.CENTER);
-		startButton.setHorizontalTextPosition(JButton.CENTER);
-		//startButton.setIcon(new ImageIcon());
-
+		
+		
 		// background
 		background = new JPanel() {
 			@Override
@@ -68,12 +43,20 @@ public class GameDisplay extends JFrame {
 				bg.drawImage(new ImageIcon("images\\background.png").getImage(), 0, 0, null);
 			}
 		};
-		background.setLayout(new BorderLayout());
+		background.setSize(1033, 772);
+		background.setLayout(null);
+
+
+		// start button
+		startButton = new JLabel();
+		startButton.setIcon(new ImageIcon("images\\start.png"));
+		startButton.setBounds(416, 350, 250, 150);
+		startButton.addMouseListener(this);
+		
 		
 		// add components
 		this.add(background, BorderLayout.CENTER);
-		background.add(tempContainer, BorderLayout.SOUTH);
-		tempContainer.add(startButton);
+		background.add(startButton);
 
 		// Refresh contents
 		refresh();
@@ -83,6 +66,58 @@ public class GameDisplay extends JFrame {
 	private void refresh() {
 		this.setSize(1032, 771);
 		this.setSize(1033, 772);
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getSource() == startButton) {
+			System.out.println("You just clicked the start button.");
+			System.out.println("Game will start now.");
+			refresh();
+
+			background.remove(startButton);
+			startButton = null;
+		}
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if(e.getSource() == startButton)
+			startButton.setIcon(new ImageIcon("images\\startPressed.png"));
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// do nothing
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		if(e.getSource() == startButton)
+			startButton.setIcon(new ImageIcon("images\\startHighlight.png"));
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		if(e.getSource() == startButton)
+			startButton.setIcon(new ImageIcon("images\\start.png"));
+	}
+
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// do nothing
+	}
+
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// do nothing
 	}
 }
 
