@@ -13,8 +13,8 @@ import java.awt.event.MouseEvent;
  */
 public class GameDisplay extends JFrame  {
 	
-	JPanel background;
-	JLabel startButton;
+	private JPanel background;
+	private JLabel startButton;
 
 	public GameDisplay() {
 		
