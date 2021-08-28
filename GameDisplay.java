@@ -84,10 +84,11 @@ public class GameDisplay extends JFrame  {
 		this.setSize(1033, 772);
 	}
 
-	public void setListener(MouseInputListener listener) {
-		startButton.addMouseListener(listener);
+	public void setListener(MouseInputListener start, MouseInputListener random) {
+		startButton.addMouseListener(start);
 		// set the listener for other MouseInputListener attributes of this class
 		// implementation of MouseInputListener are in Game class
+		randomPicker = random;
 	}
 
 	public void setTransparentBackground(Component comp) {
@@ -116,13 +117,18 @@ public class GameDisplay extends JFrame  {
 	
 	public void displayRandomChoices(int[] randIndexes) {
 		//randPieceContainer.setSize(400, 220); // 350, 170
-		randPieceContainer.setBackground(new Color(0,0,0));
+		randPieceContainer.setBackground(TRANSPARENT);
 
 		setRandomPieces(randIndexes);
 
 		transparentContainer.add(randPieceContainer);
 		//transparentContainer.validate();
 		//refresh();
+	}
+
+	public void removeRandomChoices() {
+		transparentContainer.remove(randPieceContainer);
+		randPieceContainer = null;
 	}
 
 	public class RandomPiece extends JLabel {
