@@ -19,7 +19,7 @@ public class GameDisplay extends JFrame  {
 	public GameDisplay() {
 		
 		this.setTitle("Animal Chess"); // title for the window
-		//this.setIconImage(new ImageIcon("image\\").getImage()); // icon for the window
+		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1033, 773); // original size
 		this.setResizable(false); // not resizable
