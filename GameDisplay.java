@@ -26,7 +26,7 @@ public class GameDisplay extends JFrame  {
 
 		TRANSPARENT = new Color(0, 0, 0, 0);
 		randPieceContainer = new JPanel();
-		randPieceContainer.setLayout(new GridLayout(2, 4, 10, 10));
+		randPieceContainer.setLayout(new GridLayout(2, 4, 15, 15));
 		randomPicker = null;
 		
 		this.setTitle("Animal Chess"); // title for the window
@@ -62,7 +62,7 @@ public class GameDisplay extends JFrame  {
 		startButton = new JLabel();
 		startButton.setIcon(new ImageIcon("images\\start.png"));
 		// startButton.setBounds(416, 350, 250, 150);
-		startButton.setSize(250, 150);
+		// startButton.setSize(250, 150);
 		
 		
 		
@@ -115,13 +115,14 @@ public class GameDisplay extends JFrame  {
 	}
 	
 	public void displayRandomChoices(int[] randIndexes) {
-		randPieceContainer.setSize(350, 170);
-		randPieceContainer.setBackground(TRANSPARENT);
+		//randPieceContainer.setSize(400, 220); // 350, 170
+		randPieceContainer.setBackground(new Color(0,0,0));
 
 		setRandomPieces(randIndexes);
 
 		transparentContainer.add(randPieceContainer);
-		transparentContainer.validate();
+		//transparentContainer.validate();
+		//refresh();
 	}
 
 	public class RandomPiece extends JLabel {
