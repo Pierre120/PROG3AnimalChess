@@ -19,7 +19,7 @@ public class Game {
         gameBoard = board; // instantiate the Board object
         gameGUI = gui;
         // Board object automatically instantiates Tiles and Animal objects it contains
-        gameGUI.setListener(new StartListener());
+        gameGUI.setListener(new StartListener(), new RandomListener());
 
     }
 

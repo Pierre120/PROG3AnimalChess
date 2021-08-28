@@ -84,10 +84,11 @@ public class GameDisplay extends JFrame  {
 		this.setSize(1033, 772);
 	}
 
-	public void setListener(MouseInputListener listener) {
-		startButton.addMouseListener(listener);
+	public void setListener(MouseInputListener start, MouseInputListener random) {
+		startButton.addMouseListener(start);
 		// set the listener for other MouseInputListener attributes of this class
 		// implementation of MouseInputListener are in Game class
+		randomPicker = random;
 	}
 
 	public void setTransparentBackground(Component comp) {
