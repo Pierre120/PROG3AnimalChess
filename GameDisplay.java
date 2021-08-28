@@ -18,11 +18,15 @@ public class GameDisplay extends JFrame  {
 	private JPanel transparentContainer;
 	private final Color TRANSPARENT;
 
+	private JPanel randPieceContainer;
+
 	MouseInputListener randomPicker;
 
 	public GameDisplay() {
 
 		TRANSPARENT = new Color(0, 0, 0, 0);
+		randPieceContainer = new JPanel();
+		randPieceContainer.setLayout(new GridLayout(2, 4, 10, 10));
 		randomPicker = null;
 		
 		this.setTitle("Animal Chess"); // title for the window
@@ -70,7 +74,8 @@ public class GameDisplay extends JFrame  {
 
 
 		// Refresh contents
-		refresh();
+		// refresh();
+		validate();
 	}
 	
 	
@@ -82,7 +87,7 @@ public class GameDisplay extends JFrame  {
 	public void setListener(MouseInputListener listener) {
 		startButton.addMouseListener(listener);
 		// set the listener for other MouseInputListener attributes of this class
-		// implementation of MouseInputListener are in Game
+		// implementation of MouseInputListener are in Game class
 	}
 
 	public void setTransparentBackground(Component comp) {
@@ -99,15 +104,36 @@ public class GameDisplay extends JFrame  {
 		startButton = null;
 	}
 
+	
+	private void setRandomPieces(int[] randIndexes) {
+		int n;
+
+		for(n = 0; n < randIndexes.length; n++)
+			randPieceContainer.add(new RandomPiece("" + randIndexes[n], 
+				new ImageIcon("images\\randPiece.png"), 
+				new ImageIcon("images\\" + (randIndexes[n] + 1) + ".png")));
+	}
+	
+	public void displayRandomChoices(int[] randIndexes) {
+		randPieceContainer.setSize(350, 170);
+		randPieceContainer.setBackground(TRANSPARENT);
+
+		setRandomPieces(randIndexes);
+
+		transparentContainer.add(randPieceContainer);
+		transparentContainer.validate();
+	}
 
 	public class RandomPiece extends JLabel {
 
-		public RandomPiece(ImageIcon back, ImageIcon animalPiece) {
+		public RandomPiece(String name, ImageIcon back, ImageIcon animalPiece) {
+			setName(name);
 			setIcon(back);
 			setDisabledIcon(animalPiece);
-			setSize(80, 80);
+			//setSize(80, 80);
 			setEnabled(true);
 			addMouseListener(randomPicker);
+			setBackground(TRANSPARENT);
 		}
 	}	
 }
