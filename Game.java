@@ -29,11 +29,11 @@ public class Game {
         public void mouseClicked(MouseEvent e) {
             System.out.println("You just clicked the start button.");
             System.out.println("Game will start now.");
-            gameGUI.refresh();
-
+            
             gameGUI.removeStartButton();
             
             gameGUI.displayRandomChoices(randIndexes);
+            gameGUI.repaint();
         }
 
 
@@ -96,7 +96,7 @@ public class Game {
             if(person < 2 && e.getComponent().isEnabled()) {
                 randPick[person] = Integer.parseInt(e.getComponent().getName());
                 e.getComponent().setEnabled(false);
-                gameGUI.refresh();
+                gameGUI.repaint();
                 System.out.println("Index = " + randPick[person]);
                 person++;
 
@@ -114,13 +114,19 @@ public class Game {
         @Override
         public void mouseEntered(MouseEvent e) {
             // TODO Auto-generated method stub
-            
+            if(person < 2 && e.getComponent().isEnabled()) {
+                ((JLabel)e.getComponent()).setIcon(new ImageIcon("images\\randPieceHighlight.png"));
+                gameGUI.setTransparentBackground(e.getComponent());
+            }
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
-            
+            if(person < 2 && e.getComponent().isEnabled()) {
+                ((JLabel)e.getComponent()).setIcon(new ImageIcon("images\\randPiece.png"));
+                gameGUI.setTransparentBackground(e.getComponent());
+            }
         }
 
         @Override

@@ -93,7 +93,8 @@ public class GameDisplay extends JFrame  {
 
 	public void setTransparentBackground(Component comp) {
 		comp.setBackground(TRANSPARENT);
-		refresh();
+		// refresh();
+		repaint();
 	}
 
 	public JLabel getStartButton() {
@@ -122,7 +123,7 @@ public class GameDisplay extends JFrame  {
 		setRandomPieces(randIndexes);
 
 		transparentContainer.add(randPieceContainer);
-		//transparentContainer.validate();
+		transparentContainer.revalidate();
 		//refresh();
 	}
 
