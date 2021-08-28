@@ -126,6 +126,11 @@ public class GameDisplay extends JFrame  {
 		//refresh();
 	}
 
+	public void removeRandomChoices() {
+		transparentContainer.remove(randPieceContainer);
+		randPieceContainer = null;
+	}
+
 	public class RandomPiece extends JLabel {
 
 		public RandomPiece(String name, ImageIcon back, ImageIcon animalPiece) {
