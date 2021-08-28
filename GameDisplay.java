@@ -81,6 +81,8 @@ public class GameDisplay extends JFrame  {
 
 	public void setListener(MouseInputListener listener) {
 		startButton.addMouseListener(listener);
+		// set the listener for other MouseInputListener attributes of this class
+		// implementation of MouseInputListener are in Game
 	}
 
 	public void setTransparentBackground(Component comp) {
@@ -98,7 +100,16 @@ public class GameDisplay extends JFrame  {
 	}
 
 
-	
+	public class RandomPiece extends JLabel {
+
+		public RandomPiece(ImageIcon back, ImageIcon animalPiece) {
+			setIcon(back);
+			setDisabledIcon(animalPiece);
+			setSize(80, 80);
+			setEnabled(true);
+			addMouseListener(randomPicker);
+		}
+	}	
 }
 
 // -------------------------- TERMINAL/CONSOLE VERSION --------------------------
