@@ -117,7 +117,7 @@ public class GameDisplay extends JFrame  {
 	
 	public void displayRandomChoices(int[] randIndexes) {
 		//randPieceContainer.setSize(400, 220); // 350, 170
-		randPieceContainer.setBackground(new Color(0,0,0));
+		randPieceContainer.setBackground(TRANSPARENT);
 
 		setRandomPieces(randIndexes);
 
