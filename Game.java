@@ -17,7 +17,7 @@ public class Game implements MouseInputListener{
 
     @Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStart()) {
+		if(e.getSource() == gameGUI.getStartButton()) {
 			System.out.println("You just clicked the start button.");
 			System.out.println("Game will start now.");
 			gameGUI.refresh();
@@ -29,10 +29,9 @@ public class Game implements MouseInputListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStart()) {
-			gameGUI.getStart().setIcon(new ImageIcon("images\\startPressed.png"));
-            gameGUI.getStart().setBackground(new Color(0, 0, 0, 0));
-            gameGUI.refresh();
+		if(e.getSource() == gameGUI.getStartButton()) {
+			gameGUI.getStartButton().setIcon(new ImageIcon("images\\startPressed.png"));
+            gameGUI.setTransparentBackground(gameGUI.getStartButton());
         }
 	}
 
@@ -45,20 +44,18 @@ public class Game implements MouseInputListener{
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStart()) {
-			gameGUI.getStart().setIcon(new ImageIcon("images\\startHighlight.png"));
-            gameGUI.getStart().setBackground(new Color(0, 0, 0, 0));
-            gameGUI.refresh();
+		if(e.getSource() == gameGUI.getStartButton()) {
+			gameGUI.getStartButton().setIcon(new ImageIcon("images\\startHighlight.png"));
+            gameGUI.setTransparentBackground(gameGUI.getStartButton());
         }
 	}
 
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStart()) {
-			gameGUI.getStart().setIcon(new ImageIcon("images\\start.png"));
-            gameGUI.getStart().setBackground(new Color(0, 0, 0, 0));
-            gameGUI.refresh();
+		if(e.getSource() == gameGUI.getStartButton()) {
+			gameGUI.getStartButton().setIcon(new ImageIcon("images\\start.png"));
+            gameGUI.setTransparentBackground(gameGUI.getStartButton());
         }
 	}
 

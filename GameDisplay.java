@@ -16,8 +16,11 @@ public class GameDisplay extends JFrame  {
 	private JPanel background;
 	private JLabel startButton;
 	private JPanel transparentContainer;
+	private final Color TRANSPARENT;
 
 	public GameDisplay() {
+
+		TRANSPARENT = new Color(0, 0, 0, 0);
 		
 		this.setTitle("Animal Chess"); // title for the window
 		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
@@ -31,7 +34,7 @@ public class GameDisplay extends JFrame  {
 		// transparent container
 		transparentContainer = new JPanel();
 		transparentContainer.setPreferredSize(new Dimension(100, 400));
-		transparentContainer.setBackground(new Color(0, 0, 0, 0));
+		transparentContainer.setBackground(TRANSPARENT);
 		transparentContainer.setLayout(new FlowLayout());
 		
 		
@@ -77,7 +80,12 @@ public class GameDisplay extends JFrame  {
 		startButton.addMouseListener(listener);
 	}
 
-	public JLabel getStart() {
+	public void setTransparentBackground(Component comp) {
+		comp.setBackground(TRANSPARENT);
+		refresh();
+	}
+
+	public JLabel getStartButton() {
 		return startButton;
 	}
 
