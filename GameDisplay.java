@@ -18,9 +18,12 @@ public class GameDisplay extends JFrame  {
 	private JPanel transparentContainer;
 	private final Color TRANSPARENT;
 
+	MouseInputListener randomPicker;
+
 	public GameDisplay() {
 
 		TRANSPARENT = new Color(0, 0, 0, 0);
+		randomPicker = null;
 		
 		this.setTitle("Animal Chess"); // title for the window
 		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
