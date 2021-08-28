@@ -76,12 +76,9 @@ public class GameDisplay extends JFrame  {
 		return startButton;
 	}
 
-	public void setStartToNull() {
-		startButton = null;
-	}
-
 	public void removeStartButton() {
 		background.remove(startButton);
+		startButton = null;
 	}
 
 

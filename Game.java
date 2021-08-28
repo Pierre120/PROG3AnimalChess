@@ -23,7 +23,6 @@ public class Game implements MouseInputListener{
 			gameGUI.refresh();
 
 			gameGUI.removeStartButton();
-			gameGUI.setStartToNull();
 		}
 	}
 
