@@ -5,7 +5,7 @@ import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class Game implements MouseInputListener{
+public class Game {
     
     private int[] randIndexes;
 
@@ -16,67 +16,73 @@ public class Game implements MouseInputListener{
         gameBoard = board; // instantiate the Board object
         gameGUI = gui;
         // Board object automatically instantiates Tiles and Animal objects it contains
-        gameGUI.setListener(this);
+        gameGUI.setListener(new StartListener());
 
     }
 
-    @Override
-	public void mouseClicked(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStartButton()) {
-			System.out.println("You just clicked the start button.");
-			System.out.println("Game will start now.");
-			gameGUI.refresh();
 
-			gameGUI.removeStartButton();
-            
-            gameGUI.displayRandomChoices(randIndexes);
-		}
-	}
+    private class StartListener implements MouseInputListener {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if(e.getSource() == gameGUI.getStartButton()) {
+                System.out.println("You just clicked the start button.");
+                System.out.println("Game will start now.");
+                gameGUI.refresh();
 
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStartButton()) {
-			gameGUI.getStartButton().setIcon(new ImageIcon("images\\startPressed.png"));
-            gameGUI.setTransparentBackground(gameGUI.getStartButton());
+                gameGUI.removeStartButton();
+                
+                gameGUI.displayRandomChoices(randIndexes);
+            }
         }
-	}
 
 
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// do nothing
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStartButton()) {
-			gameGUI.getStartButton().setIcon(new ImageIcon("images\\startHighlight.png"));
-            gameGUI.setTransparentBackground(gameGUI.getStartButton());
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if(e.getSource() == gameGUI.getStartButton()) {
+                gameGUI.getStartButton().setIcon(new ImageIcon("images\\startPressed.png"));
+                gameGUI.setTransparentBackground(gameGUI.getStartButton());
+            }
         }
-	}
 
 
-	@Override
-	public void mouseExited(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStartButton()) {
-			gameGUI.getStartButton().setIcon(new ImageIcon("images\\start.png"));
-            gameGUI.setTransparentBackground(gameGUI.getStartButton());
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            // do nothing
         }
-	}
 
 
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// do nothing
-	}
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            if(e.getSource() == gameGUI.getStartButton()) {
+                gameGUI.getStartButton().setIcon(new ImageIcon("images\\startHighlight.png"));
+                gameGUI.setTransparentBackground(gameGUI.getStartButton());
+            }
+        }
 
 
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// do nothing
-	}
+        @Override
+        public void mouseExited(MouseEvent e) {
+            if(e.getSource() == gameGUI.getStartButton()) {
+                gameGUI.getStartButton().setIcon(new ImageIcon("images\\start.png"));
+                gameGUI.setTransparentBackground(gameGUI.getStartButton());
+            }
+        }
+
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            // do nothing
+        }
+
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            // do nothing
+        }
+        
+    }
+
+    
 
     /*
     public void executeGame () {
