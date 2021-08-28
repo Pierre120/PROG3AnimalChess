@@ -5,78 +5,138 @@ import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class Game implements MouseInputListener{
+public class Game {
     
     private int[] randIndexes;
+    private int[] randPick;
+    private int person;
 
     public Game (Board board, GameDisplay gui) {
         randIndexes = new int[] {-1,-1,-1,-1,-1,-1,-1,-1};
         randomizePieces(randIndexes);
+        randPick = new int[2];
 
         gameBoard = board; // instantiate the Board object
         gameGUI = gui;
         // Board object automatically instantiates Tiles and Animal objects it contains
-        gameGUI.setListener(this);
+        gameGUI.setListener(new StartListener());
 
     }
 
-    @Override
-	public void mouseClicked(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStartButton()) {
-			System.out.println("You just clicked the start button.");
-			System.out.println("Game will start now.");
-			gameGUI.refresh();
 
-			gameGUI.removeStartButton();
+    private class StartListener implements MouseInputListener {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            System.out.println("You just clicked the start button.");
+            System.out.println("Game will start now.");
+            gameGUI.refresh();
+
+            gameGUI.removeStartButton();
             
             gameGUI.displayRandomChoices(randIndexes);
-		}
-	}
+        }
 
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStartButton()) {
-			gameGUI.getStartButton().setIcon(new ImageIcon("images\\startPressed.png"));
+        @Override
+        public void mousePressed(MouseEvent e) {
+            gameGUI.getStartButton().setIcon(new ImageIcon("images\\startPressed.png"));
             gameGUI.setTransparentBackground(gameGUI.getStartButton());
         }
-	}
 
 
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// do nothing
-	}
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            // do nothing
+        }
 
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStartButton()) {
-			gameGUI.getStartButton().setIcon(new ImageIcon("images\\startHighlight.png"));
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            gameGUI.getStartButton().setIcon(new ImageIcon("images\\startHighlight.png"));
             gameGUI.setTransparentBackground(gameGUI.getStartButton());
         }
-	}
 
 
-	@Override
-	public void mouseExited(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStartButton()) {
-			gameGUI.getStartButton().setIcon(new ImageIcon("images\\start.png"));
+        @Override
+        public void mouseExited(MouseEvent e) {
+            gameGUI.getStartButton().setIcon(new ImageIcon("images\\start.png"));
             gameGUI.setTransparentBackground(gameGUI.getStartButton());
         }
-	}
 
 
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// do nothing
-	}
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            // do nothing
+        }
 
 
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// do nothing
-	}
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            // do nothing
+        }
+        
+    }
+
+
+    private class RandomListener implements MouseInputListener {
+        
+        public RandomListener() {
+            person = 0;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            // TODO Auto-generated method stub
+            if(person < 2 && e.getComponent().isEnabled()) {
+                randPick[person] = Integer.parseInt(e.getComponent().getName());
+                e.getComponent().setEnabled(false);
+                gameGUI.refresh();
+                System.out.println("Index = " + randPick[person]);
+                person++;
+
+                if(person == 2)
+                    System.out.println("Congrats! Picking of random animal successful");
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+        
+    }
+    
 
     /*
     public void executeGame () {
