@@ -15,6 +15,7 @@ public class GameDisplay extends JFrame  {
 	
 	private JPanel background;
 	private JLabel startButton;
+	private JPanel transparentContainer;
 
 	public GameDisplay() {
 		
@@ -27,11 +28,11 @@ public class GameDisplay extends JFrame  {
 		this.setLayout(new BorderLayout());
 		this.setVisible(true);
 
-		// temporary container for the start button and random animal pieces button
-		JPanel tempContainer = new JPanel();
-		tempContainer.setPreferredSize(new Dimension(100, 400));
-		tempContainer.setBackground(new Color(0, 0, 0, 0));
-		tempContainer.setLayout(new FlowLayout());
+		// transparent container
+		transparentContainer = new JPanel();
+		transparentContainer.setPreferredSize(new Dimension(100, 400));
+		transparentContainer.setBackground(new Color(0, 0, 0, 0));
+		transparentContainer.setLayout(new FlowLayout());
 		
 		
 		// background
@@ -44,19 +45,23 @@ public class GameDisplay extends JFrame  {
 			}
 		};
 		background.setSize(1033, 772);
-		background.setLayout(null);
+		background.setLayout(new BorderLayout());
 
 
 		// start button
 		startButton = new JLabel();
 		startButton.setIcon(new ImageIcon("images\\start.png"));
-		startButton.setBounds(416, 350, 250, 150);
+		// startButton.setBounds(416, 350, 250, 150);
+		startButton.setSize(250, 150);
 		
 		
 		
 		// add components
 		this.add(background, BorderLayout.CENTER);
-		background.add(startButton);
+		// background.add(startButton);
+		background.add(transparentContainer, BorderLayout.SOUTH);
+		transparentContainer.add(startButton);
+
 
 		// Refresh contents
 		refresh();
@@ -77,7 +82,7 @@ public class GameDisplay extends JFrame  {
 	}
 
 	public void removeStartButton() {
-		background.remove(startButton);
+		transparentContainer.remove(startButton);
 		startButton = null;
 	}
 

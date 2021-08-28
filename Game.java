@@ -29,8 +29,11 @@ public class Game implements MouseInputListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStart())
+		if(e.getSource() == gameGUI.getStart()) {
 			gameGUI.getStart().setIcon(new ImageIcon("images\\startPressed.png"));
+            gameGUI.getStart().setBackground(new Color(0, 0, 0, 0));
+            gameGUI.refresh();
+        }
 	}
 
 
@@ -42,15 +45,21 @@ public class Game implements MouseInputListener{
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStart())
+		if(e.getSource() == gameGUI.getStart()) {
 			gameGUI.getStart().setIcon(new ImageIcon("images\\startHighlight.png"));
+            gameGUI.getStart().setBackground(new Color(0, 0, 0, 0));
+            gameGUI.refresh();
+        }
 	}
 
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		if(e.getSource() == gameGUI.getStart())
+		if(e.getSource() == gameGUI.getStart()) {
 			gameGUI.getStart().setIcon(new ImageIcon("images\\start.png"));
+            gameGUI.getStart().setBackground(new Color(0, 0, 0, 0));
+            gameGUI.refresh();
+        }
 	}
 
 
