@@ -7,7 +7,12 @@ import java.awt.event.MouseEvent;
 
 public class Game implements MouseInputListener{
     
+    private int[] randIndexes;
+
     public Game (Board board, GameDisplay gui) {
+        randIndexes = new int[] {-1,-1,-1,-1,-1,-1,-1,-1};
+        randomizePieces(randIndexes);
+
         gameBoard = board; // instantiate the Board object
         gameGUI = gui;
         // Board object automatically instantiates Tiles and Animal objects it contains
@@ -23,6 +28,8 @@ public class Game implements MouseInputListener{
 			gameGUI.refresh();
 
 			gameGUI.removeStartButton();
+            
+            gameGUI.displayRandomChoices(randIndexes);
 		}
 	}
 
@@ -359,7 +366,7 @@ public class Game implements MouseInputListener{
         for(q = 0; q < 8; q++) {
             do{
                 num = randomizer.nextInt(8);
-                System.out.print("1");
+                // System.out.print("1");
             
             }while(!isIndexUnique(pieceIndex, num));
             // continues to produce random number until produced
