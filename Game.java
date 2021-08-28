@@ -8,10 +8,13 @@ import java.awt.event.MouseEvent;
 public class Game {
     
     private int[] randIndexes;
+    private int[] randPick;
+    private int person;
 
     public Game (Board board, GameDisplay gui) {
         randIndexes = new int[] {-1,-1,-1,-1,-1,-1,-1,-1};
         randomizePieces(randIndexes);
+        randPick = new int[2];
 
         gameBoard = board; // instantiate the Board object
         gameGUI = gui;
@@ -76,6 +79,10 @@ public class Game {
 
 
     private class RandomListener implements MouseInputListener {
+        
+        public RandomListener() {
+            person = 0;
+        }
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -86,7 +93,16 @@ public class Game {
         @Override
         public void mousePressed(MouseEvent e) {
             // TODO Auto-generated method stub
-            
+            if(person < 2 && e.getComponent().isEnabled()) {
+                randPick[person] = Integer.parseInt(e.getComponent().getName());
+                e.getComponent().setEnabled(false);
+                gameGUI.refresh();
+                System.out.println("Index = " + randPick[person]);
+                person++;
+
+                if(person == 2)
+                    System.out.println("Congrats! Picking of random animal successful");
+            }
         }
 
         @Override
