@@ -24,24 +24,20 @@ public class Game {
     private class StartListener implements MouseInputListener {
         @Override
         public void mouseClicked(MouseEvent e) {
-            if(e.getSource() == gameGUI.getStartButton()) {
-                System.out.println("You just clicked the start button.");
-                System.out.println("Game will start now.");
-                gameGUI.refresh();
+            System.out.println("You just clicked the start button.");
+            System.out.println("Game will start now.");
+            gameGUI.refresh();
 
-                gameGUI.removeStartButton();
-                
-                gameGUI.displayRandomChoices(randIndexes);
-            }
+            gameGUI.removeStartButton();
+            
+            gameGUI.displayRandomChoices(randIndexes);
         }
 
 
         @Override
         public void mousePressed(MouseEvent e) {
-            if(e.getSource() == gameGUI.getStartButton()) {
-                gameGUI.getStartButton().setIcon(new ImageIcon("images\\startPressed.png"));
-                gameGUI.setTransparentBackground(gameGUI.getStartButton());
-            }
+            gameGUI.getStartButton().setIcon(new ImageIcon("images\\startPressed.png"));
+            gameGUI.setTransparentBackground(gameGUI.getStartButton());
         }
 
 
@@ -53,19 +49,15 @@ public class Game {
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            if(e.getSource() == gameGUI.getStartButton()) {
-                gameGUI.getStartButton().setIcon(new ImageIcon("images\\startHighlight.png"));
-                gameGUI.setTransparentBackground(gameGUI.getStartButton());
-            }
+            gameGUI.getStartButton().setIcon(new ImageIcon("images\\startHighlight.png"));
+            gameGUI.setTransparentBackground(gameGUI.getStartButton());
         }
 
 
         @Override
         public void mouseExited(MouseEvent e) {
-            if(e.getSource() == gameGUI.getStartButton()) {
-                gameGUI.getStartButton().setIcon(new ImageIcon("images\\start.png"));
-                gameGUI.setTransparentBackground(gameGUI.getStartButton());
-            }
+            gameGUI.getStartButton().setIcon(new ImageIcon("images\\start.png"));
+            gameGUI.setTransparentBackground(gameGUI.getStartButton());
         }
 
 
