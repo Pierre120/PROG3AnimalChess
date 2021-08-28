@@ -13,13 +13,17 @@ import java.awt.event.MouseEvent;
  */
 public class GameDisplay extends JFrame  {
 	
-	JPanel background;
-	JLabel startButton;
+	private JPanel background;
+	private JLabel startButton;
+	private JPanel transparentContainer;
+	private final Color TRANSPARENT;
 
 	public GameDisplay() {
+
+		TRANSPARENT = new Color(0, 0, 0, 0);
 		
 		this.setTitle("Animal Chess"); // title for the window
-		//this.setIconImage(new ImageIcon("image\\").getImage()); // icon for the window
+		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1033, 773); // original size
 		this.setResizable(false); // not resizable
@@ -27,11 +31,11 @@ public class GameDisplay extends JFrame  {
 		this.setLayout(new BorderLayout());
 		this.setVisible(true);
 
-		// temporary container for the start button and random animal pieces button
-		JPanel tempContainer = new JPanel();
-		tempContainer.setPreferredSize(new Dimension(100, 400));
-		tempContainer.setBackground(new Color(0, 0, 0, 0));
-		tempContainer.setLayout(new FlowLayout());
+		// transparent container
+		transparentContainer = new JPanel();
+		transparentContainer.setPreferredSize(new Dimension(100, 400));
+		transparentContainer.setBackground(TRANSPARENT);
+		transparentContainer.setLayout(new FlowLayout());
 		
 		
 		// background
@@ -44,19 +48,23 @@ public class GameDisplay extends JFrame  {
 			}
 		};
 		background.setSize(1033, 772);
-		background.setLayout(null);
+		background.setLayout(new BorderLayout());
 
 
 		// start button
 		startButton = new JLabel();
 		startButton.setIcon(new ImageIcon("images\\start.png"));
-		startButton.setBounds(416, 350, 250, 150);
+		// startButton.setBounds(416, 350, 250, 150);
+		startButton.setSize(250, 150);
 		
 		
 		
 		// add components
 		this.add(background, BorderLayout.CENTER);
-		background.add(startButton);
+		// background.add(startButton);
+		background.add(transparentContainer, BorderLayout.SOUTH);
+		transparentContainer.add(startButton);
+
 
 		// Refresh contents
 		refresh();
@@ -72,16 +80,18 @@ public class GameDisplay extends JFrame  {
 		startButton.addMouseListener(listener);
 	}
 
-	public JLabel getStart() {
+	public void setTransparentBackground(Component comp) {
+		comp.setBackground(TRANSPARENT);
+		refresh();
+	}
+
+	public JLabel getStartButton() {
 		return startButton;
 	}
 
-	public void setStartToNull() {
-		startButton = null;
-	}
-
 	public void removeStartButton() {
-		background.remove(startButton);
+		transparentContainer.remove(startButton);
+		startButton = null;
 	}
 
 
