@@ -176,6 +176,10 @@ public class GameDisplay extends JFrame  {
 		//refresh();
 	}
 
+	public void updateTurn() {
+		turnLabel.setText("TURN: PERSON 2");
+	}
+
 	public void removeRandomChoices() {
 		lowerContainer.remove(randPieceContainer);
 		randPieceContainer = null;
