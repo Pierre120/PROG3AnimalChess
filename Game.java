@@ -96,6 +96,7 @@ public class Game {
             if(person < 2 && e.getComponent().isEnabled()) {
                 randPick[person] = Integer.parseInt(e.getComponent().getName());
                 e.getComponent().setEnabled(false);
+                gameGUI.updateTurn();
                 gameGUI.repaint();
                 System.out.println("Index = " + randPick[person]);
                 person++;
