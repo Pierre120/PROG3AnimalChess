@@ -14,12 +14,14 @@ import java.awt.event.MouseEvent;
 public class GameDisplay extends JFrame  {
 	
 	private JPanel background;
-	private JPanel transparentContainer;
+	private JPanel lowerContainer;
 	private JPanel randPieceContainer;
 	private JPanel textContainer;
+	private JPanel upperContainer;
 	
 	private JLabel startButton;
-	private JLabel textLabel;
+	private JLabel pickLabel;
+	private JLabel turnLabel;
 	
 	private final Color TRANSPARENT;
 
@@ -32,28 +34,33 @@ public class GameDisplay extends JFrame  {
 		randPieceContainer = new JPanel();
 		randPieceContainer.setLayout(new GridLayout(2, 4, 15, 15));
 		textContainer = new JPanel();
-		textContainer.setLayout(new BorderLayout());
+		textContainer.setLayout(new GridLayout(2, 1));
+		upperContainer = new JPanel();
+		upperContainer.setLayout(new BorderLayout());
 
-		textLabel = new JLabel();
-		textLabel.setSize(1033, 25);
-		textLabel.setFont(new Font("Showcard Gothic", Font.PLAIN, 18));
+		turnLabel = new JLabel();
+		//turnLabel.setPreferredSize(new Dimension(1033, 50));
+		// turnLabel.setLayout(new FlowLayout());
+		turnLabel.setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
+		pickLabel = new JLabel();
+		pickLabel.setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
 
 		randomPicker = null;
 		
 		this.setTitle("Animal Chess"); // title for the window
 		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(1033, 773); // original size
+		this.setSize(1033, 772); // original size
 		this.setResizable(false); // not resizable
     	this.setLocationRelativeTo(null); // center of screen
 		this.setLayout(new BorderLayout());
 		this.setVisible(true);
 
 		// transparent container
-		transparentContainer = new JPanel();
-		transparentContainer.setPreferredSize(new Dimension(1033, 400));
-		transparentContainer.setBackground(TRANSPARENT);
-		transparentContainer.setLayout(new FlowLayout());
+		lowerContainer = new JPanel();
+		lowerContainer.setPreferredSize(new Dimension(1033, 400)); //new Dimension(1033, 400));
+		lowerContainer.setBackground(TRANSPARENT);
+		lowerContainer.setLayout(new FlowLayout());
 		
 		
 		// background
@@ -79,9 +86,8 @@ public class GameDisplay extends JFrame  {
 		
 		// add components
 		this.add(background, BorderLayout.CENTER);
-		// background.add(startButton);
-		background.add(transparentContainer, BorderLayout.SOUTH);
-		transparentContainer.add(startButton);
+		background.add(lowerContainer, BorderLayout.SOUTH);
+		lowerContainer.add(startButton);
 
 
 		// Refresh contents
@@ -113,7 +119,7 @@ public class GameDisplay extends JFrame  {
 	}
 
 	public void removeStartButton() {
-		transparentContainer.remove(startButton);
+		lowerContainer.remove(startButton);
 		startButton = null;
 	}
 
@@ -128,18 +134,50 @@ public class GameDisplay extends JFrame  {
 	}
 	
 	public void displayRandomChoices(int[] randIndexes) {
-		//randPieceContainer.setSize(400, 220); // 350, 170
-		randPieceContainer.setBackground(TRANSPARENT);
+		JPanel tmp = new JPanel();
+		tmp.setLayout(new FlowLayout());
+		tmp.setBackground(TRANSPARENT);
+		
+		upperContainer.setBackground(TRANSPARENT);
+		
+		//textContainer.setPreferredSize(new Dimension(1033, 100));
+		textContainer.setBorder(BorderFactory.createLineBorder(new Color(0x196602), 2));
+		textContainer.setBackground(new Color(0x662410)); 
 
+		pickLabel.setPreferredSize(new Dimension(400, 50));
+		pickLabel.setForeground(Color.WHITE);
+		pickLabel.setText("~ PICK A PIECE ~");
+		pickLabel.setVerticalTextPosition(JLabel.CENTER);
+		pickLabel.setHorizontalTextPosition(JLabel.CENTER);
+		pickLabel.setHorizontalAlignment(JLabel.CENTER);
+		pickLabel.setBackground(new Color(0,0,0));
+		
+		turnLabel.setPreferredSize(new Dimension(400, 50));
+		turnLabel.setForeground(Color.WHITE);
+		turnLabel.setText("TURN: PERSON 1");
+		turnLabel.setVerticalTextPosition(JLabel.CENTER);
+		turnLabel.setHorizontalTextPosition(JLabel.CENTER);
+		turnLabel.setHorizontalAlignment(JLabel.CENTER);
+		turnLabel.setBackground(new Color(0,0,0));
+		
+		randPieceContainer.setBackground(TRANSPARENT);
 		setRandomPieces(randIndexes);
 
-		transparentContainer.add(randPieceContainer);
-		transparentContainer.revalidate();
+		lowerContainer.setPreferredSize(new Dimension(1033, 350));
+
+		background.add(upperContainer, BorderLayout.CENTER);
+		upperContainer.add(tmp, BorderLayout.SOUTH);
+		tmp.add(textContainer);
+		textContainer.add(pickLabel);
+		textContainer.add(turnLabel);
+		lowerContainer.add(randPieceContainer);
+		revalidate();
+		// lowerContainer.revalidate();
 		//refresh();
 	}
 
 	public void removeRandomChoices() {
-		transparentContainer.remove(randPieceContainer);
+		lowerContainer.remove(randPieceContainer);
 		randPieceContainer = null;
 	}
 
