@@ -14,19 +14,30 @@ import java.awt.event.MouseEvent;
 public class GameDisplay extends JFrame  {
 	
 	private JPanel background;
-	private JLabel startButton;
 	private JPanel transparentContainer;
-	private final Color TRANSPARENT;
-
 	private JPanel randPieceContainer;
+	private JPanel textContainer;
+	
+	private JLabel startButton;
+	private JLabel textLabel;
+	
+	private final Color TRANSPARENT;
 
 	MouseInputListener randomPicker;
 
 	public GameDisplay() {
 
 		TRANSPARENT = new Color(0, 0, 0, 0);
+
 		randPieceContainer = new JPanel();
 		randPieceContainer.setLayout(new GridLayout(2, 4, 15, 15));
+		textContainer = new JPanel();
+		textContainer.setLayout(new BorderLayout());
+
+		textLabel = new JLabel();
+		textLabel.setSize(1033, 25);
+		textLabel.setFont(new Font("Showcard Gothic", Font.PLAIN, 18));
+
 		randomPicker = null;
 		
 		this.setTitle("Animal Chess"); // title for the window
@@ -40,7 +51,7 @@ public class GameDisplay extends JFrame  {
 
 		// transparent container
 		transparentContainer = new JPanel();
-		transparentContainer.setPreferredSize(new Dimension(100, 400));
+		transparentContainer.setPreferredSize(new Dimension(1033, 400));
 		transparentContainer.setBackground(TRANSPARENT);
 		transparentContainer.setLayout(new FlowLayout());
 		
