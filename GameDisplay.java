@@ -92,6 +92,7 @@ public class GameDisplay extends JFrame  {
 
 		// Refresh contents
 		// refresh();
+		repaint();
 		validate();
 	}
 	
