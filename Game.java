@@ -100,7 +100,7 @@ public class Game {
                     Thread.currentThread().interrupt();
                 }
                 
-                gameGUI.displayColorChoices();
+                gameGUI.displayColorChoices(person);
             }
         }
 

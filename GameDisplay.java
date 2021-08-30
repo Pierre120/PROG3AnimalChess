@@ -60,7 +60,7 @@ public class GameDisplay extends JFrame  {
 		lowerContainer = new JPanel();
 		lowerContainer.setPreferredSize(new Dimension(1017, 400)); //new Dimension(1033, 400));
 		lowerContainer.setBackground(TRANSPARENT);
-		lowerContainer.setLayout(new FlowLayout());
+		lowerContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 56, 20));
 		
 		
 		// background
@@ -188,21 +188,53 @@ public class GameDisplay extends JFrame  {
 		//refresh();
 	}
 
-	public void displayColorChoices() {
+	public void displayColorChoices(int person) {
+		JPanel tmp = new JPanel();
+		tmp.setLayout(new FlowLayout());
+		tmp.setBackground(TRANSPARENT);
+		
 		JPanel bg = new JPanel();
 		bg.setLayout(new BorderLayout());
 		bg.setBounds(0, 0, 1017, 732);
 		bg.setBackground(new Color(0, 0, 0, 75));
 		// bg.setOpaque(true);
 
-		JLabel popupPaper = new JLabel(new ImageIcon("images\\popup.png"));
+		JButton redButton = new JButton();
+		redButton.setFocusable(false);
+		redButton.setPreferredSize(new Dimension(200, 100));
+		redButton.setBackground(Color.RED);
+
+		JButton blueButton = new JButton();
+		blueButton.setFocusable(false);
+		blueButton.setPreferredSize(new Dimension(200, 100));
+		blueButton.setBackground(Color.BLUE);
+
+		popupPaper = new JLabel(new ImageIcon("images\\popup.png"));
+		popupPaper.setLayout(new BorderLayout());
 		popupPaper.setPreferredSize(new Dimension(600, 484));
-		popupPaper.setBackground(new Color(0,0,0));
+		popupPaper.setBackground(TRANSPARENT);
 		popupPaper.setVerticalAlignment(JLabel.CENTER);
 		popupPaper.setHorizontalAlignment(JLabel.CENTER);
 
-		bg.add(popupPaper, BorderLayout.CENTER);
+		textLabel1.setText("~ PICK A COLOR ~");
+		textLabel2.setText("PERSON " + person + " IS PLAYER 1");
+
+		background.removeAll();
+
+		upperContainer.removeAll();
+		
+		lowerContainer.removeAll();
+		lowerContainer.setPreferredSize(new Dimension(600, 400));
+		lowerContainer.setBackground(TRANSPARENT);
+
 		base.add(bg, JLayeredPane.POPUP_LAYER);
+		bg.add(popupPaper, BorderLayout.CENTER);
+		popupPaper.add(lowerContainer, BorderLayout.SOUTH);
+		lowerContainer.add(redButton);
+		lowerContainer.add(blueButton);
+		popupPaper.add(upperContainer, BorderLayout.CENTER);
+		upperContainer.add(tmp, BorderLayout.SOUTH);
+		tmp.add(textContainer);
 
 		// base.repaint();
 		// base.revalidate();
