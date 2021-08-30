@@ -87,7 +87,19 @@ public class Game {
         @Override
         public void mouseClicked(MouseEvent e) {
             // TODO Auto-generated method stub
-            
+            if(person == 2) {
+                System.out.println("Congrats! Picking of random animal successful");
+
+                // delay
+                try {
+                    Thread.sleep(1000);
+                }
+                catch(InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+                
+                gameGUI.displayColorChoices();
+            }
         }
 
         @Override
@@ -96,15 +108,14 @@ public class Game {
             if(person < 2 && e.getComponent().isEnabled()) {
                 randPick[person] = Integer.parseInt(e.getComponent().getName());
                 e.getComponent().setEnabled(false);
-                gameGUI.updateTurn();
-                gameGUI.repaint();
+                // gameGUI.updateTurn();
+                //gameGUI.repaint();
                 System.out.println("Index = " + randPick[person]);
                 person++;
 
-                if(person == 2) {
-                    System.out.println("Congrats! Picking of random animal successful");
-                    gameGUI.displayColorChoices();
-                }
+                gameGUI.updateTurn(person);
+                
+                gameGUI.repaint();
             }
         }
 
