@@ -49,6 +49,7 @@ public class GameDisplay extends JFrame  {
 		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1033, 772); // original size
+		this.setResizable(false);
     	this.setLocationRelativeTo(null); // center of screen
 		this.setLayout(new BorderLayout());
 		this.setVisible(true);
