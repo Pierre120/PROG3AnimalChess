@@ -101,8 +101,10 @@ public class Game {
                 System.out.println("Index = " + randPick[person]);
                 person++;
 
-                if(person == 2)
+                if(person == 2) {
                     System.out.println("Congrats! Picking of random animal successful");
+                    gameGUI.displayColorChoices();
+                }
             }
         }
 

@@ -13,6 +13,8 @@ import java.awt.event.MouseEvent;
  */
 public class GameDisplay extends JFrame  {
 	
+	JLayeredPane base;
+
 	private JPanel background;
 	private JPanel lowerContainer;
 	private JPanel upperContainer;
@@ -47,14 +49,14 @@ public class GameDisplay extends JFrame  {
 		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1033, 772); // original size
-		this.setResizable(false); // not resizable
+		this.setResizable(false);
     	this.setLocationRelativeTo(null); // center of screen
 		this.setLayout(new BorderLayout());
 		this.setVisible(true);
 
 		// transparent container
 		lowerContainer = new JPanel();
-		lowerContainer.setPreferredSize(new Dimension(1033, 400)); //new Dimension(1033, 400));
+		lowerContainer.setPreferredSize(new Dimension(1017, 400)); //new Dimension(1033, 400));
 		lowerContainer.setBackground(TRANSPARENT);
 		lowerContainer.setLayout(new FlowLayout());
 		
@@ -68,7 +70,8 @@ public class GameDisplay extends JFrame  {
 				bg.drawImage(new ImageIcon("images\\background.png").getImage(), 0, 0, null);
 			}
 		};
-		background.setSize(1033, 772);
+		// background.setSize(1033, 772);
+		background.setBounds(0, 0, 1017, 734);
 		background.setLayout(new BorderLayout());
 
 
@@ -78,10 +81,13 @@ public class GameDisplay extends JFrame  {
 		// startButton.setBounds(416, 350, 250, 150);
 		// startButton.setSize(250, 150);
 		
-		
+		base = new JLayeredPane();
+		base.setBounds(0, 0, 1017, 734);
+		base.setBackground(TRANSPARENT);
 		
 		// add components
-		this.add(background, BorderLayout.CENTER);
+		this.add(base, BorderLayout.CENTER);
+		base.add(background, JLayeredPane.DEFAULT_LAYER);
 		background.add(lowerContainer, BorderLayout.SOUTH);
 		lowerContainer.add(startButton);
 
@@ -166,7 +172,7 @@ public class GameDisplay extends JFrame  {
 		randPieceContainer.setBackground(TRANSPARENT);
 		setRandomPieces(randIndexes);
 
-		lowerContainer.setPreferredSize(new Dimension(1033, 350));
+		lowerContainer.setPreferredSize(new Dimension(1017, 350));
 
 		background.add(upperContainer, BorderLayout.CENTER);
 		upperContainer.add(tmp, BorderLayout.SOUTH);
@@ -178,6 +184,25 @@ public class GameDisplay extends JFrame  {
 		revalidate();
 		// lowerContainer.revalidate();
 		//refresh();
+	}
+
+	public void displayColorChoices() {
+		JPanel bg = new JPanel();
+		bg.setLayout(new BorderLayout());
+		bg.setBounds(0, 0, 1017, 732);
+		bg.setBackground(new Color(0, 0, 0, 75));
+		// bg.setOpaque(true);
+
+		JLabel popupPaper = new JLabel(new ImageIcon("images\\popup.png"));
+		popupPaper.setPreferredSize(new Dimension(600, 484));
+		popupPaper.setBackground(new Color(0,0,0));
+		popupPaper.setVerticalAlignment(JLabel.CENTER);
+		popupPaper.setHorizontalAlignment(JLabel.CENTER);
+
+		bg.add(popupPaper, BorderLayout.CENTER);
+		base.add(bg, JLayeredPane.POPUP_LAYER);
+
+		base.revalidate();
 	}
 
 	public void updateTurn() {
