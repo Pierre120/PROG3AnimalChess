@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.event.AncestorListener;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -28,7 +29,8 @@ public class GameDisplay extends JFrame  {
 	
 	private final Color TRANSPARENT;
 
-	MouseInputListener randomPicker;
+	private MouseInputListener randomPicker;
+	// private ActionListener colorPicker;
 
 	public GameDisplay() {
 
@@ -46,6 +48,7 @@ public class GameDisplay extends JFrame  {
 		popupPaper = null;
 
 		randomPicker = null;
+		// colorPicker = null;
 		
 		this.setTitle("Animal Chess"); // title for the window
 		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
@@ -203,11 +206,13 @@ public class GameDisplay extends JFrame  {
 		redButton.setFocusable(false);
 		redButton.setPreferredSize(new Dimension(200, 100));
 		redButton.setBackground(Color.RED);
+		// redButton.addActionListener(color);
 
 		JButton blueButton = new JButton();
 		blueButton.setFocusable(false);
 		blueButton.setPreferredSize(new Dimension(200, 100));
 		blueButton.setBackground(Color.BLUE);
+		// blueButton.addActionListener(color);
 
 		popupPaper = new JLabel(new ImageIcon("images\\popup.png"));
 		popupPaper.setLayout(new BorderLayout());
