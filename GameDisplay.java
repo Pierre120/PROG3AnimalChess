@@ -15,13 +15,13 @@ public class GameDisplay extends JFrame  {
 	
 	private JPanel background;
 	private JPanel lowerContainer;
+	private JPanel upperContainer;
 	private JPanel randPieceContainer;
 	private JPanel textContainer;
-	private JPanel upperContainer;
 	
 	private JLabel startButton;
-	private JLabel pickLabel;
-	private JLabel turnLabel;
+	private JLabel textLabel1;
+	private JLabel textLabel2;
 	
 	private final Color TRANSPARENT;
 
@@ -38,12 +38,8 @@ public class GameDisplay extends JFrame  {
 		upperContainer = new JPanel();
 		upperContainer.setLayout(new BorderLayout());
 
-		turnLabel = new JLabel();
-		//turnLabel.setPreferredSize(new Dimension(1033, 50));
-		// turnLabel.setLayout(new FlowLayout());
-		turnLabel.setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
-		pickLabel = new JLabel();
-		pickLabel.setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
+		textLabel1 = new JLabel();
+		textLabel2 = new JLabel();
 
 		randomPicker = null;
 		
@@ -138,28 +134,34 @@ public class GameDisplay extends JFrame  {
 		JPanel tmp = new JPanel();
 		tmp.setLayout(new FlowLayout());
 		tmp.setBackground(TRANSPARENT);
+
+		JPanel textBoard = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				Graphics2D board = (Graphics2D) g;
+				board.drawImage(new ImageIcon("images\\textBoard.png").getImage(), 0, 0, null);
+			}
+		};
+		textBoard.setPreferredSize(new Dimension(400, 120));
+		textBoard.setLayout(new BorderLayout());
+		textBoard.setBackground(TRANSPARENT);
 		
 		upperContainer.setBackground(TRANSPARENT);
 		
-		//textContainer.setPreferredSize(new Dimension(1033, 100));
-		textContainer.setBorder(BorderFactory.createLineBorder(new Color(0x196602), 2));
-		textContainer.setBackground(new Color(0x662410)); 
+		textContainer.setBackground(TRANSPARENT); 
 
-		pickLabel.setPreferredSize(new Dimension(400, 50));
-		pickLabel.setForeground(Color.WHITE);
-		pickLabel.setText("~ PICK A PIECE ~");
-		pickLabel.setVerticalTextPosition(JLabel.CENTER);
-		pickLabel.setHorizontalTextPosition(JLabel.CENTER);
-		pickLabel.setHorizontalAlignment(JLabel.CENTER);
-		pickLabel.setBackground(new Color(0,0,0));
+		textLabel1.setPreferredSize(new Dimension(400, 50));
+		textLabel1.setForeground(Color.BLACK);
+		textLabel1.setText("~ PICK A PIECE ~");
+		textLabel1.setHorizontalAlignment(JLabel.CENTER);
+		textLabel1.setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
 		
-		turnLabel.setPreferredSize(new Dimension(400, 50));
-		turnLabel.setForeground(Color.WHITE);
-		turnLabel.setText("TURN: PERSON 1");
-		turnLabel.setVerticalTextPosition(JLabel.CENTER);
-		turnLabel.setHorizontalTextPosition(JLabel.CENTER);
-		turnLabel.setHorizontalAlignment(JLabel.CENTER);
-		turnLabel.setBackground(new Color(0,0,0));
+		textLabel2.setPreferredSize(new Dimension(400, 50));
+		textLabel2.setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
+		textLabel2.setForeground(Color.BLACK);
+		textLabel2.setText("TURN: PERSON 1");
+		textLabel2.setHorizontalAlignment(JLabel.CENTER);
 		
 		randPieceContainer.setBackground(TRANSPARENT);
 		setRandomPieces(randIndexes);
@@ -168,9 +170,10 @@ public class GameDisplay extends JFrame  {
 
 		background.add(upperContainer, BorderLayout.CENTER);
 		upperContainer.add(tmp, BorderLayout.SOUTH);
-		tmp.add(textContainer);
-		textContainer.add(pickLabel);
-		textContainer.add(turnLabel);
+		tmp.add(textBoard);
+		textBoard.add(textContainer, BorderLayout.SOUTH);
+		textContainer.add(textLabel1);
+		textContainer.add(textLabel2);
 		lowerContainer.add(randPieceContainer);
 		revalidate();
 		// lowerContainer.revalidate();
@@ -178,7 +181,7 @@ public class GameDisplay extends JFrame  {
 	}
 
 	public void updateTurn() {
-		turnLabel.setText("TURN: PERSON 2");
+		textLabel2.setText("TURN: PERSON 2");
 	}
 
 	public void removeRandomChoices() {
