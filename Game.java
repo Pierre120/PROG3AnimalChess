@@ -53,14 +53,16 @@ public class Game {
         @Override
         public void mouseEntered(MouseEvent e) {
             gameGUI.getStartButton().setIcon(new ImageIcon("images\\startHighlight.png"));
-            gameGUI.setTransparentBackground(gameGUI.getStartButton());
+            // gameGUI.setTransparentBackground(gameGUI.getStartButton());
+            gameGUI.repaint();
         }
 
 
         @Override
         public void mouseExited(MouseEvent e) {
             gameGUI.getStartButton().setIcon(new ImageIcon("images\\start.png"));
-            gameGUI.setTransparentBackground(gameGUI.getStartButton());
+            // gameGUI.setTransparentBackground(gameGUI.getStartButton());
+            gameGUI.repaint();
         }
 
 
@@ -130,7 +132,8 @@ public class Game {
             // TODO Auto-generated method stub
             if(person < 2 && e.getComponent().isEnabled()) {
                 ((JLabel)e.getComponent()).setIcon(new ImageIcon("images\\randPieceHighlight.png"));
-                gameGUI.setTransparentBackground(e.getComponent());
+                // gameGUI.setTransparentBackground(e.getComponent());
+                gameGUI.repaint();
             }
         }
 
@@ -139,7 +142,8 @@ public class Game {
             // TODO Auto-generated method stub
             if(person < 2 && e.getComponent().isEnabled()) {
                 ((JLabel)e.getComponent()).setIcon(new ImageIcon("images\\randPiece.png"));
-                gameGUI.setTransparentBackground(e.getComponent());
+                // gameGUI.setTransparentBackground(e.getComponent());
+                gameGUI.repaint();
             }
         }
 
