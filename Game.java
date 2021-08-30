@@ -19,7 +19,7 @@ public class Game {
         gameBoard = board; // instantiate the Board object
         gameGUI = gui;
         // Board object automatically instantiates Tiles and Animal objects it contains
-        gameGUI.setListener(new StartListener(), new RandomListener());
+        gameGUI.setListener(new StartListener(), new RandomListener(), new ColorListener());
 
     }
 
@@ -141,8 +141,8 @@ public class Game {
             else if(e.getActionCommand().equals("BLUE"))
                 person = 1;
 
-            if(person != 2)
-                /*Display game board*/;
+            // if(e.getActionCommand().equals("RED") || e.getActionCommand().equals("BLUE"))
+                System.out.println(e.getActionCommand());
         }
         
     }
