@@ -29,7 +29,7 @@ public class GameDisplay extends JFrame  {
 	private final Color TRANSPARENT;
 
 	private MouseListener randomPicker;
-	// private ActionListener colorPicker;
+	private ActionListener colorPicker;
 
 	public GameDisplay() {
 
@@ -47,7 +47,7 @@ public class GameDisplay extends JFrame  {
 		popupPaper = null;
 
 		randomPicker = null;
-		// colorPicker = null;
+		colorPicker = null;
 		
 		this.setTitle("Animal Chess"); // title for the window
 		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
@@ -108,11 +108,12 @@ public class GameDisplay extends JFrame  {
 		this.setSize(1033, 772);
 	}
 
-	public void setListener(MouseListener start, MouseListener random) {
+	public void setListener(MouseListener start, MouseListener random, ActionListener color) {
 		startButton.addMouseListener(start);
 		// set the listener for other MouseInputListener attributes of this class
 		// implementation of MouseInputListener are in Game class
 		randomPicker = random;
+		colorPicker = color;
 	}
 
 	public void setTransparentBackground(Component comp) {
@@ -201,17 +202,19 @@ public class GameDisplay extends JFrame  {
 		bg.setBackground(new Color(0, 0, 0, 75));
 		// bg.setOpaque(true);
 
-		JButton redButton = new JButton();
+		JButton redButton = new JButton("RED");
 		redButton.setFocusable(false);
 		redButton.setPreferredSize(new Dimension(200, 100));
+		redButton.setForeground(TRANSPARENT);
 		redButton.setBackground(Color.RED);
-		// redButton.addActionListener(color);
+		redButton.addActionListener(colorPicker);
 
-		JButton blueButton = new JButton();
+		JButton blueButton = new JButton("BLUE");
 		blueButton.setFocusable(false);
 		blueButton.setPreferredSize(new Dimension(200, 100));
+		blueButton.setForeground(TRANSPARENT);
 		blueButton.setBackground(Color.BLUE);
-		// blueButton.addActionListener(color);
+		blueButton.addActionListener(colorPicker);
 
 		popupPaper = new JLabel(new ImageIcon("images\\popup.png"));
 		popupPaper.setLayout(new BorderLayout());
