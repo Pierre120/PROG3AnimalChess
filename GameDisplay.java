@@ -13,6 +13,8 @@ import java.awt.event.MouseEvent;
  */
 public class GameDisplay extends JFrame  {
 	
+	JLayeredPane base;
+
 	private JPanel background;
 	private JPanel lowerContainer;
 	private JPanel upperContainer;
@@ -78,10 +80,13 @@ public class GameDisplay extends JFrame  {
 		// startButton.setBounds(416, 350, 250, 150);
 		// startButton.setSize(250, 150);
 		
-		
+		base = new JLayeredPane();
+		// base.setPreferredSize(new Dimension(1033, 772));
+		base.setBackground(TRANSPARENT);
 		
 		// add components
-		this.add(background, BorderLayout.CENTER);
+		this.add(base, BorderLayout.CENTER);
+		base.add(background, JLayeredPane.DEFAULT_LAYER);
 		background.add(lowerContainer, BorderLayout.SOUTH);
 		lowerContainer.add(startButton);
 
@@ -178,6 +183,29 @@ public class GameDisplay extends JFrame  {
 		revalidate();
 		// lowerContainer.revalidate();
 		//refresh();
+	}
+
+	public void displayColorChoices() {
+		JPanel bg = new JPanel();
+		bg.setLayout(new BorderLayout());
+		bg.setPreferredSize(new Dimension(1033, 772));
+		bg.setBackground(new Color(0,0,0,50));
+
+		JPanel popupPaper = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				Graphics2D paper = (Graphics2D) g;
+				paper.drawImage(new ImageIcon("images\\popup.png").getImage(), 0, 0, null);
+			}
+		};
+		popupPaper.setPreferredSize(new Dimension(600, 484));
+		popupPaper.setBackground(TRANSPARENT);
+
+		base.add(bg, JLayeredPane.POPUP_LAYER);
+		bg.add(popupPaper);
+
+		revalidate();
 	}
 
 	public void updateTurn() {
