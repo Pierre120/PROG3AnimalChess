@@ -29,6 +29,8 @@ public class Game {
         public void mouseClicked(MouseEvent e) {
             System.out.println("You just clicked the start button.");
             System.out.println("Game will start now.");
+
+            person = 0;
             
             gameGUI.removeStartButton();
             
@@ -82,13 +84,8 @@ public class Game {
 
     private class RandomListener implements MouseInputListener {
         
-        public RandomListener() {
-            person = 0;
-        }
-
         @Override
         public void mouseClicked(MouseEvent e) {
-            // TODO Auto-generated method stub
             if(person == 2) {
                 System.out.println("Congrats! Picking of random animal successful");
 
@@ -106,7 +103,6 @@ public class Game {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            // TODO Auto-generated method stub
             if(person < 2 && e.getComponent().isEnabled()) {
                 randPick[person] = Integer.parseInt(e.getComponent().getName());
                 e.getComponent().setEnabled(false);
@@ -123,13 +119,12 @@ public class Game {
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            // TODO Auto-generated method stub
+            // do nothing
             
         }
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            // TODO Auto-generated method stub
             if(person < 2 && e.getComponent().isEnabled()) {
                 ((JLabel)e.getComponent()).setIcon(new ImageIcon("images\\randPieceHighlight.png"));
                 // gameGUI.setTransparentBackground(e.getComponent());
@@ -139,7 +134,6 @@ public class Game {
 
         @Override
         public void mouseExited(MouseEvent e) {
-            // TODO Auto-generated method stub
             if(person < 2 && e.getComponent().isEnabled()) {
                 ((JLabel)e.getComponent()).setIcon(new ImageIcon("images\\randPiece.png"));
                 // gameGUI.setTransparentBackground(e.getComponent());
@@ -149,14 +143,28 @@ public class Game {
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            // TODO Auto-generated method stub
-            
+            // do nothing
         }
 
         @Override
         public void mouseMoved(MouseEvent e) {
-            // TODO Auto-generated method stub
-            
+            // do nothing
+        }
+        
+    }
+
+
+    private class ColorListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e.getActionCommand().equals("RED"))
+                person = 0;
+            else if(e.getActionCommand().equals("BLUE"))
+                person = 1;
+
+            if(person != 2)
+                /*Display game board*/;
         }
         
     }
