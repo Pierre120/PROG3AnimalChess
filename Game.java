@@ -24,7 +24,7 @@ public class Game {
     }
 
 
-    private class StartListener implements MouseInputListener {
+    private class StartListener implements MouseListener {
         @Override
         public void mouseClicked(MouseEvent e) {
             System.out.println("You just clicked the start button.");
@@ -66,23 +66,11 @@ public class Game {
             // gameGUI.setTransparentBackground(gameGUI.getStartButton());
             gameGUI.repaint();
         }
-
-
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            // do nothing
-        }
-
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
-            // do nothing
-        }
         
     }
 
 
-    private class RandomListener implements MouseInputListener {
+    private class RandomListener implements MouseListener {
         
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -139,16 +127,6 @@ public class Game {
                 // gameGUI.setTransparentBackground(e.getComponent());
                 gameGUI.repaint();
             }
-        }
-
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            // do nothing
-        }
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
-            // do nothing
         }
         
     }
