@@ -49,14 +49,13 @@ public class GameDisplay extends JFrame  {
 		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1033, 772); // original size
-		this.setResizable(false); // not resizable
     	this.setLocationRelativeTo(null); // center of screen
 		this.setLayout(new BorderLayout());
 		this.setVisible(true);
 
 		// transparent container
 		lowerContainer = new JPanel();
-		lowerContainer.setPreferredSize(new Dimension(1033, 400)); //new Dimension(1033, 400));
+		lowerContainer.setPreferredSize(new Dimension(1017, 400)); //new Dimension(1033, 400));
 		lowerContainer.setBackground(TRANSPARENT);
 		lowerContainer.setLayout(new FlowLayout());
 		
@@ -70,7 +69,8 @@ public class GameDisplay extends JFrame  {
 				bg.drawImage(new ImageIcon("images\\background.png").getImage(), 0, 0, null);
 			}
 		};
-		background.setSize(1033, 772);
+		// background.setSize(1033, 772);
+		background.setBounds(0, 0, 1017, 734);
 		background.setLayout(new BorderLayout());
 
 
@@ -81,7 +81,7 @@ public class GameDisplay extends JFrame  {
 		// startButton.setSize(250, 150);
 		
 		base = new JLayeredPane();
-		// base.setPreferredSize(new Dimension(1033, 772));
+		base.setBounds(0, 0, 1017, 734);
 		base.setBackground(TRANSPARENT);
 		
 		// add components
@@ -171,7 +171,7 @@ public class GameDisplay extends JFrame  {
 		randPieceContainer.setBackground(TRANSPARENT);
 		setRandomPieces(randIndexes);
 
-		lowerContainer.setPreferredSize(new Dimension(1033, 350));
+		lowerContainer.setPreferredSize(new Dimension(1017, 350));
 
 		background.add(upperContainer, BorderLayout.CENTER);
 		upperContainer.add(tmp, BorderLayout.SOUTH);
@@ -188,24 +188,20 @@ public class GameDisplay extends JFrame  {
 	public void displayColorChoices() {
 		JPanel bg = new JPanel();
 		bg.setLayout(new BorderLayout());
-		bg.setPreferredSize(new Dimension(1033, 772));
-		bg.setBackground(new Color(0,0,0,50));
+		bg.setBounds(0, 0, 1017, 732);
+		bg.setBackground(new Color(0, 0, 0, 75));
+		// bg.setOpaque(true);
 
-		JPanel popupPaper = new JPanel() {
-			@Override
-			public void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				Graphics2D paper = (Graphics2D) g;
-				paper.drawImage(new ImageIcon("images\\popup.png").getImage(), 0, 0, null);
-			}
-		};
+		JLabel popupPaper = new JLabel(new ImageIcon("images\\popup.png"));
 		popupPaper.setPreferredSize(new Dimension(600, 484));
-		popupPaper.setBackground(TRANSPARENT);
+		popupPaper.setBackground(new Color(0,0,0));
+		popupPaper.setVerticalAlignment(JLabel.CENTER);
+		popupPaper.setHorizontalAlignment(JLabel.CENTER);
 
+		bg.add(popupPaper, BorderLayout.CENTER);
 		base.add(bg, JLayeredPane.POPUP_LAYER);
-		bg.add(popupPaper);
 
-		revalidate();
+		base.revalidate();
 	}
 
 	public void updateTurn() {
