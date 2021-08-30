@@ -1,8 +1,7 @@
 import javax.swing.*;
-import javax.swing.event.AncestorListener;
-import javax.swing.event.MouseInputListener;
 import java.awt.*;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import javax.swing.event.*;
 
 /**
  * This GameDisplay class is responsible for the displays or outputs in the terminal.
