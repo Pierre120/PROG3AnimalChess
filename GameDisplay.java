@@ -24,6 +24,7 @@ public class GameDisplay extends JFrame  {
 	private JLabel startButton;
 	private JLabel textLabel1;
 	private JLabel textLabel2;
+	private JLabel popupPaper;
 	
 	private final Color TRANSPARENT;
 
@@ -42,6 +43,7 @@ public class GameDisplay extends JFrame  {
 
 		textLabel1 = new JLabel();
 		textLabel2 = new JLabel();
+		popupPaper = null;
 
 		randomPicker = null;
 		
