@@ -28,7 +28,7 @@ public class GameDisplay extends JFrame  {
 	
 	private final Color TRANSPARENT;
 
-	private MouseInputListener randomPicker;
+	private MouseListener randomPicker;
 	// private ActionListener colorPicker;
 
 	public GameDisplay() {
@@ -108,7 +108,7 @@ public class GameDisplay extends JFrame  {
 		this.setSize(1033, 772);
 	}
 
-	public void setListener(MouseInputListener start, MouseInputListener random) {
+	public void setListener(MouseListener start, MouseListener random) {
 		startButton.addMouseListener(start);
 		// set the listener for other MouseInputListener attributes of this class
 		// implementation of MouseInputListener are in Game class
