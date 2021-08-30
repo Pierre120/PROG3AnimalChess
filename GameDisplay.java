@@ -202,11 +202,22 @@ public class GameDisplay extends JFrame  {
 		bg.add(popupPaper, BorderLayout.CENTER);
 		base.add(bg, JLayeredPane.POPUP_LAYER);
 
-		base.revalidate();
+		// base.repaint();
+		// base.revalidate();
+		repaint();
+		revalidate();
 	}
 
-	public void updateTurn() {
-		textLabel2.setText("TURN: PERSON 2");
+	public void updateTurn(int turn) {
+		switch(turn) {
+			case 1:
+				textLabel2.setText("TURN: PERSON 2");
+				break;
+
+			default:
+				textLabel2.setText("LOADING ...");
+				break;
+		}
 	}
 
 	public void removeRandomChoices() {
