@@ -27,15 +27,7 @@ public class Game {
     private class StartListener implements MouseListener {
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("You just clicked the start button.");
-            System.out.println("Game will start now.");
-
-            person = 0;
             
-            gameGUI.removeStartButton();
-            
-            gameGUI.displayRandomChoices(randIndexes);
-            gameGUI.repaint();
         }
 
 
@@ -49,6 +41,15 @@ public class Game {
         @Override
         public void mouseReleased(MouseEvent e) {
             // do nothing
+            System.out.println("You just clicked the start button.");
+            System.out.println("Game will start now.");
+
+            person = 0;
+            
+            gameGUI.removeStartButton();
+            
+            gameGUI.displayRandomChoices(randIndexes);
+            gameGUI.repaint();
         }
 
 
@@ -74,19 +75,7 @@ public class Game {
         
         @Override
         public void mouseClicked(MouseEvent e) {
-            if(person == 2) {
-                System.out.println("Congrats! Picking of random animal successful");
-
-                // delay
-                try {
-                    Thread.sleep(1000);
-                }
-                catch(InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                }
-                
-                gameGUI.displayColorChoices(person);
-            }
+           // do nothing
         }
 
         @Override
@@ -100,14 +89,31 @@ public class Game {
                 person++;
 
                 gameGUI.updateTurn(person);
-                
                 gameGUI.repaint();
             }
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            // do nothing
+           
+            if(person == 2) {
+                System.out.println("Congrats! Picking of random animal successful");
+                person %= 2; // assume person 1 has a higher rank piece
+
+                // check if person 2 has a higher rank piece
+                if(randPick[1] > randPick[0])
+                    person += 1;
+
+                // delay
+                try {
+                    Thread.sleep(1000);
+                }
+                catch(InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+                
+                gameGUI.displayColorChoices(person + 1);
+            }
             
         }
 

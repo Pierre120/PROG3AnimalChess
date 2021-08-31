@@ -174,7 +174,7 @@ public class GameDisplay extends JFrame  {
 		textLabel2.setText("TURN: PERSON 1");
 		textLabel2.setHorizontalAlignment(JLabel.CENTER);
 		
-		randPieceContainer.setBackground(TRANSPARENT);
+		randPieceContainer.setBackground(TRANSPARENT); // Color.BLACK
 		setRandomPieces(randIndexes);
 
 		lowerContainer.setPreferredSize(new Dimension(1017, 350));
@@ -198,7 +198,7 @@ public class GameDisplay extends JFrame  {
 		
 		JPanel bg = new JPanel();
 		bg.setLayout(new BorderLayout());
-		bg.setBounds(0, 0, 1017, 732);
+		bg.setBounds(0, 0, 1016, 730);
 		bg.setBackground(new Color(0, 0, 0, 75));
 		// bg.setOpaque(true);
 
@@ -234,8 +234,9 @@ public class GameDisplay extends JFrame  {
 		lowerContainer.setPreferredSize(new Dimension(600, 400));
 		lowerContainer.setBackground(TRANSPARENT);
 
-		base.add(bg, JLayeredPane.POPUP_LAYER);
-		bg.add(popupPaper, BorderLayout.CENTER);
+		base.add(bg, JLayeredPane.POPUP_LAYER); 
+		bg.add(popupPaper, BorderLayout.CENTER); 
+		
 		popupPaper.add(lowerContainer, BorderLayout.SOUTH);
 		lowerContainer.add(redButton);
 		lowerContainer.add(blueButton);
@@ -272,12 +273,63 @@ public class GameDisplay extends JFrame  {
 			setName(name);
 			setIcon(back);
 			setDisabledIcon(animalPiece);
-			//setSize(80, 80);
+			// setPreferredSize(new Dimension(80, 80));
 			setEnabled(true);
 			addMouseListener(randomPicker);
 			setBackground(TRANSPARENT);
 		}
-	}	
+	}
+
+
+	public class BoardPiece extends JLabel	{
+		
+		private String animalID;
+		private ImageIcon tile;
+		ImageIcon[][] animalPiecePics;
+
+		public BoardPiece(String tileID, String pieceId, ImageIcon animalPiece, ImageIcon tilePic, boolean enabled) {
+			animalID = pieceId;
+			tile = tilePic;
+			setName(tileID);
+			setIcon(animalPiece); 
+			setPreferredSize(new Dimension(80, 80));
+			setBackground(TRANSPARENT);
+			setEnabled(enabled);
+			animalPiecePics = new ImageIcon[2][8];	
+		}	
+
+		public void initPiecePics() {
+		
+			for(int i = 0; i < 2; i++) {
+				for(int j = 0; j < 8; j++) {
+					animalPiecePics[i][j] = new ImageIcon("images\\" + i + (j + 1) +".png");
+				}
+			}
+		}
+
+		//when animal moves in
+		public void addAnimal(String pieceId) {
+			animalID = pieceId;
+			
+			setEnabled(true);
+			setIcon(animalPiecePics[Integer.parseInt("" + animalID.charAt(0))][Integer.parseInt("" + animalID.charAt(1)) + 1]); // new ImageIcon("images\\" + animalID + ".png")
+		}
+
+		//when animal moves out
+		public void removeAnimal() {
+			setIcon(null);
+			animalID = null;
+			setEnabled(false);
+			repaint();
+		}
+
+		@Override
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			Graphics2D t = (Graphics2D) g;
+			t.drawImage(tile.getImage(), 0, 0, null);
+		}
+	}
 }
 
 // -------------------------- TERMINAL/CONSOLE VERSION --------------------------
