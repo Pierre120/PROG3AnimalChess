@@ -312,7 +312,7 @@ public class GameDisplay extends JFrame  {
 			animalID = pieceId;
 			
 			setEnabled(true);
-			setIcon(animalPiecePics[Integer.parseInt("" + animalID.charAt(0))][Integer.parseInt("" + animalID.charAt(1)) + 1]); // new ImageIcon("images\\" + animalID + ".png")
+			setIcon(animalPiecePics[Integer.parseInt("" + animalID.charAt(0))][Integer.parseInt("" + animalID.charAt(1)) - 1]); // new ImageIcon("images\\" + animalID + ".png")
 		}
 
 		//when animal moves out
