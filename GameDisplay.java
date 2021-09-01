@@ -281,7 +281,7 @@ public class GameDisplay extends JFrame  {
 	}
 
 
-	public class BoardPiece extends JLabel	{
+	public class BoardTile extends JLabel	{
 		
 		private String animalID;
 		private ImageIcon tile;
