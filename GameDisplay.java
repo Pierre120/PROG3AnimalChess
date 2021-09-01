@@ -25,12 +25,14 @@ public class GameDisplay extends JFrame  {
 	private JLabel textLabel1;
 	private JLabel textLabel2;
 	private JLabel popupPaper;
-	
-	private final Color TRANSPARENT;
 
+	private ImageIcon[][] animalPiecePics;
+	
 	private MouseListener randomPicker;
 	private ActionListener colorPicker;
-
+	
+	private final Color TRANSPARENT;
+	
 	public GameDisplay() {
 
 		TRANSPARENT = new Color(0, 0, 0, 0);
@@ -267,6 +269,15 @@ public class GameDisplay extends JFrame  {
 		randPieceContainer = null;
 	}
 
+	public void initPiecePics() {
+		
+		for(int i = 0; i < 2; i++) {
+			for(int j = 0; j < 8; j++) {
+				animalPiecePics[i][j] = new ImageIcon("images\\" + i + (j + 1) +".png");
+			}
+		}
+	}
+
 	public class RandomPiece extends JLabel {
 
 		public RandomPiece(String name, ImageIcon back, ImageIcon animalPiece) {
@@ -285,7 +296,6 @@ public class GameDisplay extends JFrame  {
 		
 		private String animalID;
 		private ImageIcon tile;
-		ImageIcon[][] animalPiecePics;
 
 		public BoardTile(String tileID, String pieceId, ImageIcon animalPiece, ImageIcon tilePic, boolean enabled) {
 			animalID = pieceId;
@@ -297,15 +307,6 @@ public class GameDisplay extends JFrame  {
 			setEnabled(enabled);
 			animalPiecePics = new ImageIcon[2][8];	
 		}	
-
-		public void initPiecePics() {
-		
-			for(int i = 0; i < 2; i++) {
-				for(int j = 0; j < 8; j++) {
-					animalPiecePics[i][j] = new ImageIcon("images\\" + i + (j + 1) +".png");
-				}
-			}
-		}
 
 		//when animal moves in
 		public void addAnimal(String pieceId) {
