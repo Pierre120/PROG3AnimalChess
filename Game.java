@@ -148,7 +148,9 @@ public class Game {
                 person = 1;
 
             // if(e.getActionCommand().equals("RED") || e.getActionCommand().equals("BLUE"))
-                System.out.println(e.getActionCommand());
+            System.out.println(e.getActionCommand());
+
+            gameGUI.displayAnimalChess();
         }
         
     }

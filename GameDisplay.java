@@ -301,26 +301,49 @@ public class GameDisplay extends JFrame  {
 			}
 		};
 		header.setPreferredSize(new Dimension(1017, 114));
+		// header.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 
 		redPanel = new JPanel();
 		redPanel.setLayout(new BorderLayout());
 		redPanel.setBackground(Color.RED);
 		redPanel.setPreferredSize(new Dimension(120, 620));
+		redPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 
 		bluePanel = new JPanel();
 		bluePanel.setLayout(new BorderLayout());
 		bluePanel.setBackground(Color.BLUE);
 		bluePanel.setPreferredSize(new Dimension(120, 620));
+		bluePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 
-		redPlayer = new JLabel("PLYAER X");
+		redPlayer = new JLabel();
 		redPlayer.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
 		redPlayer.setVerticalAlignment(JLabel.CENTER);
 		redPlayer.setHorizontalAlignment(JLabel.CENTER);
 
-		bluePlayer = new JLabel("PLAYER X");
+		bluePlayer = new JLabel();
 		bluePlayer.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
 		bluePlayer.setVerticalAlignment(JLabel.CENTER);
 		bluePlayer.setHorizontalAlignment(JLabel.CENTER);
+	}
+
+	public void displayAnimalChess() {
+		instantiateGameComps();
+		
+		// temporary
+		JPanel background2 = new JPanel();
+		background2.setLayout(new BorderLayout()); 
+		background2.setBounds(0, 0, 1017, 734);
+		background2.setBackground(Color.CYAN);
+		
+		base.removeAll();
+		base.add(background2, JLayeredPane.DEFAULT_LAYER);
+
+		background2.add(header, BorderLayout.NORTH);
+		background2.add(redPanel, BorderLayout.WEST);
+		background2.add(bluePanel, BorderLayout.EAST);
+
+		repaint();
+		revalidate();
 	}
 
 	public class RandomPiece extends JLabel {
