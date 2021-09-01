@@ -1,7 +1,10 @@
 import javax.swing.*;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.event.*;
+import javax.swing.text.ComponentView;
 
 /**
  * This GameDisplay class is responsible for the displays or outputs in the terminal.
@@ -20,11 +23,16 @@ public class GameDisplay extends JFrame  {
 	private JPanel upperContainer;
 	private JPanel randPieceContainer;
 	private JPanel textContainer;
+	private JPanel header;
+	private JPanel redPanel;
+	private JPanel bluePanel;
 	
 	private JLabel startButton;
 	private JLabel textLabel1;
 	private JLabel textLabel2;
 	private JLabel popupPaper;
+	private JLabel redPlayer;
+	private JLabel bluePlayer;
 
 	private ImageIcon[][] animalPiecePics;
 	
@@ -43,10 +51,15 @@ public class GameDisplay extends JFrame  {
 		textContainer.setLayout(new GridLayout(2, 1));
 		upperContainer = new JPanel();
 		upperContainer.setLayout(new BorderLayout());
+		header = null;
+		redPanel = null;
+		bluePanel = null;
 
 		textLabel1 = new JLabel();
 		textLabel2 = new JLabel();
 		popupPaper = null;
+		redPlayer = null;
+		bluePlayer = null;
 
 		randomPicker = null;
 		colorPicker = null;
@@ -276,6 +289,61 @@ public class GameDisplay extends JFrame  {
 				animalPiecePics[i][j] = new ImageIcon("images\\" + i + (j + 1) +".png");
 			}
 		}
+	}
+
+	public void instantiateGameComps() {
+		header = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				Graphics2D h = (Graphics2D) g;
+				h.drawImage(new ImageIcon("images\\header.png").getImage(), 0, 0, null);
+			}
+		};
+		header.setPreferredSize(new Dimension(1017, 114));
+		// header.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+
+		redPanel = new JPanel();
+		redPanel.setLayout(new BorderLayout());
+		redPanel.setBackground(Color.RED);
+		redPanel.setPreferredSize(new Dimension(120, 620));
+		redPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+
+		bluePanel = new JPanel();
+		bluePanel.setLayout(new BorderLayout());
+		bluePanel.setBackground(Color.BLUE);
+		bluePanel.setPreferredSize(new Dimension(120, 620));
+		bluePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+
+		redPlayer = new JLabel();
+		redPlayer.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
+		redPlayer.setVerticalAlignment(JLabel.CENTER);
+		redPlayer.setHorizontalAlignment(JLabel.CENTER);
+
+		bluePlayer = new JLabel();
+		bluePlayer.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
+		bluePlayer.setVerticalAlignment(JLabel.CENTER);
+		bluePlayer.setHorizontalAlignment(JLabel.CENTER);
+	}
+
+	public void displayAnimalChess() {
+		instantiateGameComps();
+		
+		// temporary
+		JPanel background2 = new JPanel();
+		background2.setLayout(new BorderLayout()); 
+		background2.setBounds(0, 0, 1017, 734);
+		background2.setBackground(Color.CYAN);
+		
+		base.removeAll();
+		base.add(background2, JLayeredPane.DEFAULT_LAYER);
+
+		background2.add(header, BorderLayout.NORTH);
+		background2.add(redPanel, BorderLayout.WEST);
+		background2.add(bluePanel, BorderLayout.EAST);
+
+		repaint();
+		revalidate();
 	}
 
 	public class RandomPiece extends JLabel {
