@@ -287,7 +287,7 @@ public class GameDisplay extends JFrame  {
 		private ImageIcon tile;
 		ImageIcon[][] animalPiecePics;
 
-		public BoardPiece(String tileID, String pieceId, ImageIcon animalPiece, ImageIcon tilePic, boolean enabled) {
+		public BoardTile(String tileID, String pieceId, ImageIcon animalPiece, ImageIcon tilePic, boolean enabled) {
 			animalID = pieceId;
 			tile = tilePic;
 			setName(tileID);
