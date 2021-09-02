@@ -25,6 +25,7 @@ public class GameDisplay extends JFrame  {
 	private JPanel textPanel;
 	private JPanel textContainer;
 	private JPanel textBoard;
+	private JPanel popupPanel;
 	private JPanel header;
 	private JPanel redPanel;
 	private JPanel bluePanel;
@@ -62,8 +63,8 @@ public class GameDisplay extends JFrame  {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				Graphics2D bg = (Graphics2D) g;
-				bg.drawImage(new ImageIcon("images\\background.png").getImage(), 0, 0, null);
+				Graphics2D popupPanel = (Graphics2D) g;
+				popupPanel.drawImage(new ImageIcon("images\\background.png").getImage(), 0, 0, null);
 			}
 		};
 		textBoard = new JPanel() {
@@ -87,7 +88,7 @@ public class GameDisplay extends JFrame  {
 		textContainer = new JPanel(); 
 		upperContainer = new JPanel();
 		lowerContainer = new JPanel();
-		
+		popupPanel = new JPanel();
 		redPanel = new JPanel();
 		bluePanel = new JPanel();
 		
@@ -139,6 +140,12 @@ public class GameDisplay extends JFrame  {
 		// set textContainer 
 		textContainer.setLayout(new GridLayout(2, 1));
 		textContainer.setBackground(TRANSPARENT); 
+
+		// set popupPanel
+		popupPanel.setLayout(new BorderLayout());
+		popupPanel.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
+		popupPanel.setBackground(new Color(0, 0, 0, 100));
+		// popupPanel.setOpaque(true);
 
 		// set redPanel
 		redPanel.setLayout(new BorderLayout());
@@ -275,13 +282,9 @@ public class GameDisplay extends JFrame  {
 	}
 
 	public void displayColorChoices(int person) {
-		textPanel.removeAll();
+		randPieceContainer.removeAll();
 		
-		JPanel bg = new JPanel();
-		bg.setLayout(new BorderLayout());
-		bg.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
-		bg.setBackground(new Color(0, 0, 0, 100));
-		// bg.setOpaque(true);
+		textPanel.removeAll();
 
 		JButton redButton = new JButton("RED");
 		redButton.setFocusable(false);
@@ -306,10 +309,10 @@ public class GameDisplay extends JFrame  {
 		
 		lowerContainer.removeAll();
 		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); // new Dimension(600, 400)
-		lowerContainer.setBackground(TRANSPARENT);
+		// lowerContainer.setBackground(TRANSPARENT);
 
-		base.add(bg, JLayeredPane.POPUP_LAYER); 
-		bg.add(popupPaper, BorderLayout.CENTER); 
+		base.add(popupPanel, JLayeredPane.POPUP_LAYER); 
+		popupPanel.add(popupPaper, BorderLayout.CENTER); 
 		
 		popupPaper.add(lowerContainer, BorderLayout.SOUTH);
 		lowerContainer.add(redButton);
