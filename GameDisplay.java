@@ -25,6 +25,7 @@ public class GameDisplay extends JFrame  {
 	private JPanel textPanel;
 	private JPanel textContainer;
 	private JPanel textBoard;
+	private JPanel popupPanel;
 	private JPanel header;
 	private JPanel redPanel;
 	private JPanel bluePanel;
@@ -46,6 +47,7 @@ public class GameDisplay extends JFrame  {
 	private final Dimension DEFAULT_SIZE;
 	private final Dimension[] LOWER_CONTAINER_SIZE;
 	private final Dimension TEXT_LABEL_SIZE;
+	private final Dimension COLOR_PANEL_SIZE;
 	
 	public GameDisplay() {
 
@@ -55,15 +57,16 @@ public class GameDisplay extends JFrame  {
 		LOWER_CONTAINER_SIZE[0] = new Dimension(1017, 400); // default size
 		LOWER_CONTAINER_SIZE[1] = new Dimension(1017, (int)LOWER_CONTAINER_SIZE[0].getHeight() - 50); // during random picking size
 		TEXT_LABEL_SIZE = new Dimension(400, 50);
-		
+		COLOR_PANEL_SIZE = new Dimension(120, 620);
+
 		base = new JLayeredPane();
 		
 		background = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				Graphics2D bg = (Graphics2D) g;
-				bg.drawImage(new ImageIcon("images\\background.png").getImage(), 0, 0, null);
+				Graphics2D popupPanel = (Graphics2D) g;
+				popupPanel.drawImage(new ImageIcon("images\\background.png").getImage(), 0, 0, null);
 			}
 		};
 		textBoard = new JPanel() {
@@ -87,7 +90,7 @@ public class GameDisplay extends JFrame  {
 		textContainer = new JPanel(); 
 		upperContainer = new JPanel();
 		lowerContainer = new JPanel();
-		
+		popupPanel = new JPanel();
 		redPanel = new JPanel();
 		bluePanel = new JPanel();
 		
@@ -108,11 +111,13 @@ public class GameDisplay extends JFrame  {
 		base.setLayout(null);
 		base.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
 		base.setBackground(TRANSPARENT);
+		// System.out.println(base.getSize());
 
 		// set background
 		// background.setSize(1033, 772);
 		background.setLayout(new BorderLayout());
 		background.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
+		// System.out.println(background.getSize());
 
 		// set transparent upper container 
 		upperContainer.setLayout(new BorderLayout());
@@ -140,17 +145,25 @@ public class GameDisplay extends JFrame  {
 		textContainer.setLayout(new GridLayout(2, 1));
 		textContainer.setBackground(TRANSPARENT); 
 
+		// set popupPanel
+		popupPanel.setLayout(new BorderLayout());
+		popupPanel.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
+		popupPanel.setBackground(new Color(0, 0, 0, 100));
+		// popupPanel.setOpaque(true);
+
 		// set redPanel
 		redPanel.setLayout(new BorderLayout());
 		redPanel.setBackground(Color.RED);
-		redPanel.setPreferredSize(new Dimension(120, 620));
+		redPanel.setPreferredSize(COLOR_PANEL_SIZE);
 		redPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		// System.out.println(redPanel.getSize().toString());
 
 		// set bluePanel
 		bluePanel.setLayout(new BorderLayout());
 		bluePanel.setBackground(Color.BLUE);
-		bluePanel.setPreferredSize(new Dimension(120, 620));
+		bluePanel.setPreferredSize(COLOR_PANEL_SIZE); // new Dimension(120, 620)
 		bluePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		// System.out.println(bluePanel.getSize().toString());
 
 		// set header
 		header.setPreferredSize(new Dimension(1017, 114));
@@ -165,12 +178,14 @@ public class GameDisplay extends JFrame  {
 		textLabel1.setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
 		textLabel1.setForeground(Color.BLACK);
 		textLabel1.setHorizontalAlignment(JLabel.CENTER);
+		// System.out.println(textLabel1.getSize().toString());
 
 		// set textLabel2
 		textLabel2.setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
 		textLabel2.setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
 		textLabel2.setForeground(Color.BLACK);
 		textLabel2.setHorizontalAlignment(JLabel.CENTER);
+		// System.out.println(textLabel2.getSize().toString());
 
 		// set popupPaper
 		popupPaper.setLayout(new BorderLayout());
@@ -212,6 +227,7 @@ public class GameDisplay extends JFrame  {
 		// refresh();
 		repaint();
 		validate();
+		// System.out.println(this.getSize().toString());
 	}
 	
 	
@@ -275,13 +291,9 @@ public class GameDisplay extends JFrame  {
 	}
 
 	public void displayColorChoices(int person) {
-		textPanel.removeAll();
+		randPieceContainer.removeAll();
 		
-		JPanel bg = new JPanel();
-		bg.setLayout(new BorderLayout());
-		bg.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
-		bg.setBackground(new Color(0, 0, 0, 100));
-		// bg.setOpaque(true);
+		textPanel.removeAll();
 
 		JButton redButton = new JButton("RED");
 		redButton.setFocusable(false);
@@ -306,10 +318,10 @@ public class GameDisplay extends JFrame  {
 		
 		lowerContainer.removeAll();
 		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); // new Dimension(600, 400)
-		lowerContainer.setBackground(TRANSPARENT);
+		// lowerContainer.setBackground(TRANSPARENT);
 
-		base.add(bg, JLayeredPane.POPUP_LAYER); 
-		bg.add(popupPaper, BorderLayout.CENTER); 
+		base.add(popupPanel, JLayeredPane.POPUP_LAYER); 
+		popupPanel.add(popupPaper, BorderLayout.CENTER); 
 		
 		popupPaper.add(lowerContainer, BorderLayout.SOUTH);
 		lowerContainer.add(redButton);
