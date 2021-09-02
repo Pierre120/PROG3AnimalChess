@@ -168,13 +168,13 @@ public class GameDisplay extends JFrame  {
 		// startButton.setSize(250, 150);
 
 		// set textLabel1
-		textLabel1.setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
+		textLabel1.setPreferredSize(new Dimension(400, 50)); // new Dimension(400, 50)
 		textLabel1.setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
 		textLabel1.setForeground(Color.BLACK);
 		textLabel1.setHorizontalAlignment(JLabel.CENTER);
 
 		// set textLabel2
-		textLabel2.setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
+		textLabel2.setPreferredSize(textLabel1.getSize()); // new Dimension(400, 50)
 		textLabel2.setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
 		textLabel2.setForeground(Color.BLACK);
 		textLabel2.setHorizontalAlignment(JLabel.CENTER);
