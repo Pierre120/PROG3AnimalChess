@@ -43,6 +43,7 @@ public class GameDisplay extends JFrame  {
 
 	private final Dimension DEFAULT_SIZE;
 	private final Dimension[] LOWER_CONTAINER_SIZE;
+	private final Dimension TEXT_LABEL_SIZE;
 	
 	public GameDisplay() {
 
@@ -51,6 +52,7 @@ public class GameDisplay extends JFrame  {
 		LOWER_CONTAINER_SIZE = new Dimension[2];
 		LOWER_CONTAINER_SIZE[0] = new Dimension(1017, 400); // default size
 		LOWER_CONTAINER_SIZE[1] = new Dimension(1017, (int)LOWER_CONTAINER_SIZE[0].getHeight() - 50); // during random picking size
+		TEXT_LABEL_SIZE = new Dimension(400, 50);
 
 		randPieceContainer = new JPanel();
 		textContainer = new JPanel(); // textContainer.setLayout(new GridLayout(2, 1));
@@ -190,13 +192,13 @@ public class GameDisplay extends JFrame  {
 		textContainer.setLayout(new GridLayout(2, 1));
 		textContainer.setBackground(TRANSPARENT); 
 
-		textLabel1.setPreferredSize(new Dimension(400, 50));
+		textLabel1.setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
 		textLabel1.setForeground(Color.BLACK);
 		textLabel1.setText("~ PICK A PIECE ~");
 		textLabel1.setHorizontalAlignment(JLabel.CENTER);
 		textLabel1.setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
 		
-		textLabel2.setPreferredSize(new Dimension(400, 50));
+		textLabel2.setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
 		textLabel2.setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
 		textLabel2.setForeground(Color.BLACK);
 		textLabel2.setText("TURN: PERSON 1");
