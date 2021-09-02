@@ -42,11 +42,15 @@ public class GameDisplay extends JFrame  {
 	private final Color TRANSPARENT;
 
 	private final Dimension DEFAULT_SIZE;
+	private final Dimension[] LOWER_CONTAINER_SIZE;
 	
 	public GameDisplay() {
 
 		TRANSPARENT = new Color(0, 0, 0, 0);
 		DEFAULT_SIZE = new Dimension(1017, 732);
+		LOWER_CONTAINER_SIZE = new Dimension[2];
+		LOWER_CONTAINER_SIZE[0] = new Dimension(1017, 400); // default size
+		LOWER_CONTAINER_SIZE[1] = new Dimension(1017, (int)LOWER_CONTAINER_SIZE[0].getHeight() - 50); // during random picking size
 
 		randPieceContainer = new JPanel();
 		textContainer = new JPanel(); // textContainer.setLayout(new GridLayout(2, 1));
@@ -91,7 +95,7 @@ public class GameDisplay extends JFrame  {
 
 		// transparent lower container
 		lowerContainer = new JPanel();
-		lowerContainer.setPreferredSize(new Dimension(1017, 400)); //new Dimension(1017, 400) 
+		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); //new Dimension(1017, 400) 
 		lowerContainer.setBackground(TRANSPARENT);
 		lowerContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 56, 20));
 
@@ -202,7 +206,7 @@ public class GameDisplay extends JFrame  {
 		randPieceContainer.setBackground(TRANSPARENT); // Color.BLACK
 		setRandomPieces(randIndexes);
 
-		lowerContainer.setPreferredSize(new Dimension(1017, 350));
+		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[1]);
 
 		background.add(upperContainer, BorderLayout.CENTER);
 		upperContainer.add(tmp, BorderLayout.SOUTH);
@@ -256,7 +260,7 @@ public class GameDisplay extends JFrame  {
 		upperContainer.removeAll();
 		
 		lowerContainer.removeAll();
-		lowerContainer.setPreferredSize(new Dimension(600, 400)); // new Dimension(600, 400)
+		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); // new Dimension(600, 400)
 		lowerContainer.setBackground(TRANSPARENT);
 
 		base.add(bg, JLayeredPane.POPUP_LAYER); 
