@@ -18,11 +18,13 @@ public class GameDisplay extends JFrame  {
 	
 	JLayeredPane base;
 
-	private JPanel background;
+	private JPanel background; 
 	private JPanel lowerContainer;
-	private JPanel upperContainer;
+	private JPanel upperContainer; 
 	private JPanel randPieceContainer;
+	private JPanel textPanel;
 	private JPanel textContainer;
+	private JPanel textBoard;
 	private JPanel header;
 	private JPanel redPanel;
 	private JPanel bluePanel;
@@ -34,10 +36,10 @@ public class GameDisplay extends JFrame  {
 	private JLabel redPlayer;
 	private JLabel bluePlayer;
 
-	private ImageIcon[][] animalPiecePics;
+	private ImageIcon[][] animalPiecePics; // final
 	
-	private MouseListener randomPicker;
-	private ActionListener colorPicker;
+	private MouseListener randomPicker; // final 
+	private ActionListener colorPicker; // final
 	
 	private final Color TRANSPARENT;
 
@@ -55,7 +57,16 @@ public class GameDisplay extends JFrame  {
 		TEXT_LABEL_SIZE = new Dimension(400, 50);
 
 		randPieceContainer = new JPanel();
+		textPanel = new JPanel();
 		textContainer = new JPanel(); // textContainer.setLayout(new GridLayout(2, 1));
+		textBoard = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				Graphics2D board = (Graphics2D) g;
+				board.drawImage(new ImageIcon("images\\textBoard.png").getImage(), 0, 0, null);
+			}
+		};
 		upperContainer = new JPanel(); // upperContainer.setLayout(new BorderLayout());
 		header = new JPanel() {
 			@Override
@@ -170,18 +181,9 @@ public class GameDisplay extends JFrame  {
 	}
 	
 	public void displayRandomChoices(int[] randIndexes) {
-		JPanel tmp = new JPanel();
-		tmp.setLayout(new FlowLayout());
-		tmp.setBackground(TRANSPARENT);
+		textPanel.setLayout(new FlowLayout());
+		textPanel.setBackground(TRANSPARENT);
 
-		JPanel textBoard = new JPanel() {
-			@Override
-			public void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				Graphics2D board = (Graphics2D) g;
-				board.drawImage(new ImageIcon("images\\textBoard.png").getImage(), 0, 0, null);
-			}
-		};
 		textBoard.setPreferredSize(new Dimension(400, 120));
 		textBoard.setLayout(new BorderLayout());
 		textBoard.setBackground(TRANSPARENT);
@@ -211,8 +213,8 @@ public class GameDisplay extends JFrame  {
 		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[1]);
 
 		background.add(upperContainer, BorderLayout.CENTER);
-		upperContainer.add(tmp, BorderLayout.SOUTH);
-		tmp.add(textBoard);
+		upperContainer.add(textPanel, BorderLayout.SOUTH);
+		textPanel.add(textBoard);
 		textBoard.add(textContainer, BorderLayout.SOUTH);
 		textContainer.add(textLabel1);
 		textContainer.add(textLabel2);
@@ -223,14 +225,14 @@ public class GameDisplay extends JFrame  {
 	}
 
 	public void displayColorChoices(int person) {
-		JPanel tmp = new JPanel();
-		tmp.setLayout(new FlowLayout());
-		tmp.setBackground(TRANSPARENT);
+		textPanel.removeAll();
+		textPanel.setLayout(new FlowLayout());
+		textPanel.setBackground(TRANSPARENT);
 		
 		JPanel bg = new JPanel();
 		bg.setLayout(new BorderLayout());
 		bg.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
-		bg.setBackground(new Color(0, 0, 0, 75));
+		bg.setBackground(new Color(0, 0, 0, 100));
 		// bg.setOpaque(true);
 
 		JButton redButton = new JButton("RED");
@@ -272,8 +274,8 @@ public class GameDisplay extends JFrame  {
 		lowerContainer.add(redButton);
 		lowerContainer.add(blueButton);
 		popupPaper.add(upperContainer, BorderLayout.CENTER);
-		upperContainer.add(tmp, BorderLayout.SOUTH);
-		tmp.add(textContainer);
+		upperContainer.add(textPanel, BorderLayout.SOUTH);
+		textPanel.add(textContainer);
 
 		// base.repaint();
 		// base.revalidate();
