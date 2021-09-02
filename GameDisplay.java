@@ -40,10 +40,13 @@ public class GameDisplay extends JFrame  {
 	private ActionListener colorPicker;
 	
 	private final Color TRANSPARENT;
+
+	private final Dimension DEFAULT_SIZE;
 	
 	public GameDisplay() {
 
 		TRANSPARENT = new Color(0, 0, 0, 0);
+		DEFAULT_SIZE = new Dimension(1017, 732);
 
 		randPieceContainer = new JPanel();
 		textContainer = new JPanel(); // textContainer.setLayout(new GridLayout(2, 1));
@@ -70,7 +73,7 @@ public class GameDisplay extends JFrame  {
 
 		// base of all components
 		base = new JLayeredPane();
-		base.setBounds(0, 0, 1017, 734);
+		base.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
 		base.setBackground(TRANSPARENT);
 
 		// background
@@ -83,12 +86,12 @@ public class GameDisplay extends JFrame  {
 			}
 		};
 		// background.setSize(1033, 772);
-		background.setBounds(0, 0, 1017, 734);
+		background.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
 		background.setLayout(new BorderLayout());
 
 		// transparent lower container
 		lowerContainer = new JPanel();
-		lowerContainer.setPreferredSize(new Dimension(1017, 400)); //new Dimension(1033, 400));
+		lowerContainer.setPreferredSize(new Dimension(1017, 400)); //new Dimension(1017, 400) 
 		lowerContainer.setBackground(TRANSPARENT);
 		lowerContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 56, 20));
 
@@ -102,7 +105,7 @@ public class GameDisplay extends JFrame  {
 		this.setTitle("Animal Chess"); // title for the window
 		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(1033, 772); // original size
+		this.setSize((int)DEFAULT_SIZE.getWidth() + 16, (int)DEFAULT_SIZE.getHeight() + 40); // original frame size: 1033, 772
 		this.setResizable(false); // not resizable
     	this.setLocationRelativeTo(null); // center of screen
 		this.setLayout(new BorderLayout());
@@ -220,7 +223,7 @@ public class GameDisplay extends JFrame  {
 		
 		JPanel bg = new JPanel();
 		bg.setLayout(new BorderLayout());
-		bg.setBounds(0, 0, 1016, 730);
+		bg.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
 		bg.setBackground(new Color(0, 0, 0, 75));
 		// bg.setOpaque(true);
 
@@ -253,7 +256,7 @@ public class GameDisplay extends JFrame  {
 		upperContainer.removeAll();
 		
 		lowerContainer.removeAll();
-		lowerContainer.setPreferredSize(new Dimension(600, 400));
+		lowerContainer.setPreferredSize(new Dimension(600, 400)); // new Dimension(600, 400)
 		lowerContainer.setBackground(TRANSPARENT);
 
 		base.add(bg, JLayeredPane.POPUP_LAYER); 
