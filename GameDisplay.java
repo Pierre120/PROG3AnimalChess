@@ -49,6 +49,7 @@ public class GameDisplay extends JFrame  {
 	private final Dimension[] LOWER_CONTAINER_SIZE;
 	private final Dimension TEXT_LABEL_SIZE;
 	private final Dimension COLOR_PANEL_SIZE;
+	private final Dimension TILE_SIZE;
 	
 	public GameDisplay() {
 
@@ -59,6 +60,7 @@ public class GameDisplay extends JFrame  {
 		LOWER_CONTAINER_SIZE[1] = new Dimension(1017, (int)LOWER_CONTAINER_SIZE[0].getHeight() - 50); // during random picking size
 		TEXT_LABEL_SIZE = new Dimension(400, 50);
 		COLOR_PANEL_SIZE = new Dimension(120, 620);
+		TILE_SIZE = new Dimension(80, 80);
 
 		base = new JLayeredPane();
 		
@@ -439,7 +441,7 @@ public class GameDisplay extends JFrame  {
 			tile = tilePic;
 			setName(tileID);
 			setIcon(animalPiece); 
-			setPreferredSize(new Dimension(80, 80));
+			setPreferredSize(TILE_SIZE);
 			setBackground(TRANSPARENT);
 			setEnabled(enabled);	
 		}	
