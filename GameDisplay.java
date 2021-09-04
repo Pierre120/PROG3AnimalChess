@@ -67,8 +67,16 @@ public class GameDisplay extends JFrame  {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				Graphics2D popupPanel = (Graphics2D) g;
-				popupPanel.drawImage(new ImageIcon("images\\background.png").getImage(), 0, 0, null);
+				Graphics2D bg = (Graphics2D) g;
+				bg.drawImage(new ImageIcon("images\\background.png").getImage(), 0, 0, null);
+			}
+		};
+		backgrounds[1] = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				Graphics2D wood = (Graphics2D) g;
+				wood.drawImage(new ImageIcon("images\\boardBackground.jpg").getImage(), 0, 0, null);
 			}
 		};
 		textBoard = new JPanel() {
@@ -137,6 +145,9 @@ public class GameDisplay extends JFrame  {
 		backgrounds[0].setLayout(new BorderLayout());
 		backgrounds[0].setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
 		// System.out.println(backgrounds[0].getSize());
+
+		backgrounds[1].setLayout(new BorderLayout());
+		// backgrounds[1].setBounds(0, 0, 777, 618);
 
 		// set transparent upper container 
 		upperContainer.setLayout(new BorderLayout());
@@ -396,6 +407,7 @@ public class GameDisplay extends JFrame  {
 		backgrounds[0].add(header, BorderLayout.NORTH);
 		backgrounds[0].add(redPanel, BorderLayout.WEST);
 		backgrounds[0].add(bluePanel, BorderLayout.EAST);
+		backgrounds[0].add(backgrounds[1], BorderLayout.CENTER);
 		redPanel.add(redPlayer, BorderLayout.CENTER);
 		bluePanel.add(bluePlayer, BorderLayout.CENTER);
 
