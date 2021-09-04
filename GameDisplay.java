@@ -51,6 +51,7 @@ public class GameDisplay extends JFrame  {
 	private final Dimension TEXT_LABEL_SIZE;
 	private final Dimension COLOR_PANEL_SIZE;
 	private final Dimension TILE_SIZE;
+	private final Dimension BUTTON_SIZE;
 	
 	public GameDisplay() {
 
@@ -66,6 +67,7 @@ public class GameDisplay extends JFrame  {
 		TEXT_LABEL_SIZE = new Dimension(400, 50);
 		COLOR_PANEL_SIZE = new Dimension(120, 618);
 		TILE_SIZE = new Dimension(80, 80);
+		BUTTON_SIZE = new Dimension(200, 100);
 
 		base = new JLayeredPane();
 		
@@ -126,13 +128,13 @@ public class GameDisplay extends JFrame  {
 
 		choiceButtons[0].setActionCommand("RED");
 		choiceButtons[0].setFocusable(false);
-		choiceButtons[0].setPreferredSize(new Dimension(200, 100));
+		choiceButtons[0].setPreferredSize(BUTTON_SIZE);
 		choiceButtons[0].setForeground(TRANSPARENT);
 		choiceButtons[0].setBackground(Color.RED);
 
 		choiceButtons[1].setActionCommand("BLUE");
 		choiceButtons[1].setFocusable(false);
-		choiceButtons[1].setPreferredSize(new Dimension(200, 100));
+		choiceButtons[1].setPreferredSize(BUTTON_SIZE);
 		choiceButtons[1].setForeground(TRANSPARENT);
 		choiceButtons[1].setBackground(Color.BLUE);
 
