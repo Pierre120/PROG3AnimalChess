@@ -216,11 +216,15 @@ public class GameDisplay extends JFrame  {
 
 		// set redPlayer
 		redPlayer.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
+		redPlayer.setForeground(Color.BLACK);
+		// redPlayer.setBackground(TRANSPARENT);
 		redPlayer.setVerticalAlignment(JLabel.CENTER);
 		redPlayer.setHorizontalAlignment(JLabel.CENTER);
 
 		// set bluePlayer
 		bluePlayer.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
+		bluePlayer.setForeground(Color.BLACK);
+		// bluePlayer.setBackground(TRANSPARENT);
 		bluePlayer.setVerticalAlignment(JLabel.CENTER);
 		bluePlayer.setHorizontalAlignment(JLabel.CENTER);
 		
@@ -375,9 +379,9 @@ public class GameDisplay extends JFrame  {
 	public void instantiateGameComps() {
 		// header.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		
-		redPlayer.setText("Some text");
+		redPlayer.setText("<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>X</HTML>");
 
-		bluePlayer.setText("Some text");
+		bluePlayer.setText("<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>X</HTML>");
 	}
 
 	public void displayAnimalChess() {
@@ -395,6 +399,8 @@ public class GameDisplay extends JFrame  {
 		background2.add(header, BorderLayout.NORTH);
 		background2.add(redPanel, BorderLayout.WEST);
 		background2.add(bluePanel, BorderLayout.EAST);
+		redPanel.add(redPlayer, BorderLayout.CENTER);
+		bluePanel.add(bluePlayer, BorderLayout.CENTER);
 
 		repaint();
 		revalidate();
