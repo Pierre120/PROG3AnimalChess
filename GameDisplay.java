@@ -125,18 +125,6 @@ public class GameDisplay extends JFrame  {
 		choiceButtons[2] = new JButton(); // yes
 		choiceButtons[3] = new JButton(); // no
 
-		choiceButtons[0].setActionCommand("RED");
-		choiceButtons[0].setFocusable(false);
-		choiceButtons[0].setPreferredSize(BUTTON_SIZE);
-		choiceButtons[0].setForeground(TRANSPARENT);
-		choiceButtons[0].setBackground(Color.RED);
-
-		choiceButtons[1].setActionCommand("BLUE");
-		choiceButtons[1].setFocusable(false);
-		choiceButtons[1].setPreferredSize(BUTTON_SIZE);
-		choiceButtons[1].setForeground(TRANSPARENT);
-		choiceButtons[1].setBackground(Color.BLUE);
-
 		animalPiecePics = new ImageIcon[2][8];
 
 		randomPicker = null;
@@ -245,6 +233,21 @@ public class GameDisplay extends JFrame  {
 		// bluePlayer.setBackground(TRANSPARENT);
 		bluePlayer.setVerticalAlignment(JLabel.CENTER);
 		bluePlayer.setHorizontalAlignment(JLabel.CENTER);
+
+
+		// set choiceButtons[0] (red button)
+		choiceButtons[0].setActionCommand("RED");
+		choiceButtons[0].setFocusable(false);
+		choiceButtons[0].setPreferredSize(BUTTON_SIZE);
+		choiceButtons[0].setForeground(TRANSPARENT);
+		choiceButtons[0].setBackground(Color.RED);
+
+		// set choiceButtons[1] (blue button)
+		choiceButtons[1].setActionCommand("BLUE");
+		choiceButtons[1].setFocusable(false);
+		choiceButtons[1].setPreferredSize(BUTTON_SIZE);
+		choiceButtons[1].setForeground(TRANSPARENT);
+		choiceButtons[1].setBackground(Color.BLUE);
 		
 
 		// setup this frame
