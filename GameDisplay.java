@@ -140,8 +140,7 @@ public class GameDisplay extends JFrame  {
 		setTransparentContainers();
 
 		// set randPieceContainer 
-		randPieceContainer.setLayout(new GridLayout(2, 4, 15, 15));
-		randPieceContainer.setBackground(TRANSPARENT); // Color.BLACK
+		setRandPieceContainer();
 
 		// set textBoard 
 		textBoard.setLayout(new BorderLayout());
@@ -290,6 +289,10 @@ public class GameDisplay extends JFrame  {
 		lowerContainer.setBackground(TRANSPARENT);
 	}
 	
+	private void setRandPieceContainer() {
+		randPieceContainer.setLayout(new GridLayout(2, 4, 15, 15));
+		randPieceContainer.setBackground(TRANSPARENT); // Color.BLACK
+	}
 	
 	public void refresh() {
 		this.setSize(1032, 771);
