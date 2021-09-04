@@ -142,18 +142,8 @@ public class GameDisplay extends JFrame  {
 		// set randPieceContainer 
 		setRandPieceContainer();
 
-		// set textBoard 
-		textBoard.setLayout(new BorderLayout());
-		textBoard.setPreferredSize(new Dimension(400, 120));
-		textBoard.setBackground(TRANSPARENT);
-		
-		// set textPanel 
-		textPanel.setLayout(new FlowLayout());
-		textPanel.setBackground(TRANSPARENT);
-
-		// set textContainer 
-		textContainer.setLayout(new GridLayout(2, 1));
-		textContainer.setBackground(TRANSPARENT); 
+		// set textBoard, textPanel, & textContainer
+		setTextPanelComps();
 
 		// set popupPanel
 		popupPanel.setLayout(new BorderLayout());
@@ -292,6 +282,21 @@ public class GameDisplay extends JFrame  {
 	private void setRandPieceContainer() {
 		randPieceContainer.setLayout(new GridLayout(2, 4, 15, 15));
 		randPieceContainer.setBackground(TRANSPARENT); // Color.BLACK
+	}
+
+	private void setTextPanelComps() {
+		// set textBoard 
+		textBoard.setLayout(new BorderLayout());
+		textBoard.setPreferredSize(new Dimension(400, 120));
+		textBoard.setBackground(TRANSPARENT);
+		
+		// set textPanel 
+		textPanel.setLayout(new FlowLayout());
+		textPanel.setBackground(TRANSPARENT);
+
+		// set textContainer 
+		textContainer.setLayout(new GridLayout(2, 1));
+		textContainer.setBackground(TRANSPARENT); 
 	}
 	
 	public void refresh() {
