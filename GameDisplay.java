@@ -18,7 +18,7 @@ public class GameDisplay extends JFrame  {
 	
 	private JLayeredPane base;
 
-	private JPanel background; 
+	private JPanel[] backgrounds; 
 	private JPanel upperContainer; 
 	private JPanel lowerContainer;
 	private JPanel randPieceContainer;
@@ -63,7 +63,8 @@ public class GameDisplay extends JFrame  {
 
 		base = new JLayeredPane();
 		
-		background = new JPanel() {
+		backgrounds = new JPanel[2];
+		backgrounds[0] = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -134,10 +135,10 @@ public class GameDisplay extends JFrame  {
 		// System.out.println(base.getSize());
 
 		// set background
-		// background.setSize(1033, 772);
-		background.setLayout(new BorderLayout());
-		background.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
-		// System.out.println(background.getSize());
+		// backgrounds[0].setSize(1033, 772);
+		backgrounds[0].setLayout(new BorderLayout());
+		backgrounds[0].setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
+		// System.out.println(backgrounds[0].getSize());
 
 		// set transparent upper container 
 		upperContainer.setLayout(new BorderLayout());
@@ -242,8 +243,8 @@ public class GameDisplay extends JFrame  {
 		// add the base to this frame
 		this.add(base, BorderLayout.CENTER);
 		// add components to the base
-		base.add(background, JLayeredPane.DEFAULT_LAYER);
-		background.add(lowerContainer, BorderLayout.SOUTH);
+		base.add(backgrounds[0], JLayeredPane.DEFAULT_LAYER);
+		backgrounds[0].add(lowerContainer, BorderLayout.SOUTH);
 		lowerContainer.add(startButton);
 
 
@@ -302,7 +303,7 @@ public class GameDisplay extends JFrame  {
 
 		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[1]);
 
-		background.add(upperContainer, BorderLayout.CENTER);
+		backgrounds[0].add(upperContainer, BorderLayout.CENTER);
 		upperContainer.add(textPanel, BorderLayout.SOUTH);
 		textPanel.add(textBoard);
 		textBoard.add(textContainer, BorderLayout.SOUTH);
@@ -322,7 +323,7 @@ public class GameDisplay extends JFrame  {
 		textLabel1.setText("~ PICK A COLOR ~");
 		textLabel2.setText("PERSON " + person + " IS PLAYER 1");
 
-		background.removeAll();
+		backgrounds[0].removeAll();
 
 		upperContainer.removeAll();
 
@@ -393,12 +394,13 @@ public class GameDisplay extends JFrame  {
 		background2.setBounds(0, 0, 1017, 734);
 		background2.setBackground(Color.CYAN);
 		
-		base.removeAll();
-		base.add(background2, JLayeredPane.DEFAULT_LAYER);
+		// base.removeAll();
+		// base.add(background2, JLayeredPane.DEFAULT_LAYER);
+		base.remove(popupPanel);
 
-		background2.add(header, BorderLayout.NORTH);
-		background2.add(redPanel, BorderLayout.WEST);
-		background2.add(bluePanel, BorderLayout.EAST);
+		backgrounds[0].add(header, BorderLayout.NORTH);
+		backgrounds[0].add(redPanel, BorderLayout.WEST);
+		backgrounds[0].add(bluePanel, BorderLayout.EAST);
 		redPanel.add(redPlayer, BorderLayout.CENTER);
 		bluePanel.add(bluePlayer, BorderLayout.CENTER);
 
