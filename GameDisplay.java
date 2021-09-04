@@ -148,19 +148,8 @@ public class GameDisplay extends JFrame  {
 		// set popupPanel
 		setPopupPanel();
 
-		// set redPanel
-		redPanel.setLayout(new BorderLayout());
-		redPanel.setBackground(Color.RED);
-		redPanel.setPreferredSize(COLOR_PANEL_SIZE);
-		redPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-		// System.out.println(redPanel.getSize().toString());
-
-		// set bluePanel
-		bluePanel.setLayout(new BorderLayout());
-		bluePanel.setBackground(Color.BLUE);
-		bluePanel.setPreferredSize(COLOR_PANEL_SIZE); // new Dimension(120, 620)
-		bluePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-		// System.out.println(bluePanel.getSize().toString());
+		// set redPanel & bluePanel for each player
+		setColorPanels();
 
 		// set header
 		header.setPreferredSize(new Dimension(1017, 114));
@@ -170,19 +159,8 @@ public class GameDisplay extends JFrame  {
 		// startButton.setBounds(416, 350, 250, 150);
 		// startButton.setSize(250, 150);
 
-		// set textLabels[0]
-		textLabels[0].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
-		textLabels[0].setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
-		textLabels[0].setForeground(Color.BLACK);
-		textLabels[0].setHorizontalAlignment(JLabel.CENTER);
-		// System.out.println(textLabels[0].getSize().toString());
-
-		// set textLabels[1]
-		textLabels[1].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
-		textLabels[1].setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
-		textLabels[1].setForeground(Color.BLACK);
-		textLabels[1].setHorizontalAlignment(JLabel.CENTER);
-		// System.out.println(textLabels[1].getSize().toString());
+		//	set textLabels
+		setTextLabels();
 
 		// set popupPaper
 		popupPaper.setLayout(new BorderLayout());
@@ -302,7 +280,39 @@ public class GameDisplay extends JFrame  {
 		popupPanel.setBackground(new Color(0, 0, 0, 100));
 		// popupPanel.setOpaque(true);
 	}
+
+	private void setColorPanels() {
+		// set redPanel
+		redPanel.setLayout(new BorderLayout());
+		redPanel.setBackground(Color.RED);
+		redPanel.setPreferredSize(COLOR_PANEL_SIZE);
+		redPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		// System.out.println(redPanel.getSize().toString());
+
+		// set bluePanel
+		bluePanel.setLayout(new BorderLayout());
+		bluePanel.setBackground(Color.BLUE);
+		bluePanel.setPreferredSize(COLOR_PANEL_SIZE); // new Dimension(120, 620)
+		bluePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		// System.out.println(bluePanel.getSize().toString());
+	}
 	
+	private void setTextLabels() {
+		// set textLabels[0]
+		textLabels[0].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
+		textLabels[0].setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
+		textLabels[0].setForeground(Color.BLACK);
+		textLabels[0].setHorizontalAlignment(JLabel.CENTER);
+		// System.out.println(textLabels[0].getSize().toString());
+
+		// set textLabels[1]
+		textLabels[1].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
+		textLabels[1].setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
+		textLabels[1].setForeground(Color.BLACK);
+		textLabels[1].setHorizontalAlignment(JLabel.CENTER);
+		// System.out.println(textLabels[1].getSize().toString());
+	}
+
 	public void refresh() {
 		this.setSize(1032, 771);
 		this.setSize(1033, 772);
