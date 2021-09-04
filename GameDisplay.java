@@ -131,10 +131,7 @@ public class GameDisplay extends JFrame  {
 
 
 		// set base for all components
-		base.setLayout(null);
-		base.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
-		base.setBackground(TRANSPARENT);
-		// System.out.println(base.getSize());
+		setBase();
 
 		// set background
 		// backgrounds[0].setSize(1033, 772);
@@ -275,6 +272,18 @@ public class GameDisplay extends JFrame  {
 		validate();
 		// System.out.println(this.getSize().toString());
 	}
+
+
+	private void setBase() {
+		base.setLayout(null);
+		base.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
+		base.setBackground(TRANSPARENT);
+		// System.out.println(base.getSize());
+	}
+
+	private void setBackgrounds() {
+		
+	}
 	
 	
 	public void refresh() {
@@ -394,8 +403,12 @@ public class GameDisplay extends JFrame  {
 			}
 		}
 	}
+	 
+	/*public void initBoardTiles() {
 
-	public void instantiateGameComps() {
+	} */
+
+	public void assignPlayers() {
 		// header.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		
 		redPlayer.setText("<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>X</HTML>");
@@ -404,7 +417,7 @@ public class GameDisplay extends JFrame  {
 	}
 
 	public void displayAnimalChess() {
-		instantiateGameComps();
+		assignPlayers();
 		
 		// temporary
 		JPanel background2 = new JPanel();
