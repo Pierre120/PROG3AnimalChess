@@ -131,65 +131,25 @@ public class GameDisplay extends JFrame  {
 
 
 		// set base for all components
-		base.setLayout(null);
-		base.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
-		base.setBackground(TRANSPARENT);
-		// System.out.println(base.getSize());
+		setBase();
 
 		// set background
-		// backgrounds[0].setSize(1033, 772);
-		backgrounds[0].setLayout(new BorderLayout());
-		backgrounds[0].setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
-		// System.out.println(backgrounds[0].getSize());
+		setBackgrounds();
 
-		backgrounds[1].setLayout(new BorderLayout());
-		// backgrounds[1].setBounds(0, 0, 777, 618);
-
-		// set transparent upper container 
-		upperContainer.setLayout(new BorderLayout());
-		upperContainer.setBackground(TRANSPARENT);
-
-		// set transparent lower container
-		lowerContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 56, 20));
-		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); //new Dimension(1017, 400) 
-		lowerContainer.setBackground(TRANSPARENT);
+		//set transparent upper and lower containers
+		setTransparentContainers();
 
 		// set randPieceContainer 
-		randPieceContainer.setLayout(new GridLayout(2, 4, 15, 15));
-		randPieceContainer.setBackground(TRANSPARENT); // Color.BLACK
+		setRandPieceContainer();
 
-		// set textBoard 
-		textBoard.setLayout(new BorderLayout());
-		textBoard.setPreferredSize(new Dimension(400, 120));
-		textBoard.setBackground(TRANSPARENT);
-		
-		// set textPanel 
-		textPanel.setLayout(new FlowLayout());
-		textPanel.setBackground(TRANSPARENT);
-
-		// set textContainer 
-		textContainer.setLayout(new GridLayout(2, 1));
-		textContainer.setBackground(TRANSPARENT); 
+		// set textBoard, textPanel, & textContainer
+		setTextPanelComps();
 
 		// set popupPanel
-		popupPanel.setLayout(new BorderLayout());
-		popupPanel.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
-		popupPanel.setBackground(new Color(0, 0, 0, 100));
-		// popupPanel.setOpaque(true);
+		setPopupPanel();
 
-		// set redPanel
-		redPanel.setLayout(new BorderLayout());
-		redPanel.setBackground(Color.RED);
-		redPanel.setPreferredSize(COLOR_PANEL_SIZE);
-		redPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-		// System.out.println(redPanel.getSize().toString());
-
-		// set bluePanel
-		bluePanel.setLayout(new BorderLayout());
-		bluePanel.setBackground(Color.BLUE);
-		bluePanel.setPreferredSize(COLOR_PANEL_SIZE); // new Dimension(120, 620)
-		bluePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-		// System.out.println(bluePanel.getSize().toString());
+		// set redPanel & bluePanel for each player
+		setColorPanels();
 
 		// set header
 		header.setPreferredSize(new Dimension(1017, 114));
@@ -199,19 +159,8 @@ public class GameDisplay extends JFrame  {
 		// startButton.setBounds(416, 350, 250, 150);
 		// startButton.setSize(250, 150);
 
-		// set textLabels[0]
-		textLabels[0].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
-		textLabels[0].setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
-		textLabels[0].setForeground(Color.BLACK);
-		textLabels[0].setHorizontalAlignment(JLabel.CENTER);
-		// System.out.println(textLabels[0].getSize().toString());
-
-		// set textLabels[1]
-		textLabels[1].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
-		textLabels[1].setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
-		textLabels[1].setForeground(Color.BLACK);
-		textLabels[1].setHorizontalAlignment(JLabel.CENTER);
-		// System.out.println(textLabels[1].getSize().toString());
+		//	set textLabels
+		setTextLabels();
 
 		// set popupPaper
 		popupPaper.setLayout(new BorderLayout());
@@ -275,8 +224,95 @@ public class GameDisplay extends JFrame  {
 		validate();
 		// System.out.println(this.getSize().toString());
 	}
+
+
+	private void setBase() {
+		base.setLayout(null);
+		base.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
+		base.setBackground(TRANSPARENT);
+		// System.out.println(base.getSize());
+	}
+
+	private void setBackgrounds() {
+		// backgrounds[0].setSize(1033, 772);
+		backgrounds[0].setLayout(new BorderLayout());
+		backgrounds[0].setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
+		// System.out.println(backgrounds[0].getSize());
+
+		backgrounds[1].setLayout(new BorderLayout());
+		// backgrounds[1].setBounds(0, 0, 777, 618);
+	}
+
+	private void setTransparentContainers() {
+		// set transparent upper container 
+		upperContainer.setLayout(new BorderLayout());
+		upperContainer.setBackground(TRANSPARENT);
+
+		// set transparent lower container
+		lowerContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 56, 20));
+		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); //new Dimension(1017, 400) 
+		lowerContainer.setBackground(TRANSPARENT);
+	}
 	
+	private void setRandPieceContainer() {
+		randPieceContainer.setLayout(new GridLayout(2, 4, 15, 15));
+		randPieceContainer.setBackground(TRANSPARENT); // Color.BLACK
+	}
+
+	private void setTextPanelComps() {
+		// set textBoard 
+		textBoard.setLayout(new BorderLayout());
+		textBoard.setPreferredSize(new Dimension(400, 120));
+		textBoard.setBackground(TRANSPARENT);
+		
+		// set textPanel 
+		textPanel.setLayout(new FlowLayout());
+		textPanel.setBackground(TRANSPARENT);
+
+		// set textContainer 
+		textContainer.setLayout(new GridLayout(2, 1));
+		textContainer.setBackground(TRANSPARENT); 
+	}
+
+	private void setPopupPanel() {
+		popupPanel.setLayout(new BorderLayout());
+		popupPanel.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
+		popupPanel.setBackground(new Color(0, 0, 0, 100));
+		// popupPanel.setOpaque(true);
+	}
+
+	private void setColorPanels() {
+		// set redPanel
+		redPanel.setLayout(new BorderLayout());
+		redPanel.setBackground(Color.RED);
+		redPanel.setPreferredSize(COLOR_PANEL_SIZE);
+		redPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		// System.out.println(redPanel.getSize().toString());
+
+		// set bluePanel
+		bluePanel.setLayout(new BorderLayout());
+		bluePanel.setBackground(Color.BLUE);
+		bluePanel.setPreferredSize(COLOR_PANEL_SIZE); // new Dimension(120, 620)
+		bluePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		// System.out.println(bluePanel.getSize().toString());
+	}
 	
+	private void setTextLabels() {
+		// set textLabels[0]
+		textLabels[0].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
+		textLabels[0].setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
+		textLabels[0].setForeground(Color.BLACK);
+		textLabels[0].setHorizontalAlignment(JLabel.CENTER);
+		// System.out.println(textLabels[0].getSize().toString());
+
+		// set textLabels[1]
+		textLabels[1].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
+		textLabels[1].setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
+		textLabels[1].setForeground(Color.BLACK);
+		textLabels[1].setHorizontalAlignment(JLabel.CENTER);
+		// System.out.println(textLabels[1].getSize().toString());
+	}
+
 	public void refresh() {
 		this.setSize(1032, 771);
 		this.setSize(1033, 772);
@@ -394,8 +430,12 @@ public class GameDisplay extends JFrame  {
 			}
 		}
 	}
+	 
+	/*public void initBoardTiles() {
 
-	public void instantiateGameComps() {
+	} */
+
+	public void assignPlayers() {
 		// header.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		
 		redPlayer.setText("<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>X</HTML>");
@@ -404,7 +444,7 @@ public class GameDisplay extends JFrame  {
 	}
 
 	public void displayAnimalChess() {
-		instantiateGameComps();
+		assignPlayers();
 		
 		// temporary
 		JPanel background2 = new JPanel();
