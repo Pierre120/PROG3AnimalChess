@@ -41,8 +41,7 @@ public class GameDisplay extends JFrame  {
 
 	private ImageIcon[][] animalPiecePics; // final
 	
-	private MouseListener randomPicker;
-	private ActionListener colorPicker; 
+	private MouseListener randomPicker; 
 	
 	private final Color TRANSPARENT;
 
@@ -125,7 +124,6 @@ public class GameDisplay extends JFrame  {
 		animalPiecePics = new ImageIcon[2][8];
 
 		randomPicker = null;
-		colorPicker = null;
 
 
 		// set base for all components
@@ -261,12 +259,13 @@ public class GameDisplay extends JFrame  {
 		this.setSize(1033, 772);
 	}
 
-	public void setListener(MouseListener start, MouseListener random, ActionListener color) {
+	public void setListener(MouseListener start, MouseListener random, ActionListener colorPicker) {
 		startButton.addMouseListener(start);
 		// set the listener for other MouseInputListener attributes of this class
 		// implementation of MouseInputListener are in Game class
 		randomPicker = random;
-		colorPicker = color;
+		choiceButtons[0].addActionListener(colorPicker);
+		choiceButtons[1].addActionListener(colorPicker);
 	}
 
 	public void setTransparentBackground(Component comp) {
@@ -326,10 +325,6 @@ public class GameDisplay extends JFrame  {
 		backgrounds[0].removeAll();
 
 		upperContainer.removeAll();
-
-		choiceButtons[0].addActionListener(colorPicker);
-
-		choiceButtons[1].addActionListener(colorPicker);
 		
 		lowerContainer.removeAll();
 		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); // new Dimension(600, 400)
