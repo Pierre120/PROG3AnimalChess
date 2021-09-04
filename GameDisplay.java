@@ -163,40 +163,12 @@ public class GameDisplay extends JFrame  {
 		setTextLabels();
 
 		// set popupPaper
-		popupPaper.setLayout(new BorderLayout());
-		popupPaper.setPreferredSize(new Dimension(600, 484));
-		popupPaper.setBackground(TRANSPARENT);
-		popupPaper.setVerticalAlignment(JLabel.CENTER);
-		popupPaper.setHorizontalAlignment(JLabel.CENTER);
+		setPopupPaper();
 
-		// set redPlayer
-		redPlayer.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
-		redPlayer.setForeground(Color.BLACK);
-		// redPlayer.setBackground(TRANSPARENT);
-		redPlayer.setVerticalAlignment(JLabel.CENTER);
-		redPlayer.setHorizontalAlignment(JLabel.CENTER);
+		//set blue and red player banners on left and right of the board
+		setPlayerBanners();
 
-		// set bluePlayer
-		bluePlayer.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
-		bluePlayer.setForeground(Color.BLACK);
-		// bluePlayer.setBackground(TRANSPARENT);
-		bluePlayer.setVerticalAlignment(JLabel.CENTER);
-		bluePlayer.setHorizontalAlignment(JLabel.CENTER);
-
-
-		// set choiceButtons[0] (red button)
-		choiceButtons[0].setActionCommand("RED");
-		choiceButtons[0].setFocusable(false);
-		choiceButtons[0].setPreferredSize(BUTTON_SIZE);
-		choiceButtons[0].setForeground(TRANSPARENT);
-		choiceButtons[0].setBackground(Color.RED);
-
-		// set choiceButtons[1] (blue button)
-		choiceButtons[1].setActionCommand("BLUE");
-		choiceButtons[1].setFocusable(false);
-		choiceButtons[1].setPreferredSize(BUTTON_SIZE);
-		choiceButtons[1].setForeground(TRANSPARENT);
-		choiceButtons[1].setBackground(Color.BLUE);
+		setChoiceButtons();
 		
 
 		// setup this frame
@@ -333,6 +305,45 @@ public class GameDisplay extends JFrame  {
 		repaint();
 	}
 
+	private void setPopupPaper() {
+		popupPaper.setLayout(new BorderLayout());
+		popupPaper.setPreferredSize(new Dimension(600, 484));
+		popupPaper.setBackground(TRANSPARENT);
+		popupPaper.setVerticalAlignment(JLabel.CENTER);
+		popupPaper.setHorizontalAlignment(JLabel.CENTER);
+	}
+
+	private void setPlayerBanners() {
+		// set redPlayer
+		redPlayer.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
+		redPlayer.setForeground(Color.BLACK);
+		// redPlayer.setBackground(TRANSPARENT);
+		redPlayer.setVerticalAlignment(JLabel.CENTER);
+		redPlayer.setHorizontalAlignment(JLabel.CENTER);
+
+		// set bluePlayer
+		bluePlayer.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
+		bluePlayer.setForeground(Color.BLACK);
+		// bluePlayer.setBackground(TRANSPARENT);
+		bluePlayer.setVerticalAlignment(JLabel.CENTER);
+		bluePlayer.setHorizontalAlignment(JLabel.CENTER);
+	}
+
+	private void setChoiceButtons() {
+		// set choiceButtons[0] (red button)
+		choiceButtons[0].setActionCommand("RED");
+		choiceButtons[0].setFocusable(false);
+		choiceButtons[0].setPreferredSize(BUTTON_SIZE);
+		choiceButtons[0].setForeground(TRANSPARENT);
+		choiceButtons[0].setBackground(Color.RED);
+
+		// set choiceButtons[1] (blue button)
+		choiceButtons[1].setActionCommand("BLUE");
+		choiceButtons[1].setFocusable(false);
+		choiceButtons[1].setPreferredSize(BUTTON_SIZE);
+		choiceButtons[1].setForeground(TRANSPARENT);
+		choiceButtons[1].setBackground(Color.BLUE);
+	}
 	public JLabel getStartButton() {
 		return startButton;
 	}
