@@ -168,26 +168,12 @@ public class GameDisplay extends JFrame  {
 		//set blue and red player banners on left and right of the board
 		setPlayerBanners();
 
+		//set choice buttons on player banner
 		setChoiceButtons();
 		
-
-		// setup this frame
-		this.setTitle("Animal Chess"); // title for the window
-		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// this.setSize((int)DEFAULT_SIZE.getWidth() + 16, (int)DEFAULT_SIZE.getHeight() + 40); // original frame size: 1033, 772
-		this.setSize(DEF_FRAME_SIZE);
-		this.setResizable(false); // not resizable
-    	this.setLocationRelativeTo(null); // center of screen
-		this.setLayout(new BorderLayout());
-		this.setVisible(true);
+		//set main JFrame of GUI and add base
+		setFrame();
 		
-		// add the base to this frame
-		this.add(base, BorderLayout.CENTER);
-		// add components to the base
-		base.add(backgrounds[0], JLayeredPane.DEFAULT_LAYER);
-		backgrounds[0].add(lowerContainer, BorderLayout.SOUTH);
-		lowerContainer.add(startButton);
 
 
 		// Refresh contents
@@ -362,7 +348,25 @@ public class GameDisplay extends JFrame  {
 				new ImageIcon("images\\randPiece.png"), 
 				new ImageIcon("images\\" + (randIndexes[n] + 1) + ".png")));
 	}
-	
+	private void setFrame() {
+		// setup this frame
+		this.setTitle("Animal Chess"); // title for the window
+		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// this.setSize((int)DEFAULT_SIZE.getWidth() + 16, (int)DEFAULT_SIZE.getHeight() + 40); // original frame size: 1033, 772
+		this.setSize(DEF_FRAME_SIZE);
+		this.setResizable(false); // not resizable
+    	this.setLocationRelativeTo(null); // center of screen
+		this.setLayout(new BorderLayout());
+		this.setVisible(true);
+		
+		// add the base to this frame
+		this.add(base, BorderLayout.CENTER);
+		// add components to the base
+		base.add(backgrounds[0], JLayeredPane.DEFAULT_LAYER);
+		backgrounds[0].add(lowerContainer, BorderLayout.SOUTH);
+		lowerContainer.add(startButton);
+	}
 	public void displayRandomChoices(int[] randIndexes) {
 		textLabels[0].setText("~ PICK A PIECE ~");
 		
