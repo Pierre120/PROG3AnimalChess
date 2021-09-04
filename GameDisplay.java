@@ -295,7 +295,7 @@ public class GameDisplay extends JFrame  {
 	}
 
 	
-	private void setRandomPieces(int[] randIndexes) {
+	private void initRandomPieces(int[] randIndexes) {
 		int n;
 
 		for(n = 0; n < randIndexes.length; n++)
@@ -309,7 +309,7 @@ public class GameDisplay extends JFrame  {
 		
 		textLabel2.setText("TURN: PERSON 1");
 		
-		setRandomPieces(randIndexes);
+		initRandomPieces(randIndexes);
 
 		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[1]);
 
