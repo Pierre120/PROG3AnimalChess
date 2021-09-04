@@ -37,6 +37,8 @@ public class GameDisplay extends JFrame  {
 	private JLabel redPlayer;
 	private JLabel bluePlayer;
 
+	private JButton[] choiceButtons;
+
 	private ImageIcon[][] animalPiecePics; // final
 	
 	private MouseListener randomPicker;
@@ -100,6 +102,24 @@ public class GameDisplay extends JFrame  {
 		popupPaper = new JLabel(new ImageIcon("images\\popup.png"));
 		redPlayer = new JLabel();
 		bluePlayer = new JLabel();
+
+		choiceButtons = new JButton[4];
+		choiceButtons[0] = new JButton(); // red
+		choiceButtons[1] = new JButton(); // blue
+		choiceButtons[2] = new JButton(); // yes
+		choiceButtons[3] = new JButton(); // no
+
+		choiceButtons[0].setActionCommand("RED");
+		choiceButtons[0].setFocusable(false);
+		choiceButtons[0].setPreferredSize(new Dimension(200, 100));
+		choiceButtons[0].setForeground(TRANSPARENT);
+		choiceButtons[0].setBackground(Color.RED);
+
+		choiceButtons[1].setActionCommand("BLUE");
+		choiceButtons[1].setFocusable(false);
+		choiceButtons[1].setPreferredSize(new Dimension(200, 100));
+		choiceButtons[1].setForeground(TRANSPARENT);
+		choiceButtons[1].setBackground(Color.BLUE);
 
 		animalPiecePics = new ImageIcon[2][8];
 
@@ -295,26 +315,16 @@ public class GameDisplay extends JFrame  {
 		
 		textPanel.removeAll();
 
-		JButton redButton = new JButton("RED");
-		redButton.setFocusable(false);
-		redButton.setPreferredSize(new Dimension(200, 100));
-		redButton.setForeground(TRANSPARENT);
-		redButton.setBackground(Color.RED);
-		redButton.addActionListener(colorPicker);
-
-		JButton blueButton = new JButton("BLUE");
-		blueButton.setFocusable(false);
-		blueButton.setPreferredSize(new Dimension(200, 100));
-		blueButton.setForeground(TRANSPARENT);
-		blueButton.setBackground(Color.BLUE);
-		blueButton.addActionListener(colorPicker);
-
 		textLabel1.setText("~ PICK A COLOR ~");
 		textLabel2.setText("PERSON " + person + " IS PLAYER 1");
 
 		background.removeAll();
 
 		upperContainer.removeAll();
+
+		choiceButtons[0].addActionListener(colorPicker);
+
+		choiceButtons[1].addActionListener(colorPicker);
 		
 		lowerContainer.removeAll();
 		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); // new Dimension(600, 400)
@@ -324,8 +334,8 @@ public class GameDisplay extends JFrame  {
 		popupPanel.add(popupPaper, BorderLayout.CENTER); 
 		
 		popupPaper.add(lowerContainer, BorderLayout.SOUTH);
-		lowerContainer.add(redButton);
-		lowerContainer.add(blueButton);
+		lowerContainer.add(choiceButtons[0]);
+		lowerContainer.add(choiceButtons[1]);
 		popupPaper.add(upperContainer, BorderLayout.CENTER);
 		upperContainer.add(textPanel, BorderLayout.SOUTH);
 		textPanel.add(textContainer);
