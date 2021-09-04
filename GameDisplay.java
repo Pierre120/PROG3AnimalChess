@@ -136,14 +136,8 @@ public class GameDisplay extends JFrame  {
 		// set background
 		setBackgrounds();
 
-		// set transparent upper container 
-		upperContainer.setLayout(new BorderLayout());
-		upperContainer.setBackground(TRANSPARENT);
-
-		// set transparent lower container
-		lowerContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 56, 20));
-		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); //new Dimension(1017, 400) 
-		lowerContainer.setBackground(TRANSPARENT);
+		//set transparent upper and lower containers
+		setTransparentContainers();
 
 		// set randPieceContainer 
 		randPieceContainer.setLayout(new GridLayout(2, 4, 15, 15));
@@ -283,6 +277,17 @@ public class GameDisplay extends JFrame  {
 
 		backgrounds[1].setLayout(new BorderLayout());
 		// backgrounds[1].setBounds(0, 0, 777, 618);
+	}
+
+	private void setTransparentContainers() {
+		// set transparent upper container 
+		upperContainer.setLayout(new BorderLayout());
+		upperContainer.setBackground(TRANSPARENT);
+
+		// set transparent lower container
+		lowerContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 56, 20));
+		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); //new Dimension(1017, 400) 
+		lowerContainer.setBackground(TRANSPARENT);
 	}
 	
 	
