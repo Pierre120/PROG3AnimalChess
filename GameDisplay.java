@@ -45,6 +45,7 @@ public class GameDisplay extends JFrame  {
 	
 	private final Color TRANSPARENT;
 
+	private final Dimension DEF_FRAME_SIZE;
 	private final Dimension DEFAULT_SIZE;
 	private final Dimension[] LOWER_CONTAINER_SIZE;
 	private final Dimension TEXT_LABEL_SIZE;
@@ -54,12 +55,16 @@ public class GameDisplay extends JFrame  {
 	public GameDisplay() {
 
 		TRANSPARENT = new Color(0, 0, 0, 0);
-		DEFAULT_SIZE = new Dimension(1017, 732);
+
+		DEF_FRAME_SIZE = new Dimension(1033, 772); // allowance of dimension for the frame
+		DEFAULT_SIZE = new Dimension((int)DEF_FRAME_SIZE.getWidth() - 16, (int)DEF_FRAME_SIZE.getHeight() - 40); // 1017 x 732
 		LOWER_CONTAINER_SIZE = new Dimension[2];
-		LOWER_CONTAINER_SIZE[0] = new Dimension(1017, 400); // default size
-		LOWER_CONTAINER_SIZE[1] = new Dimension(1017, (int)LOWER_CONTAINER_SIZE[0].getHeight() - 50); // during random picking size
+		LOWER_CONTAINER_SIZE[0] = new Dimension((int)DEFAULT_SIZE.getWidth(), 
+									(int)DEFAULT_SIZE.getHeight() - 332); // 1017 x 400
+		LOWER_CONTAINER_SIZE[1] = new Dimension((int)DEFAULT_SIZE.getWidth(), 
+									(int)LOWER_CONTAINER_SIZE[0].getHeight() - 50); // during random picking size
 		TEXT_LABEL_SIZE = new Dimension(400, 50);
-		COLOR_PANEL_SIZE = new Dimension(120, 620);
+		COLOR_PANEL_SIZE = new Dimension(120, 618);
 		TILE_SIZE = new Dimension(80, 80);
 
 		base = new JLayeredPane();
@@ -245,7 +250,8 @@ public class GameDisplay extends JFrame  {
 		this.setTitle("Animal Chess"); // title for the window
 		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize((int)DEFAULT_SIZE.getWidth() + 16, (int)DEFAULT_SIZE.getHeight() + 40); // original frame size: 1033, 772
+		// this.setSize((int)DEFAULT_SIZE.getWidth() + 16, (int)DEFAULT_SIZE.getHeight() + 40); // original frame size: 1033, 772
+		this.setSize(DEF_FRAME_SIZE);
 		this.setResizable(false); // not resizable
     	this.setLocationRelativeTo(null); // center of screen
 		this.setLayout(new BorderLayout());
