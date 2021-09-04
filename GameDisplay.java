@@ -146,10 +146,7 @@ public class GameDisplay extends JFrame  {
 		setTextPanelComps();
 
 		// set popupPanel
-		popupPanel.setLayout(new BorderLayout());
-		popupPanel.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
-		popupPanel.setBackground(new Color(0, 0, 0, 100));
-		// popupPanel.setOpaque(true);
+		setPopupPanel();
 
 		// set redPanel
 		redPanel.setLayout(new BorderLayout());
@@ -297,6 +294,13 @@ public class GameDisplay extends JFrame  {
 		// set textContainer 
 		textContainer.setLayout(new GridLayout(2, 1));
 		textContainer.setBackground(TRANSPARENT); 
+	}
+
+	private void setPopupPanel() {
+		popupPanel.setLayout(new BorderLayout());
+		popupPanel.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
+		popupPanel.setBackground(new Color(0, 0, 0, 100));
+		// popupPanel.setOpaque(true);
 	}
 	
 	public void refresh() {
