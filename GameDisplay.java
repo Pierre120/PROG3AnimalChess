@@ -134,13 +134,7 @@ public class GameDisplay extends JFrame  {
 		setBase();
 
 		// set background
-		// backgrounds[0].setSize(1033, 772);
-		backgrounds[0].setLayout(new BorderLayout());
-		backgrounds[0].setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
-		// System.out.println(backgrounds[0].getSize());
-
-		backgrounds[1].setLayout(new BorderLayout());
-		// backgrounds[1].setBounds(0, 0, 777, 618);
+		setBackgrounds();
 
 		// set transparent upper container 
 		upperContainer.setLayout(new BorderLayout());
@@ -282,7 +276,13 @@ public class GameDisplay extends JFrame  {
 	}
 
 	private void setBackgrounds() {
-		
+		// backgrounds[0].setSize(1033, 772);
+		backgrounds[0].setLayout(new BorderLayout());
+		backgrounds[0].setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
+		// System.out.println(backgrounds[0].getSize());
+
+		backgrounds[1].setLayout(new BorderLayout());
+		// backgrounds[1].setBounds(0, 0, 777, 618);
 	}
 	
 	
