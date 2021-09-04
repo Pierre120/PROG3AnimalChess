@@ -1,10 +1,9 @@
 import javax.swing.*;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.event.*;
-import javax.swing.text.ComponentView;
+// import javax.swing.LayoutStyle.ComponentPlacement;
+// import javax.swing.text.ComponentView;
 
 /**
  * This GameDisplay class is responsible for the displays or outputs in the terminal.
@@ -31,8 +30,7 @@ public class GameDisplay extends JFrame  {
 	private JPanel bluePanel;
 	
 	private JLabel startButton;
-	private JLabel textLabel1;
-	private JLabel textLabel2;
+	private JLabel[] textLabels;
 	private JLabel popupPaper;
 	private JLabel redPlayer;
 	private JLabel bluePlayer;
@@ -114,8 +112,9 @@ public class GameDisplay extends JFrame  {
 		bluePanel = new JPanel();
 		
 		startButton = new JLabel(new ImageIcon("images\\start.png"));
-		textLabel1 = new JLabel();
-		textLabel2 = new JLabel();
+		textLabels = new JLabel[2];
+		textLabels[0] = new JLabel();
+		textLabels[1] = new JLabel();
 		popupPaper = new JLabel(new ImageIcon("images\\popup.png"));
 		redPlayer = new JLabel();
 		bluePlayer = new JLabel();
@@ -212,19 +211,19 @@ public class GameDisplay extends JFrame  {
 		// startButton.setBounds(416, 350, 250, 150);
 		// startButton.setSize(250, 150);
 
-		// set textLabel1
-		textLabel1.setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
-		textLabel1.setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
-		textLabel1.setForeground(Color.BLACK);
-		textLabel1.setHorizontalAlignment(JLabel.CENTER);
-		// System.out.println(textLabel1.getSize().toString());
+		// set textLabels[0]
+		textLabels[0].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
+		textLabels[0].setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
+		textLabels[0].setForeground(Color.BLACK);
+		textLabels[0].setHorizontalAlignment(JLabel.CENTER);
+		// System.out.println(textLabels[0].getSize().toString());
 
-		// set textLabel2
-		textLabel2.setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
-		textLabel2.setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
-		textLabel2.setForeground(Color.BLACK);
-		textLabel2.setHorizontalAlignment(JLabel.CENTER);
-		// System.out.println(textLabel2.getSize().toString());
+		// set textLabels[1]
+		textLabels[1].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
+		textLabels[1].setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
+		textLabels[1].setForeground(Color.BLACK);
+		textLabels[1].setHorizontalAlignment(JLabel.CENTER);
+		// System.out.println(textLabels[1].getSize().toString());
 
 		// set popupPaper
 		popupPaper.setLayout(new BorderLayout());
@@ -315,9 +314,9 @@ public class GameDisplay extends JFrame  {
 	}
 	
 	public void displayRandomChoices(int[] randIndexes) {
-		textLabel1.setText("~ PICK A PIECE ~");
+		textLabels[0].setText("~ PICK A PIECE ~");
 		
-		textLabel2.setText("TURN: PERSON 1");
+		textLabels[1].setText("TURN: PERSON 1");
 		
 		initRandomPieces(randIndexes);
 
@@ -327,8 +326,8 @@ public class GameDisplay extends JFrame  {
 		upperContainer.add(textPanel, BorderLayout.SOUTH);
 		textPanel.add(textBoard);
 		textBoard.add(textContainer, BorderLayout.SOUTH);
-		textContainer.add(textLabel1);
-		textContainer.add(textLabel2);
+		textContainer.add(textLabels[0]);
+		textContainer.add(textLabels[1]);
 		lowerContainer.add(randPieceContainer);
 		revalidate();
 		// lowerContainer.revalidate();
@@ -340,8 +339,8 @@ public class GameDisplay extends JFrame  {
 		
 		textPanel.removeAll();
 
-		textLabel1.setText("~ PICK A COLOR ~");
-		textLabel2.setText("PERSON " + person + " IS PLAYER 1");
+		textLabels[0].setText("~ PICK A COLOR ~");
+		textLabels[1].setText("PERSON " + person + " IS PLAYER 1");
 
 		backgrounds[0].removeAll();
 
@@ -370,11 +369,11 @@ public class GameDisplay extends JFrame  {
 	public void updateTurn(int turn) {
 		switch(turn) {
 			case 1:
-				textLabel2.setText("TURN: PERSON 2");
+				textLabels[1].setText("TURN: PERSON 2");
 				break;
 
 			default:
-				textLabel2.setText("LOADING ...");
+				textLabels[1].setText("LOADING ...");
 				break;
 		}
 	}
