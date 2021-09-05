@@ -28,6 +28,8 @@ public class GameDisplay extends JFrame  {
 	private JPanel header;
 	private JPanel redPanel;
 	private JPanel bluePanel;
+	private JPanel boardPanel;
+	private JPanel boardContainer;
 	
 	private JLabel startButton;
 	private JLabel[] textLabels;
@@ -38,7 +40,9 @@ public class GameDisplay extends JFrame  {
 	private JButton[] choiceButtons;
 
 	private BoardTile[][] tiles;
-	private final ImageIcon[][] animalPiecePics; // final
+	// private JPanel[][] tiles;
+	private final JLabel[][] animalPiecePics; // final
+	private final ImageIcon[] TERRAIN_PICS;
 	
 	private MouseListener randomPicker; 
 	
@@ -49,11 +53,12 @@ public class GameDisplay extends JFrame  {
 	private final Dimension[] LOWER_CONTAINER_SIZE;
 	private final Dimension TEXT_LABEL_SIZE;
 	private final Dimension COLOR_PANEL_SIZE;
+	private final Dimension PIECE_SIZE;
 	private final Dimension TILE_SIZE;
 	private final Dimension BUTTON_SIZE;
 	
 	public GameDisplay() {
-
+		
 		TRANSPARENT = new Color(0, 0, 0, 0);
 
 		DEF_FRAME_SIZE = new Dimension(1033, 772); // allowance of dimension for the frame
@@ -65,6 +70,7 @@ public class GameDisplay extends JFrame  {
 									(int)LOWER_CONTAINER_SIZE[0].getHeight() - 50); // during random picking size
 		TEXT_LABEL_SIZE = new Dimension(400, 50);
 		COLOR_PANEL_SIZE = new Dimension(120, 618);
+		PIECE_SIZE = new Dimension(78, 78);
 		TILE_SIZE = new Dimension(80, 80);
 		BUTTON_SIZE = new Dimension(200, 100);
 
@@ -111,6 +117,8 @@ public class GameDisplay extends JFrame  {
 		popupPanel = new JPanel();
 		redPanel = new JPanel();
 		bluePanel = new JPanel();
+		boardPanel = new JPanel();
+		boardContainer = new JPanel();
 		
 		startButton = new JLabel(new ImageIcon("images\\start.png"));
 		textLabels = new JLabel[2];
@@ -127,11 +135,17 @@ public class GameDisplay extends JFrame  {
 		choiceButtons[3] = new JButton(); // no
 
 		tiles = new BoardTile[9][7];
-		animalPiecePics = new ImageIcon[2][8];
+		// tiles = new JPanel[9][7];
+		animalPiecePics = new JLabel[2][8];
 		initPiecePics();
+		TERRAIN_PICS = new ImageIcon[4];
+		TERRAIN_PICS[0] = new ImageIcon("images\\land.png");
+		TERRAIN_PICS[1] = new ImageIcon("images\\river.png");
+		TERRAIN_PICS[2] = new ImageIcon("images\\trap.png");
+		TERRAIN_PICS[3] = new ImageIcon("images\\animalDen.png");
 
 		randomPicker = null;
-
+		
 
 		// set base for all components
 		setBase();
@@ -409,7 +423,7 @@ public class GameDisplay extends JFrame  {
 		
 		lowerContainer.removeAll();
 		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); // new Dimension(600, 400)
-		// lowerContainer.setBackground(TRANSPARENT);
+		// lowerContainer.setBackground(Color.BLACK);
 
 		base.add(popupPanel, JLayeredPane.POPUP_LAYER); 
 		popupPanel.add(popupPaper, BorderLayout.CENTER); 
@@ -448,7 +462,11 @@ public class GameDisplay extends JFrame  {
 		
 		for(int i = 0; i < 2; i++) {
 			for(int j = 0; j < 8; j++) {
-				animalPiecePics[i][j] = new ImageIcon("images\\" + i + (j + 1) + ".png");
+				animalPiecePics[i][j] = new JLabel(new ImageIcon("images\\" + i + (j + 1) + ".png"));
+				animalPiecePics[i][j].setPreferredSize(PIECE_SIZE);
+				animalPiecePics[i][j].setHorizontalAlignment(JLabel.CENTER);
+				animalPiecePics[i][j].setVerticalAlignment(JLabel.CENTER);
+				// animalPiecePics[i][j].setBounds(0, 0, 78, 78);
 			}
 		}
 	}
@@ -457,25 +475,73 @@ public class GameDisplay extends JFrame  {
 
 		for(int row = 0; row < 9; row++) 
 			for(int col = 0; col < 7; col++) {
-
+				/*
 				if(board.getTiles().getTerrains()[row][col].isLand())
-					tiles[row][col] = new BoardTile("" + row + col, new ImageIcon("images\\land.png"));
+					tiles[row][col] = new JPanel() {
+						@Override
+						public void paintComponent(Graphics g) {
+							super.paintComponent(g);
+							Graphics2D h = (Graphics2D) g;
+							h.drawImage(new ImageIcon("images\\land.png").getImage(), 0, 0, null);
+						}
+					};
 				else if (board.getTiles().getTerrains()[row][col].isRiver())
-					tiles[row][col] = new BoardTile("" + row + col, new ImageIcon("images\\river.png"));
+					tiles[row][col] = new JPanel() {
+						@Override
+						public void paintComponent(Graphics g) {
+							super.paintComponent(g);
+							Graphics2D h = (Graphics2D) g;
+							h.drawImage(new ImageIcon("images\\river.png").getImage(), 0, 0, null);
+						}
+					};
 				else if(board.getTiles().getTerrains()[row][col].isAnimalDen())
-					tiles[row][col] = new BoardTile("" + row + col, new ImageIcon("images\\animalDen.png"));
+					tiles[row][col] = new JPanel() {
+						@Override
+						public void paintComponent(Graphics g) {
+							super.paintComponent(g);
+							Graphics2D h = (Graphics2D) g;
+							h.drawImage(new ImageIcon("images\\animalDen.png").getImage(), 0, 0, null);
+						}
+					};
 				else if(board.getTiles().getTerrains()[row][col].isTrap())
-					tiles[row][col] = new BoardTile("" + row + col, new ImageIcon("images\\trap.png"));
+					tiles[row][col] = new JPanel() {
+						@Override
+						public void paintComponent(Graphics g) {
+							super.paintComponent(g);
+							Graphics2D h = (Graphics2D) g;
+							h.drawImage(new ImageIcon("images\\trap.png").getImage(), 0, 0, null);
+						}
+					};
+
+				tiles[row][col].setLayout(new BorderLayout());
+
+				tiles[row][col].setPreferredSize(TILE_SIZE);
 
 				if(board.getTiles().getTerrains()[row][col].getState())
-					tiles[row][col].addAnimal("" + (board.getTiles().getTerrains()[row][col].getAnimal().getPlayerSide() - 1) +
-						board.getTiles().getTerrains()[row][col].getAnimal().getRank());
+					// tiles[row][col].addAnimal("" + (board.getTiles().getTerrains()[row][col].getAnimal().getPlayerSide() - 1) +
+					// 	board.getTiles().getTerrains()[row][col].getAnimal().getRank());
+					tiles[row][col].add((animalPiecePics[board.getTiles().getTerrains()[row][col].getAnimal().getPlayerSide() - 1]
+						[board.getTiles().getTerrains()[row][col].getAnimal().getRank() - 1]), BorderLayout.CENTER);
+				*/
+
+				if(board.getTiles().getTerrains()[row][col].isLand())
+					tiles[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[0]);
+				else if (board.getTiles().getTerrains()[row][col].isRiver())
+					tiles[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[1]);
+				else if(board.getTiles().getTerrains()[row][col].isTrap())
+					tiles[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[2]);
+				else if(board.getTiles().getTerrains()[row][col].isAnimalDen())
+					tiles[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[3]);
+				
+				if(board.getTiles().getTerrains()[row][col].getState())
+					tiles[row][col].addPiece("" + (board.getTiles().getTerrains()[row][col].getAnimal().getPlayerSide() - 1) +
+					 	board.getTiles().getTerrains()[row][col].getAnimal().getRank());
 			}
 	}
 
-	private void addBoardTiles(JPanel boardPanel) {
+	private void addBoardTiles() {
 		
-		for(int col = 6; col <= 0; col--)
+		for(int col = 6; col >= 0; col--)
 			for(int row = 0; row < 9; row++)
 				boardPanel.add(tiles[row][col]);
 	}
@@ -494,21 +560,32 @@ public class GameDisplay extends JFrame  {
 
 	public void displayAnimalChess(int playerInd) {
 		assignPlayers(playerInd);
+
+		boardPanel.setLayout(new GridLayout(7, 9, 1, 1)); 
+		// boardPanel.setBounds(0, 0, 1017, 734);
+		// boardPanel.setBounds(0, 0, 720, 560);
+		boardPanel.setBackground(Color.BLACK);
+		// backgrounds[1].setLayout(new FlowLayout());
 		
-		// temporary
-		JPanel background2 = new JPanel();
-		background2.setLayout(new BorderLayout()); 
-		background2.setBounds(0, 0, 1017, 734);
-		background2.setBackground(Color.CYAN);
 		
+		boardContainer.setLayout(new FlowLayout());
+		boardContainer.setPreferredSize(new Dimension(1000, 617));
+		boardContainer.setBackground(TRANSPARENT);
+
+		
+
 		// base.removeAll();
-		// base.add(background2, JLayeredPane.DEFAULT_LAYER);
+		// base.add(boardPanel, JLayeredPane.DEFAULT_LAYER);
 		base.remove(popupPanel);
+		
+		addBoardTiles();
 
 		backgrounds[0].add(header, BorderLayout.NORTH);
 		backgrounds[0].add(redPanel, BorderLayout.WEST);
 		backgrounds[0].add(bluePanel, BorderLayout.EAST);
 		backgrounds[0].add(backgrounds[1], BorderLayout.CENTER);
+		backgrounds[1].add(boardContainer, BorderLayout.SOUTH);
+		boardContainer.add(boardPanel);
 		redPanel.add(redPlayer, BorderLayout.CENTER);
 		bluePanel.add(bluePlayer, BorderLayout.CENTER);
 
@@ -530,35 +607,36 @@ public class GameDisplay extends JFrame  {
 	}
 
 
-	public class BoardTile extends JLabel	{
+	public class BoardTile extends JPanel	{
 		
-		private String animalID;
+		private JLabel animalPiece;
 		private ImageIcon tile;
 
 		public BoardTile(String tileID, ImageIcon tilePic) {
-			animalID = null;
+			animalPiece = null;
 			tile = tilePic;
 			setName(tileID);
-			setIcon(null); 
+			setLayout(new BorderLayout());
 			setPreferredSize(TILE_SIZE);
 			setBackground(TRANSPARENT);
-			setEnabled(false);	
+			setEnabled(false);
+			// addMouseListener(l);
 		}	
 
 		//when animal moves in
-		public void addAnimal(String pieceId) {
-			animalID = pieceId;
+		public void addPiece(String pieceId) {
+			animalPiece = animalPiecePics[Integer.parseInt("" + pieceId.charAt(0))][Integer.parseInt("" + pieceId.charAt(1)) - 1];
 			
 			setEnabled(true);
-			setIcon(animalPiecePics[Integer.parseInt("" + animalID.charAt(0))][Integer.parseInt("" + animalID.charAt(1)) - 1]); // new ImageIcon("images\\" + animalID + ".png")
+			add(animalPiece);
 		}
 
 		//when animal moves out
-		public void removeAnimal() {
-			setIcon(null);
-			animalID = null;
+		public void removePiece() {
+			remove(animalPiece);
+			animalPiece = null;
 			setEnabled(false);
-			repaint();
+			// repaint();
 		}
 
 		@Override

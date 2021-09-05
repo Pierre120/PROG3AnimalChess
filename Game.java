@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.Random;
 import java.util.Scanner;
 
+
 public class Game {
     
     private int[] randIndexes;
@@ -150,7 +151,39 @@ public class Game {
             // if(e.getActionCommand().equals("RED") || e.getActionCommand().equals("BLUE"))
             System.out.println(e.getActionCommand());
 
+            gameGUI.initBoardDisplay(gameBoard);
             gameGUI.displayAnimalChess(person);
+        }
+        
+    }
+
+
+    private class BoardListener implements MouseListener {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+           // do nothing
+           
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            //if(isRight)
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+           
+            
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+           
         }
         
     }
