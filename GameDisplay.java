@@ -45,6 +45,7 @@ public class GameDisplay extends JFrame  {
 	private final ImageIcon[] TERRAIN_PICS;
 	
 	private MouseListener randomPicker; 
+	private MouseListener boardListener;
 	
 	private final Color TRANSPARENT;
 
@@ -145,6 +146,7 @@ public class GameDisplay extends JFrame  {
 		TERRAIN_PICS[3] = new ImageIcon("images\\animalDen.png");
 
 		randomPicker = null;
+		boardListener = null;
 		
 
 		// set base for all components
@@ -352,13 +354,14 @@ public class GameDisplay extends JFrame  {
 		this.setSize(1033, 772);
 	}
 
-	public void setListener(MouseListener start, MouseListener random, ActionListener colorPicker) {
+	public void setListeners(MouseListener start, MouseListener random, ActionListener colorPicker, MouseListener board) {
 		startButton.addMouseListener(start);
 		// set the listener for other MouseInputListener attributes of this class
 		// implementation of MouseInputListener are in Game class
 		randomPicker = random;
 		choiceButtons[0].addActionListener(colorPicker);
 		choiceButtons[1].addActionListener(colorPicker);
+		boardListener = board;
 	}
 
 	public void setTransparentBackground(Component comp) {
@@ -593,6 +596,69 @@ public class GameDisplay extends JFrame  {
 		revalidate();
 	}
 
+
+	public void updateTiles(Terrain[][] board, Animal movingPiece, String[] validIDs, int move) {
+		for(int m = 0; m < validIDs.length; m++)
+			if(!validIDs[m].equalsIgnoreCase("null")) {
+				switch(move) {
+					case 0: // done making a move
+						tiles[movingPiece.getRow()][movingPiece.getCol()]
+							.setBorder(BorderFactory.createEmptyBorder());
+
+						tiles[Integer.parseInt("" + validIDs[m].charAt(0))]
+							[Integer.parseInt("" + validIDs[m].charAt(1))]
+							.setBorder(BorderFactory.createEmptyBorder());
+
+						// if there are no pieces occupying current tile
+						if(!board[Integer.parseInt("" + validIDs[m].charAt(0))]
+							[Integer.parseInt("" + validIDs[m].charAt(1))].getState())
+							tiles[Integer.parseInt("" + validIDs[m].charAt(0))]
+								[Integer.parseInt("" + validIDs[m].charAt(1))]
+								.setEnabled(false);
+						break;
+
+					case 1: // starting to make a move
+						tiles[movingPiece.getRow()][movingPiece.getCol()]
+							.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+
+						tiles[Integer.parseInt("" + validIDs[m].charAt(0))]
+							[Integer.parseInt("" + validIDs[m].charAt(1))]
+							.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+
+						tiles[Integer.parseInt("" + validIDs[m].charAt(0))]
+							[Integer.parseInt("" + validIDs[m].charAt(1))]
+							.setEnabled(true);
+						break;
+				}
+					
+			}
+	}
+
+
+	public void movePiece(Terrain[][] board, Animal movingPiece, String[] validIDs, int inOut) {
+		switch(inOut) {
+			case 0: // moves out of tile
+				tiles[movingPiece.getRow()][movingPiece.getCol()].removePiece();
+				tiles[movingPiece.getRow()][movingPiece.getCol()]
+					.setBorder(BorderFactory.createEmptyBorder());
+				break;
+			case 1: // moves into tile
+				tiles[movingPiece.getRow()][movingPiece.getCol()].addPiece("" + (movingPiece.getPlayerSide() - 1) + movingPiece.getRank());
+
+				updateTiles(board, movingPiece, validIDs, 0);
+				break;
+		}
+	}
+
+
+	/* public void displayValidMoves(Terrain[][] board, Animal movingPiece, String[] validIDs) {
+		
+		
+		updateTiles(board, movingPiece, validIDs, 1);
+		
+		// repaint();
+	} */
+
 	public class RandomPiece extends JLabel {
 
 		public RandomPiece(String name, ImageIcon back, ImageIcon animalPiece) {
@@ -620,7 +686,7 @@ public class GameDisplay extends JFrame  {
 			setPreferredSize(TILE_SIZE);
 			setBackground(TRANSPARENT);
 			setEnabled(false);
-			// addMouseListener(l);
+			addMouseListener(boardListener);
 		}	
 
 		//when animal moves in

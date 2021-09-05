@@ -1,9 +1,10 @@
 import javax.swing.*;
-import java.awt.*;
 import javax.swing.event.*;
+import javax.swing.SwingUtilities.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
-import java.util.Scanner;
+// import java.util.Scanner;
 
 
 public class Game {
@@ -12,16 +13,23 @@ public class Game {
     private int[] randPick;
     private int person;
 
+    private Animal movingPiece;
+    // private String chosenTileID;
+    private String[] validTileIDs; //[0]/1-Up; [1]/2-Down; [2]/3-Left; [3]/4-Right
+
     public Game (Board board, GameDisplay gui) {
         randIndexes = new int[] {-1,-1,-1,-1,-1,-1,-1,-1};
         randomizePieces(randIndexes);
         randPick = new int[2];
 
+        validTileIDs = new String[4];
+
         gameBoard = board; // instantiate the Board object
         gameGUI = gui;
         // Board object automatically instantiates Tiles and Animal objects it contains
-        gameGUI.setListener(new StartListener(), new RandomListener(), new ColorListener());
+        gameGUI.setListeners(new StartListener(), new RandomListener(), new ColorListener(), new BoardListener());
 
+        
     }
 
 
@@ -35,7 +43,17 @@ public class Game {
         @Override
         public void mousePressed(MouseEvent e) {
             gameGUI.getStartButton().setIcon(new ImageIcon("images\\startPressed.png"));
-            gameGUI.setTransparentBackground(gameGUI.getStartButton());
+            // gameGUI.setTransparentBackground(gameGUI.getStartButton());
+            gameGUI.repaint();
+
+            /*
+            int d;
+            for(d = 0; d < 4; d++)
+                if(d == 2)
+                    break;
+            
+            System.out.println("Current value: " + d);
+            */
         }
 
 
@@ -167,13 +185,47 @@ public class Game {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            //if(isRight)
+            if(SwingUtilities.isRightMouseButton(e) && e.getComponent().isEnabled() && 
+                movingPiece != null && isOwnPiece(e) && isSameChosenPiece(e)) {
+                    
+                System.out.println("RIGHT");
+                System.out.println("Current chosen animal: " + movingPiece);
+                gameGUI.updateTiles(gameBoard.getTiles().getTerrains(), movingPiece, validTileIDs, 0);
+                movingPiece = null;
+                // chosenTileID = null;
+            }
+            else if(SwingUtilities.isLeftMouseButton(e) && e.getComponent().isEnabled()) {
+                System.out.println("LEFT");
+                
+                if(movingPiece == null && isOwnPiece(e)) {
+                    movingPiece = gameBoard.getTiles().getTerrains()[Integer.parseInt("" + e.getComponent().getName().charAt(0))]
+                        [Integer.parseInt("" + e.getComponent().getName().charAt(1))].getAnimal();
+
+                    generateValidMoves();
+                    gameGUI.updateTiles(gameBoard.getTiles().getTerrains(), movingPiece, validTileIDs, 1);
+                }
+                    
+                
+                else if(movingPiece != null && isValidMove(e)) {
+                    gameGUI.movePiece(gameBoard.getTiles().getTerrains(), movingPiece, validTileIDs, 0); // out of current tile of piece
+                    // move animal in Model
+                    executeMovements(e);
+                    gameGUI.movePiece(gameBoard.getTiles().getTerrains(), movingPiece, validTileIDs, 1); // into the chosen tile of movement
+                    //chosenTileID = e.getComponent().getName();
+                    person = (person + 1) % 2;
+                    System.out.println(person);
+                    // gameGUI.repaint();
+                    movingPiece = null;
+                }
+
+                System.out.println("Chosen piece: " + movingPiece);
+            }
+                
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
            
-            
         }
 
         @Override
@@ -188,6 +240,62 @@ public class Game {
         
     }
     
+
+    private boolean isOwnPiece(MouseEvent e) {
+        return gameBoard.getTiles().getTerrains()[Integer.parseInt("" + e.getComponent().getName().charAt(0))]
+                [Integer.parseInt("" + e.getComponent().getName().charAt(1))].getAnimal().getPlayerSide() - 1 == person;
+    }
+
+    private boolean isSameChosenPiece(MouseEvent e) {
+        return gameBoard.getTiles().getTerrains()[Integer.parseInt("" + e.getComponent().getName().charAt(0))]
+            [Integer.parseInt("" + e.getComponent().getName().charAt(1))].getAnimal() == movingPiece;
+    }
+
+    private boolean isValidMove(MouseEvent e) {
+        for(int n = 0; n < validTileIDs.length; n++)
+            if(validTileIDs[n].equals(e.getComponent().getName()))
+                return true;
+
+        return false;
+    }
+
+    private void generateValidMoves() {
+        for(int k = 0; k < validTileIDs.length; k++)
+            validTileIDs[k] = "null";
+
+        if(movingPiece.canMoveUp(gameBoard.getTiles().getTerrains())) 
+            validTileIDs[0] = "" + movingPiece.getRow() + (movingPiece.getCol() + movingPiece.getUpwardSpace());
+        if(movingPiece.canMoveDown(gameBoard.getTiles().getTerrains())) 
+            validTileIDs[1] = "" + movingPiece.getRow() + (movingPiece.getCol() - movingPiece.getDownwardSpace());
+        if(movingPiece.canMoveLeft(gameBoard.getTiles().getTerrains())) 
+            validTileIDs[2] = "" + (movingPiece.getRow() - movingPiece.getLeftSpace()) + movingPiece.getCol();
+        if(movingPiece.canMoveRight(gameBoard.getTiles().getTerrains())) 
+            validTileIDs[3] = "" + (movingPiece.getRow() + movingPiece.getRightSpace()) + movingPiece.getCol(); 
+    }
+
+    private void executeMovements(MouseEvent e) {
+        int i;
+        for(i = 0; i < validTileIDs.length; i++) {
+            if(validTileIDs[i].equals(e.getComponent().getName()))
+                break;
+        }
+
+        switch(i) {
+            case 0:
+                movingPiece.moveUp(gameBoard.getTiles().getTerrains());
+                break;
+            case 1:
+                movingPiece.moveDown(gameBoard.getTiles().getTerrains());
+                break;
+            case 2:
+                movingPiece.moveLeft(gameBoard.getTiles().getTerrains());
+                break;
+            case 3:
+                movingPiece.moveRight(gameBoard.getTiles().getTerrains());
+                break;
+
+        }
+    }
 
     /*
     public void executeGame () {
