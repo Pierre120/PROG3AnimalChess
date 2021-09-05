@@ -150,7 +150,7 @@ public class Game {
             // if(e.getActionCommand().equals("RED") || e.getActionCommand().equals("BLUE"))
             System.out.println(e.getActionCommand());
 
-            gameGUI.displayAnimalChess();
+            gameGUI.displayAnimalChess(person);
         }
         
     }

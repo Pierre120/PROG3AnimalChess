@@ -37,7 +37,8 @@ public class GameDisplay extends JFrame  {
 
 	private JButton[] choiceButtons;
 
-	private ImageIcon[][] animalPiecePics; // final
+	private BoardTile[][] tiles;
+	private final ImageIcon[][] animalPiecePics; // final
 	
 	private MouseListener randomPicker; 
 	
@@ -125,7 +126,9 @@ public class GameDisplay extends JFrame  {
 		choiceButtons[2] = new JButton(); // yes
 		choiceButtons[3] = new JButton(); // no
 
+		tiles = new BoardTile[9][7];
 		animalPiecePics = new ImageIcon[2][8];
+		initPiecePics();
 
 		randomPicker = null;
 
@@ -174,7 +177,12 @@ public class GameDisplay extends JFrame  {
 		//set main JFrame of GUI and add base
 		setFrame();
 		
-
+		// add the base to this frame
+		this.add(base, BorderLayout.CENTER);
+		// add components to the base
+		base.add(backgrounds[0], JLayeredPane.DEFAULT_LAYER);
+		backgrounds[0].add(lowerContainer, BorderLayout.SOUTH);
+		lowerContainer.add(startButton);
 
 		// Refresh contents
 		// refresh();
@@ -271,26 +279,6 @@ public class GameDisplay extends JFrame  {
 		// System.out.println(textLabels[1].getSize().toString());
 	}
 
-	public void refresh() {
-		this.setSize(1032, 771);
-		this.setSize(1033, 772);
-	}
-
-	public void setListener(MouseListener start, MouseListener random, ActionListener colorPicker) {
-		startButton.addMouseListener(start);
-		// set the listener for other MouseInputListener attributes of this class
-		// implementation of MouseInputListener are in Game class
-		randomPicker = random;
-		choiceButtons[0].addActionListener(colorPicker);
-		choiceButtons[1].addActionListener(colorPicker);
-	}
-
-	public void setTransparentBackground(Component comp) {
-		comp.setBackground(TRANSPARENT);
-		// refresh();
-		repaint();
-	}
-
 	private void setPopupPaper() {
 		popupPaper.setLayout(new BorderLayout());
 		popupPaper.setPreferredSize(new Dimension(600, 484));
@@ -330,6 +318,42 @@ public class GameDisplay extends JFrame  {
 		choiceButtons[1].setForeground(TRANSPARENT);
 		choiceButtons[1].setBackground(Color.BLUE);
 	}
+
+	private void setFrame() {
+		// setup this frame
+		this.setTitle("Animal Chess"); // title for the window
+		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// this.setSize((int)DEFAULT_SIZE.getWidth() + 16, (int)DEFAULT_SIZE.getHeight() + 40); // original frame size: 1033, 772
+		this.setSize(DEF_FRAME_SIZE);
+		this.setResizable(false); // not resizable
+    	this.setLocationRelativeTo(null); // center of screen
+		this.setLayout(new BorderLayout());
+		this.setVisible(true);
+		
+	}
+
+	public void refresh() {
+		this.setSize(1032, 771);
+		this.setSize(1033, 772);
+	}
+
+	public void setListener(MouseListener start, MouseListener random, ActionListener colorPicker) {
+		startButton.addMouseListener(start);
+		// set the listener for other MouseInputListener attributes of this class
+		// implementation of MouseInputListener are in Game class
+		randomPicker = random;
+		choiceButtons[0].addActionListener(colorPicker);
+		choiceButtons[1].addActionListener(colorPicker);
+	}
+
+	public void setTransparentBackground(Component comp) {
+		comp.setBackground(TRANSPARENT);
+		// refresh();
+		repaint();
+	}
+
+	
 	public JLabel getStartButton() {
 		return startButton;
 	}
@@ -348,25 +372,8 @@ public class GameDisplay extends JFrame  {
 				new ImageIcon("images\\randPiece.png"), 
 				new ImageIcon("images\\" + (randIndexes[n] + 1) + ".png")));
 	}
-	private void setFrame() {
-		// setup this frame
-		this.setTitle("Animal Chess"); // title for the window
-		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// this.setSize((int)DEFAULT_SIZE.getWidth() + 16, (int)DEFAULT_SIZE.getHeight() + 40); // original frame size: 1033, 772
-		this.setSize(DEF_FRAME_SIZE);
-		this.setResizable(false); // not resizable
-    	this.setLocationRelativeTo(null); // center of screen
-		this.setLayout(new BorderLayout());
-		this.setVisible(true);
-		
-		// add the base to this frame
-		this.add(base, BorderLayout.CENTER);
-		// add components to the base
-		base.add(backgrounds[0], JLayeredPane.DEFAULT_LAYER);
-		backgrounds[0].add(lowerContainer, BorderLayout.SOUTH);
-		lowerContainer.add(startButton);
-	}
+	
+
 	public void displayRandomChoices(int[] randIndexes) {
 		textLabels[0].setText("~ PICK A PIECE ~");
 		
@@ -441,25 +448,52 @@ public class GameDisplay extends JFrame  {
 		
 		for(int i = 0; i < 2; i++) {
 			for(int j = 0; j < 8; j++) {
-				animalPiecePics[i][j] = new ImageIcon("images\\" + i + (j + 1) +".png");
+				animalPiecePics[i][j] = new ImageIcon("images\\" + i + (j + 1) + ".png");
 			}
 		}
 	}
 	 
-	/*public void initBoardTiles() {
+	public void initBoardDisplay(Board board) {
 
-	} */
+		for(int row = 0; row < 9; row++) 
+			for(int col = 0; col < 7; col++) {
 
-	public void assignPlayers() {
-		// header.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-		
-		redPlayer.setText("<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>X</HTML>");
+				if(board.getTiles().getTerrains()[row][col].isLand())
+					tiles[row][col] = new BoardTile("" + row + col, new ImageIcon("images\\land.png"));
+				else if (board.getTiles().getTerrains()[row][col].isRiver())
+					tiles[row][col] = new BoardTile("" + row + col, new ImageIcon("images\\river.png"));
+				else if(board.getTiles().getTerrains()[row][col].isAnimalDen())
+					tiles[row][col] = new BoardTile("" + row + col, new ImageIcon("images\\animalDen.png"));
+				else if(board.getTiles().getTerrains()[row][col].isTrap())
+					tiles[row][col] = new BoardTile("" + row + col, new ImageIcon("images\\trap.png"));
 
-		bluePlayer.setText("<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>X</HTML>");
+				if(board.getTiles().getTerrains()[row][col].getState())
+					tiles[row][col].addAnimal("" + (board.getTiles().getTerrains()[row][col].getAnimal().getPlayerSide() - 1) +
+						board.getTiles().getTerrains()[row][col].getAnimal().getRank());
+			}
 	}
 
-	public void displayAnimalChess() {
-		assignPlayers();
+	private void addBoardTiles(JPanel boardPanel) {
+		
+		for(int col = 6; col <= 0; col--)
+			for(int row = 0; row < 9; row++)
+				boardPanel.add(tiles[row][col]);
+	}
+
+	public void assignPlayers(int playerInd) {
+		// header.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		String[] playerString = new String[2];
+
+		playerString[playerInd] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>1</HTML>";
+		playerString[(playerInd + 1) % 2] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>2</HTML>";
+
+		redPlayer.setText(playerString[0]);
+
+		bluePlayer.setText(playerString[1]);
+	}
+
+	public void displayAnimalChess(int playerInd) {
+		assignPlayers(playerInd);
 		
 		// temporary
 		JPanel background2 = new JPanel();
@@ -501,14 +535,14 @@ public class GameDisplay extends JFrame  {
 		private String animalID;
 		private ImageIcon tile;
 
-		public BoardTile(String tileID, String pieceId, ImageIcon animalPiece, ImageIcon tilePic, boolean enabled) {
-			animalID = pieceId;
+		public BoardTile(String tileID, ImageIcon tilePic) {
+			animalID = null;
 			tile = tilePic;
 			setName(tileID);
-			setIcon(animalPiece); 
+			setIcon(null); 
 			setPreferredSize(TILE_SIZE);
 			setBackground(TRANSPARENT);
-			setEnabled(enabled);	
+			setEnabled(false);	
 		}	
 
 		//when animal moves in
