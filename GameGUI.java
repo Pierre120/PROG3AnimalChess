@@ -11,9 +11,9 @@ import java.awt.event.*;
  * @author Pierre Vincent Hernandez
  * @author Matthew James Villarica
  */
-public class GameDisplay extends JFrame  {
+public class GameGUI extends JFrame  {
 
-	public GameDisplay() {
+	public GameGUI() {
 		
 		randPieceContainer = new JPanel();
 		startButton = new JLabel(new ImageIcon("images\\start.png"));

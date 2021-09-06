@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class GameController {
     
-    public GameController (BoardModel board, GameDisplay gui) {
+    public GameController (BoardModel board, GameGUI gui) {
         randIndexes = new int[] {-1,-1,-1,-1,-1,-1,-1,-1};
         randomizePieces();
         randPick = new int[2];
@@ -347,7 +347,7 @@ public class GameController {
 
 
     private BoardModel gameBoard;
-    private GameDisplay gameGUI; 
+    private GameGUI gameGUI; 
 
     private int[] randIndexes;
     private int[] randPick;
