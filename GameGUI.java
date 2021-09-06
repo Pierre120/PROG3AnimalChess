@@ -7,7 +7,7 @@ import java.awt.event.*;
  * This GameGUI class is responsible for the displays or outputs in the terminal.
  * It is used by the driver class to provide information and UI/UX for the players of 
  * the game.
- * 
+ * animal piece pictures source: https://www.pousseurdebois.fr/jeux-de-strategie/doushouqi/
  * @author Pierre Vincent Hernandez
  * @author Matthew James Villarica
  */
