@@ -207,10 +207,10 @@ public class Game {
                     
                 
                 else if(movingPiece != null && isValidMove(e)) {
-                    gameGUI.movePiece(gameBoard.getTiles().getTerrains(), movingPiece, validTileIDs, 0); // out of current tile of piece
+                    gameGUI.movePiece(gameBoard.getTiles().getTerrains(), movingPiece, validTileIDs, false); // out of current tile of piece
                     // move animal in Model
                     executeMovements(e);
-                    gameGUI.movePiece(gameBoard.getTiles().getTerrains(), movingPiece, validTileIDs, 1); // into the chosen tile of movement
+                    gameGUI.movePiece(gameBoard.getTiles().getTerrains(), movingPiece, validTileIDs, true); // into the chosen tile of movement
                     //chosenTileID = e.getComponent().getName();
                     person = (person + 1) % 2;
                     System.out.println(person);
