@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.event.*;
+
 // import javax.swing.LayoutStyle.ComponentPlacement;
 // import javax.swing.text.ComponentView;
 
@@ -15,52 +15,16 @@ import javax.swing.event.*;
  */
 public class GameDisplay extends JFrame  {
 	
-	private JPanel randPieceContainer;
-	private JLabel startButton;
-
-	private MouseListener randomPicker; 
-	private MouseListener boardListener;
-
-	private final Color TRANSPARENT;
 	
-	private final Dimension DEF_FRAME_SIZE;
-	private final Dimension DEFAULT_SIZE;
-	private final Dimension[] LOWER_CONTAINER_SIZE;
-	private final Dimension TEXT_LABEL_SIZE;
-	private final Dimension COLOR_PANEL_SIZE;
-	private final Dimension PIECE_SIZE;
-	private final Dimension TILE_SIZE;
-	private final Dimension BUTTON_SIZE; 
-
-	private final JLayeredPane BASE;
-
-	private final JPanel[] BACKGROUNDS; 
-	private final JPanel UPPER_CONTAINER; 
-	private final JPanel LOWER_CONTAINER;
-	private final JPanel TEXT_PANEL;
-	private final JPanel TEXT_CONTAINER;
-	private final JPanel TEXT_BOARD;
-	private final JPanel POPUP_PANEL;
-	private final JPanel HEADER;
-	private final JPanel RED_PANEL;
-	private final JPanel BLUE_PANEL;
-	private final JPanel BOARD_PANEL;
-	private final JPanel BOARD_CONTAINER;
-	
-	private final JLabel[] TEXT_LABELS;
-	private final JLabel POPUP_PAPER;
-	private final JLabel RED_PLAYER;
-	private final JLabel BLUE_PLAYER;
-	private final JLabel[][] PIECE_PICS;
-
-	private final JButton[] CHOICE_BUTTONS;
-
-	private final BoardTile[][] TILES;
-	private final ImageIcon[] TERRAIN_PICS;
-
 	
 	public GameDisplay() {
 		
+		randPieceContainer = new JPanel();
+		startButton = new JLabel(new ImageIcon("images\\start.png"));
+
+		randomPicker = null;
+		boardListener = null;
+
 		TRANSPARENT = new Color(0, 0, 0, 0);
 
 		DEF_FRAME_SIZE = new Dimension(1033, 772); // allowance of dimension for the frame
@@ -95,6 +59,7 @@ public class GameDisplay extends JFrame  {
 				wood.drawImage(new ImageIcon("images\\boardBackground.jpg").getImage(), 0, 0, null);
 			}
 		};
+
 		TEXT_BOARD = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
@@ -103,6 +68,7 @@ public class GameDisplay extends JFrame  {
 				board.drawImage(new ImageIcon("images\\textBoard.png").getImage(), 0, 0, null);
 			}
 		};
+
 		HEADER = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
@@ -111,7 +77,7 @@ public class GameDisplay extends JFrame  {
 				h.drawImage(new ImageIcon("images\\header.png").getImage(), 0, 0, null);
 			}
 		};
-		randPieceContainer = new JPanel();
+
 		TEXT_PANEL = new JPanel();
 		TEXT_CONTAINER = new JPanel(); 
 		UPPER_CONTAINER = new JPanel();
@@ -122,10 +88,11 @@ public class GameDisplay extends JFrame  {
 		BOARD_PANEL = new JPanel();
 		BOARD_CONTAINER = new JPanel();
 		
-		startButton = new JLabel(new ImageIcon("images\\start.png"));
+		
 		TEXT_LABELS = new JLabel[2];
 		TEXT_LABELS[0] = new JLabel();
 		TEXT_LABELS[1] = new JLabel();
+
 		POPUP_PAPER = new JLabel(new ImageIcon("images\\popup.png"));
 		RED_PLAYER = new JLabel();
 		BLUE_PLAYER = new JLabel();
@@ -136,18 +103,17 @@ public class GameDisplay extends JFrame  {
 		CHOICE_BUTTONS[2] = new JButton(); // ok
 
 		TILES = new BoardTile[9][7];
-		// TILES = new JPanel[9][7];
 		PIECE_PICS = new JLabel[2][8];
-		initPiecePics();
+		
 		TERRAIN_PICS = new ImageIcon[4];
 		TERRAIN_PICS[0] = new ImageIcon("images\\land.png");
 		TERRAIN_PICS[1] = new ImageIcon("images\\river.png");
 		TERRAIN_PICS[2] = new ImageIcon("images\\trap.png");
 		TERRAIN_PICS[3] = new ImageIcon("images\\animalDen.png");
 
-		randomPicker = null;
-		boardListener = null;
 		
+		// initialize pictures of pieces
+		initPiecePics();
 
 		// set base for all components
 		setBase();
@@ -173,11 +139,6 @@ public class GameDisplay extends JFrame  {
 		// set HEADER
 		HEADER.setPreferredSize(new Dimension(1017, 114));
 
-
-		// start button
-		// startButton.setBounds(416, 350, 250, 150);
-		// startButton.setSize(250, 150);
-
 		//	set TEXT_LABELS
 		setTextLabels();
 
@@ -200,13 +161,286 @@ public class GameDisplay extends JFrame  {
 		BACKGROUNDS[0].add(LOWER_CONTAINER, BorderLayout.SOUTH);
 		LOWER_CONTAINER.add(startButton);
 
-		// Refresh contents
-		// refresh();
+		
 		repaint();
 		validate();
 		// System.out.println(this.getSize().toString());
 	}
+	
+	
 
+
+	public void setListeners(MouseListener start, MouseListener random, ActionListener choicePicker, MouseListener board) {
+		startButton.addMouseListener(start);
+		// set the listener for other MouseInputListener attributes of this class
+		// implementation of MouseInputListener are in Game class
+		randomPicker = random;
+		CHOICE_BUTTONS[0].addActionListener(choicePicker);
+		CHOICE_BUTTONS[1].addActionListener(choicePicker);
+		CHOICE_BUTTONS[2].addActionListener(choicePicker);
+		boardListener = board;
+	}
+
+	/* public void setTransparentBackground(Component comp) {
+		comp.setBackground(TRANSPARENT);
+		repaint();
+	} */
+
+	
+	public JLabel getStartButton() {
+		return startButton;
+	}
+
+	public void removeStartButton() {
+		LOWER_CONTAINER.remove(startButton);
+		startButton = null;
+	}
+
+	public void removeRandomChoices() {
+		LOWER_CONTAINER.remove(randPieceContainer);
+		randPieceContainer = null;
+	}
+
+	
+	public void initBoardDisplay(Board board) {
+
+		for(int row = 0; row < 9; row++) 
+			for(int col = 0; col < 7; col++) {
+				if(board.getTiles().getTerrains()[row][col].isLand())
+					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[0]);
+				else if (board.getTiles().getTerrains()[row][col].isRiver())
+					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[1]);
+				else if(board.getTiles().getTerrains()[row][col].isTrap())
+					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[2]);
+				else if(board.getTiles().getTerrains()[row][col].isAnimalDen())
+					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[3]);
+				
+				if(board.getTiles().getTerrains()[row][col].getState())
+					TILES[row][col].addPiece("" + (board.getTiles().getTerrains()[row][col].getAnimal().getPlayerSide() - 1) +
+					 	board.getTiles().getTerrains()[row][col].getAnimal().getRank());
+			}
+	}
+
+	public void assignPlayers(int playerInd) {
+		// HEADER.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		String[] playerString = new String[2];
+
+		playerString[playerInd] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>1</HTML>";
+		playerString[(playerInd + 1) % 2] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>2</HTML>";
+
+		RED_PLAYER.setText(playerString[0]);
+		System.out.println("Assigning players... Red is " + RED_PLAYER.getText());
+
+		BLUE_PLAYER.setText(playerString[1]);
+	}
+
+	
+	public void updateTurn(int turn) {
+		switch(turn) {
+			case 1:
+				TEXT_LABELS[1].setText("TURN: PERSON 2");
+				break;
+
+			default:
+				TEXT_LABELS[1].setText("LOADING ...");
+				break;
+		}
+
+		repaint();
+	}
+
+	public void updateColorPanel(int turn) {
+		if(turn == 0) { // 0 - red
+			RED_PANEL.setBackground(Color.RED);
+			BLUE_PANEL.setBackground(Color.LIGHT_GRAY);
+		} else { // 1 = blue
+			RED_PANEL.setBackground(Color.LIGHT_GRAY);
+			BLUE_PANEL.setBackground(Color.BLUE);
+		}
+	}
+
+	public void updateTiles(Terrain[][] board, Animal movingPiece, String[] validIDs, int move) {
+		for(int m = 0; m < validIDs.length; m++)
+			if(!validIDs[m].equalsIgnoreCase("null")) {
+				switch(move) {
+					case 0: // done making a move
+						TILES[movingPiece.getRow()][movingPiece.getCol()]
+							.setBorder(BorderFactory.createEmptyBorder());
+
+						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
+							[Integer.parseInt("" + validIDs[m].charAt(1))]
+							.setBorder(BorderFactory.createEmptyBorder());
+
+						// if there are no pieces occupying current tile
+						if(!board[Integer.parseInt("" + validIDs[m].charAt(0))]
+						[Integer.parseInt("" + validIDs[m].charAt(1))].getState())
+							TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
+								[Integer.parseInt("" + validIDs[m].charAt(1))]
+								.setEnabled(false);
+						break;
+
+					case 1: // starting to make a move
+						TILES[movingPiece.getRow()][movingPiece.getCol()]
+							.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+
+						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
+							[Integer.parseInt("" + validIDs[m].charAt(1))]
+							.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+
+						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
+							[Integer.parseInt("" + validIDs[m].charAt(1))]
+							.setEnabled(true);
+						break;
+				}
+					
+			}
+	}
+
+
+	public void movePiece(Terrain[][] board, Animal movingPiece, String[] validIDs, boolean movesIn) {
+		if(TILES[movingPiece.getRow()][movingPiece.getCol()].hasPiece())
+			TILES[movingPiece.getRow()][movingPiece.getCol()].removePiece();
+
+		if(movesIn) {
+			TILES[movingPiece.getRow()][movingPiece.getCol()].addPiece("" + (movingPiece.getPlayerSide() - 1) + movingPiece.getRank());
+			updateTiles(board, movingPiece, validIDs, 0);
+		} else
+			TILES[movingPiece.getRow()][movingPiece.getCol()]
+				.setBorder(BorderFactory.createEmptyBorder());
+	}
+
+	public void displayRandomChoices(int[] randIndexes) {
+		TEXT_LABELS[0].setText("~ PICK A PIECE ~");
+		
+		TEXT_LABELS[1].setText("TURN: PERSON 1");
+		
+		initRandomPieces(randIndexes);
+
+		LOWER_CONTAINER.setPreferredSize(LOWER_CONTAINER_SIZE[1]);
+
+		BACKGROUNDS[0].add(UPPER_CONTAINER, BorderLayout.CENTER);
+		UPPER_CONTAINER.add(TEXT_PANEL, BorderLayout.SOUTH);
+		TEXT_PANEL.add(TEXT_BOARD);
+		TEXT_BOARD.add(TEXT_CONTAINER, BorderLayout.SOUTH);
+		TEXT_CONTAINER.add(TEXT_LABELS[0]);
+		TEXT_CONTAINER.add(TEXT_LABELS[1]);
+		LOWER_CONTAINER.add(randPieceContainer);
+		revalidate();
+	}
+
+	public void displayColorChoices(int person) {
+		randPieceContainer.removeAll();
+		
+		TEXT_PANEL.removeAll();
+
+		TEXT_LABELS[0].setText("~ PICK A COLOR ~");
+		TEXT_LABELS[1].setText("PERSON " + person + " IS PLAYER 1");
+
+		BACKGROUNDS[0].removeAll();
+
+		UPPER_CONTAINER.removeAll();
+		
+		LOWER_CONTAINER.removeAll();
+		LOWER_CONTAINER.setPreferredSize(LOWER_CONTAINER_SIZE[0]); // new Dimension(600, 400)
+		// LOWER_CONTAINER.setBackground(Color.BLACK);
+
+		BASE.add(POPUP_PANEL, JLayeredPane.POPUP_LAYER); 
+		POPUP_PANEL.add(POPUP_PAPER, BorderLayout.CENTER); 
+		
+		POPUP_PAPER.add(LOWER_CONTAINER, BorderLayout.SOUTH);
+		LOWER_CONTAINER.add(CHOICE_BUTTONS[0]);
+		LOWER_CONTAINER.add(CHOICE_BUTTONS[1]);
+		POPUP_PAPER.add(UPPER_CONTAINER, BorderLayout.CENTER);
+		UPPER_CONTAINER.add(TEXT_PANEL, BorderLayout.SOUTH);
+		TEXT_PANEL.add(TEXT_CONTAINER);
+
+		// BASE.repaint();
+		// BASE.revalidate();
+		repaint();
+		revalidate();
+	}
+
+	public void displayAnimalChess(int playerInd) {
+		assignPlayers(playerInd);
+
+		BOARD_PANEL.setLayout(new GridLayout(7, 9, 1, 1)); 
+		// BOARD_PANEL.setBounds(0, 0, 1017, 734);
+		// BOARD_PANEL.setBounds(0, 0, 720, 560);
+		BOARD_PANEL.setBackground(Color.BLACK);
+		// BACKGROUNDS[1].setLayout(new FlowLayout());
+		
+		
+		BOARD_CONTAINER.setLayout(new FlowLayout());
+		BOARD_CONTAINER.setPreferredSize(new Dimension(1000, 617));
+		BOARD_CONTAINER.setBackground(TRANSPARENT);
+
+		
+
+		// BASE.removeAll();
+		// BASE.add(BOARD_PANEL, JLayeredPane.DEFAULT_LAYER);
+		BASE.remove(POPUP_PANEL);
+		
+		addBoardTiles();
+
+		BACKGROUNDS[0].add(HEADER, BorderLayout.NORTH);
+		BACKGROUNDS[0].add(RED_PANEL, BorderLayout.WEST);
+		BACKGROUNDS[0].add(BLUE_PANEL, BorderLayout.EAST);
+		BACKGROUNDS[0].add(BACKGROUNDS[1], BorderLayout.CENTER);
+		BACKGROUNDS[1].add(BOARD_CONTAINER, BorderLayout.SOUTH);
+		BOARD_CONTAINER.add(BOARD_PANEL);
+		RED_PANEL.add(RED_PLAYER, BorderLayout.CENTER);
+		BLUE_PANEL.add(BLUE_PLAYER, BorderLayout.CENTER);
+
+		repaint();
+		revalidate();
+	}
+
+	public void displayResults(int winningPlayer) {
+		if(winningPlayer == 0) // 0 - red
+			TEXT_LABELS[0].setText("PLAYER " + RED_PLAYER.getText().charAt(40) + " WINS !!!");
+		else // 1 - blue
+			TEXT_LABELS[0].setText("PLAYER " + BLUE_PLAYER.getText().charAt(40) + " WINS !!!");
+		
+		TEXT_LABELS[1].setText("WANNA PLAY AGAIN DADDY?");
+
+		LOWER_CONTAINER.removeAll(); // remove red & blue buttons
+		LOWER_CONTAINER.add(CHOICE_BUTTONS[2]);
+
+		BASE.add(POPUP_PANEL, JLayeredPane.POPUP_LAYER);
+
+		repaint();
+		revalidate();
+	}
+
+
+	private void addBoardTiles() {
+		
+		for(int col = 6; col >= 0; col--)
+			for(int row = 0; row < 9; row++)
+				BOARD_PANEL.add(TILES[row][col]);
+	}
+	
+	private void initRandomPieces(int[] randIndexes) {
+		int n;
+
+		for(n = 0; n < randIndexes.length; n++)
+			randPieceContainer.add(new RandomPiece("" + randIndexes[n], 
+				new ImageIcon("images\\randPiece.png"), 
+				new ImageIcon("images\\" + (randIndexes[n] + 1) + ".png")));
+	}
+
+	private void initPiecePics() {
+		
+		for(int i = 0; i < 2; i++) {
+			for(int j = 0; j < 8; j++) {
+				PIECE_PICS[i][j] = new JLabel(new ImageIcon("images\\" + i + (j + 1) + ".png"));
+				PIECE_PICS[i][j].setPreferredSize(PIECE_SIZE);
+				PIECE_PICS[i][j].setHorizontalAlignment(JLabel.CENTER);
+				PIECE_PICS[i][j].setVerticalAlignment(JLabel.CENTER);
+				// PIECE_PICS[i][j].setBounds(0, 0, 78, 78);
+			}
+		}
+	}
 
 	private void setBase() {
 		BASE.setLayout(null);
@@ -356,294 +590,8 @@ public class GameDisplay extends JFrame  {
 		
 	}
 
-	public void refresh() {
-		this.setSize(1032, 771);
-		this.setSize(1033, 772);
-	}
 
-	public void setListeners(MouseListener start, MouseListener random, ActionListener choicePicker, MouseListener board) {
-		startButton.addMouseListener(start);
-		// set the listener for other MouseInputListener attributes of this class
-		// implementation of MouseInputListener are in Game class
-		randomPicker = random;
-		CHOICE_BUTTONS[0].addActionListener(choicePicker);
-		CHOICE_BUTTONS[1].addActionListener(choicePicker);
-		CHOICE_BUTTONS[2].addActionListener(choicePicker);
-		boardListener = board;
-	}
-
-	public void setTransparentBackground(Component comp) {
-		comp.setBackground(TRANSPARENT);
-		// refresh();
-		repaint();
-	}
-
-	
-	public JLabel getStartButton() {
-		return startButton;
-	}
-
-	public void removeStartButton() {
-		LOWER_CONTAINER.remove(startButton);
-		startButton = null;
-	}
-
-	
-	private void initRandomPieces(int[] randIndexes) {
-		int n;
-
-		for(n = 0; n < randIndexes.length; n++)
-			randPieceContainer.add(new RandomPiece("" + randIndexes[n], 
-				new ImageIcon("images\\randPiece.png"), 
-				new ImageIcon("images\\" + (randIndexes[n] + 1) + ".png")));
-	}
-	
-
-	public void displayRandomChoices(int[] randIndexes) {
-		TEXT_LABELS[0].setText("~ PICK A PIECE ~");
-		
-		TEXT_LABELS[1].setText("TURN: PERSON 1");
-		
-		initRandomPieces(randIndexes);
-
-		LOWER_CONTAINER.setPreferredSize(LOWER_CONTAINER_SIZE[1]);
-
-		BACKGROUNDS[0].add(UPPER_CONTAINER, BorderLayout.CENTER);
-		UPPER_CONTAINER.add(TEXT_PANEL, BorderLayout.SOUTH);
-		TEXT_PANEL.add(TEXT_BOARD);
-		TEXT_BOARD.add(TEXT_CONTAINER, BorderLayout.SOUTH);
-		TEXT_CONTAINER.add(TEXT_LABELS[0]);
-		TEXT_CONTAINER.add(TEXT_LABELS[1]);
-		LOWER_CONTAINER.add(randPieceContainer);
-		revalidate();
-		// LOWER_CONTAINER.revalidate();
-		//refresh();
-	}
-
-	public void displayColorChoices(int person) {
-		randPieceContainer.removeAll();
-		
-		TEXT_PANEL.removeAll();
-
-		TEXT_LABELS[0].setText("~ PICK A COLOR ~");
-		TEXT_LABELS[1].setText("PERSON " + person + " IS PLAYER 1");
-
-		BACKGROUNDS[0].removeAll();
-
-		UPPER_CONTAINER.removeAll();
-		
-		LOWER_CONTAINER.removeAll();
-		LOWER_CONTAINER.setPreferredSize(LOWER_CONTAINER_SIZE[0]); // new Dimension(600, 400)
-		// LOWER_CONTAINER.setBackground(Color.BLACK);
-
-		BASE.add(POPUP_PANEL, JLayeredPane.POPUP_LAYER); 
-		POPUP_PANEL.add(POPUP_PAPER, BorderLayout.CENTER); 
-		
-		POPUP_PAPER.add(LOWER_CONTAINER, BorderLayout.SOUTH);
-		LOWER_CONTAINER.add(CHOICE_BUTTONS[0]);
-		LOWER_CONTAINER.add(CHOICE_BUTTONS[1]);
-		POPUP_PAPER.add(UPPER_CONTAINER, BorderLayout.CENTER);
-		UPPER_CONTAINER.add(TEXT_PANEL, BorderLayout.SOUTH);
-		TEXT_PANEL.add(TEXT_CONTAINER);
-
-		// BASE.repaint();
-		// BASE.revalidate();
-		repaint();
-		revalidate();
-	}
-
-	public void updateTurn(int turn) {
-		switch(turn) {
-			case 1:
-				TEXT_LABELS[1].setText("TURN: PERSON 2");
-				break;
-
-			default:
-				TEXT_LABELS[1].setText("LOADING ...");
-				break;
-		}
-
-		repaint();
-	}
-
-	public void removeRandomChoices() {
-		LOWER_CONTAINER.remove(randPieceContainer);
-		randPieceContainer = null;
-	}
-
-	public void initPiecePics() {
-		
-		for(int i = 0; i < 2; i++) {
-			for(int j = 0; j < 8; j++) {
-				PIECE_PICS[i][j] = new JLabel(new ImageIcon("images\\" + i + (j + 1) + ".png"));
-				PIECE_PICS[i][j].setPreferredSize(PIECE_SIZE);
-				PIECE_PICS[i][j].setHorizontalAlignment(JLabel.CENTER);
-				PIECE_PICS[i][j].setVerticalAlignment(JLabel.CENTER);
-				// PIECE_PICS[i][j].setBounds(0, 0, 78, 78);
-			}
-		}
-	}
-	 
-	public void initBoardDisplay(Board board) {
-
-		for(int row = 0; row < 9; row++) 
-			for(int col = 0; col < 7; col++) {
-				if(board.getTiles().getTerrains()[row][col].isLand())
-					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[0]);
-				else if (board.getTiles().getTerrains()[row][col].isRiver())
-					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[1]);
-				else if(board.getTiles().getTerrains()[row][col].isTrap())
-					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[2]);
-				else if(board.getTiles().getTerrains()[row][col].isAnimalDen())
-					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[3]);
-				
-				if(board.getTiles().getTerrains()[row][col].getState())
-					TILES[row][col].addPiece("" + (board.getTiles().getTerrains()[row][col].getAnimal().getPlayerSide() - 1) +
-					 	board.getTiles().getTerrains()[row][col].getAnimal().getRank());
-			}
-	}
-
-	private void addBoardTiles() {
-		
-		for(int col = 6; col >= 0; col--)
-			for(int row = 0; row < 9; row++)
-				BOARD_PANEL.add(TILES[row][col]);
-	}
-
-	public void assignPlayers(int playerInd) {
-		// HEADER.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-		String[] playerString = new String[2];
-
-		playerString[playerInd] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>1</HTML>";
-		playerString[(playerInd + 1) % 2] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>2</HTML>";
-
-		RED_PLAYER.setText(playerString[0]);
-		System.out.println("Assigning players... Red is " + RED_PLAYER.getText());
-
-		BLUE_PLAYER.setText(playerString[1]);
-	}
-
-	public void displayAnimalChess(int playerInd) {
-		assignPlayers(playerInd);
-
-		BOARD_PANEL.setLayout(new GridLayout(7, 9, 1, 1)); 
-		// BOARD_PANEL.setBounds(0, 0, 1017, 734);
-		// BOARD_PANEL.setBounds(0, 0, 720, 560);
-		BOARD_PANEL.setBackground(Color.BLACK);
-		// BACKGROUNDS[1].setLayout(new FlowLayout());
-		
-		
-		BOARD_CONTAINER.setLayout(new FlowLayout());
-		BOARD_CONTAINER.setPreferredSize(new Dimension(1000, 617));
-		BOARD_CONTAINER.setBackground(TRANSPARENT);
-
-		
-
-		// BASE.removeAll();
-		// BASE.add(BOARD_PANEL, JLayeredPane.DEFAULT_LAYER);
-		BASE.remove(POPUP_PANEL);
-		
-		addBoardTiles();
-
-		BACKGROUNDS[0].add(HEADER, BorderLayout.NORTH);
-		BACKGROUNDS[0].add(RED_PANEL, BorderLayout.WEST);
-		BACKGROUNDS[0].add(BLUE_PANEL, BorderLayout.EAST);
-		BACKGROUNDS[0].add(BACKGROUNDS[1], BorderLayout.CENTER);
-		BACKGROUNDS[1].add(BOARD_CONTAINER, BorderLayout.SOUTH);
-		BOARD_CONTAINER.add(BOARD_PANEL);
-		RED_PANEL.add(RED_PLAYER, BorderLayout.CENTER);
-		BLUE_PANEL.add(BLUE_PLAYER, BorderLayout.CENTER);
-
-		repaint();
-		revalidate();
-	}
-
-
-	public void updateColorPanel(int turn) {
-		if(turn == 0) { // 0 - red
-			RED_PANEL.setBackground(Color.RED);
-			BLUE_PANEL.setBackground(Color.LIGHT_GRAY);
-		} else { // 1 = blue
-			RED_PANEL.setBackground(Color.LIGHT_GRAY);
-			BLUE_PANEL.setBackground(Color.BLUE);
-		}
-	}
-
-	public void updateTiles(Terrain[][] board, Animal movingPiece, String[] validIDs, int move) {
-		for(int m = 0; m < validIDs.length; m++)
-			if(!validIDs[m].equalsIgnoreCase("null")) {
-				switch(move) {
-					case 0: // done making a move
-						TILES[movingPiece.getRow()][movingPiece.getCol()]
-							.setBorder(BorderFactory.createEmptyBorder());
-
-						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
-							[Integer.parseInt("" + validIDs[m].charAt(1))]
-							.setBorder(BorderFactory.createEmptyBorder());
-
-						// if there are no pieces occupying current tile
-						if(!board[Integer.parseInt("" + validIDs[m].charAt(0))]
-						[Integer.parseInt("" + validIDs[m].charAt(1))].getState())
-							TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
-								[Integer.parseInt("" + validIDs[m].charAt(1))]
-								.setEnabled(false);
-						break;
-
-					case 1: // starting to make a move
-						TILES[movingPiece.getRow()][movingPiece.getCol()]
-							.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
-
-						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
-							[Integer.parseInt("" + validIDs[m].charAt(1))]
-							.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
-
-						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
-							[Integer.parseInt("" + validIDs[m].charAt(1))]
-							.setEnabled(true);
-						break;
-				}
-					
-			}
-	}
-
-
-	public void movePiece(Terrain[][] board, Animal movingPiece, String[] validIDs, boolean movesIn) {
-		if(TILES[movingPiece.getRow()][movingPiece.getCol()].hasPiece())
-			TILES[movingPiece.getRow()][movingPiece.getCol()].removePiece();
-
-		if(movesIn) {
-			TILES[movingPiece.getRow()][movingPiece.getCol()].addPiece("" + (movingPiece.getPlayerSide() - 1) + movingPiece.getRank());
-			updateTiles(board, movingPiece, validIDs, 0);
-		} else
-			TILES[movingPiece.getRow()][movingPiece.getCol()]
-				.setBorder(BorderFactory.createEmptyBorder());
-
-		
-	}
-
-
-	
-
-	public void displayResults(int winningPlayer) {
-		if(winningPlayer == 0) // 0 - red
-			TEXT_LABELS[0].setText("PLAYER " + RED_PLAYER.getText().charAt(40) + " WINS !!!");
-		else // 1 - blue
-			TEXT_LABELS[0].setText("PLAYER " + BLUE_PLAYER.getText().charAt(40) + " WINS !!!");
-		
-		TEXT_LABELS[1].setText("WANNA PLAY AGAIN DADDY?");
-
-		LOWER_CONTAINER.removeAll(); // remove red & blue buttons
-		LOWER_CONTAINER.add(CHOICE_BUTTONS[2]);
-
-		BASE.add(POPUP_PANEL, JLayeredPane.POPUP_LAYER);
-
-		repaint();
-		revalidate();
-	}
-
-
-
-	public class RandomPiece extends JLabel {
+	private class RandomPiece extends JLabel {
 
 		public RandomPiece(String name, ImageIcon back, ImageIcon animalPiece) {
 			setName(name);
@@ -657,7 +605,7 @@ public class GameDisplay extends JFrame  {
 	}
 
 
-	public class BoardTile extends JPanel	{
+	private class BoardTile extends JPanel	{
 		
 		private JLabel animalPiece;
 		private ImageIcon tile;
@@ -703,5 +651,49 @@ public class GameDisplay extends JFrame  {
 			t.drawImage(tile.getImage(), 0, 0, null);
 		}
 	}
+
+	private JPanel randPieceContainer;
+	private JLabel startButton;
+
+	private MouseListener randomPicker; 
+	private MouseListener boardListener;
+
+	private final Color TRANSPARENT;
+	
+	private final Dimension DEF_FRAME_SIZE;
+	private final Dimension DEFAULT_SIZE;
+	private final Dimension[] LOWER_CONTAINER_SIZE;
+	private final Dimension TEXT_LABEL_SIZE;
+	private final Dimension COLOR_PANEL_SIZE;
+	private final Dimension PIECE_SIZE;
+	private final Dimension TILE_SIZE;
+	private final Dimension BUTTON_SIZE; 
+
+	private final JLayeredPane BASE;
+
+	private final JPanel[] BACKGROUNDS; 
+	private final JPanel UPPER_CONTAINER; 
+	private final JPanel LOWER_CONTAINER;
+	private final JPanel TEXT_PANEL;
+	private final JPanel TEXT_CONTAINER;
+	private final JPanel TEXT_BOARD;
+	private final JPanel POPUP_PANEL;
+	private final JPanel HEADER;
+	private final JPanel RED_PANEL;
+	private final JPanel BLUE_PANEL;
+	private final JPanel BOARD_PANEL;
+	private final JPanel BOARD_CONTAINER;
+	
+	private final JLabel[] TEXT_LABELS;
+	private final JLabel POPUP_PAPER;
+	private final JLabel RED_PLAYER;
+	private final JLabel BLUE_PLAYER;
+	private final JLabel[][] PIECE_PICS;
+
+	private final JButton[] CHOICE_BUTTONS;
+
+	private final BoardTile[][] TILES;
+	private final ImageIcon[] TERRAIN_PICS;
+
 }
 
