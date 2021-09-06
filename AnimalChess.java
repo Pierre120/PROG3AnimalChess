@@ -7,7 +7,7 @@
  */
 public class AnimalChess {
     public static void main (String[] args) {
-        Board gameBoard = new Board();
+        BoardModel gameBoard = new BoardModel();
         GameDisplay GUI = new GameDisplay();
         Game mechanic = new Game(gameBoard, GUI);
         //mechanic.executeGame();

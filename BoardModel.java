@@ -1,6 +1,6 @@
-public class Board {
+public class BoardModel {
     
-    public Board () {
+    public BoardModel () {
         boardTiles = new Tiles(); // instantiate Tiles object
         animalPieces = new Animal[8][2]; // allot size/number of animal pieces
         // instantiate the animal pieces

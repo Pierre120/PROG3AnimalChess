@@ -194,7 +194,7 @@ public class GameDisplay extends JFrame  {
 	}
 
 	
-	public void initBoardDisplay(Board board) {
+	public void initBoardDisplay(BoardModel board) {
 
 		for(int row = 0; row < 9; row++) 
 			for(int col = 0; col < 7; col++) {
