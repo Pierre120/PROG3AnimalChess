@@ -19,7 +19,7 @@ public class Game {
  
     }
 
-    
+
     private boolean isOwnPiece(MouseEvent e) {
         return gameBoard.getTiles().getTerrains()[Integer.parseInt("" + e.getComponent().getName().charAt(0))]
                 [Integer.parseInt("" + e.getComponent().getName().charAt(1))].getAnimal().getPlayerSide() - 1 == person;
@@ -325,7 +325,7 @@ public class Game {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getActionCommand().equals("OK")) {
-                
+                gameBoard.setToNull();
                 //terminate program at the end of the game
                 System.gc();
                 System.exit(0);
