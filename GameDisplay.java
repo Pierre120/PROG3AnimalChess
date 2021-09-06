@@ -635,8 +635,18 @@ public class GameDisplay extends JFrame  {
 	}
 
 
-	public void movePiece(Terrain[][] board, Animal movingPiece, String[] validIDs, int inOut) {
-		switch(inOut) {
+	public void movePiece(Terrain[][] board, Animal movingPiece, String[] validIDs, boolean movesIn) {
+		if(tiles[movingPiece.getRow()][movingPiece.getCol()].hasPiece())
+			tiles[movingPiece.getRow()][movingPiece.getCol()].removePiece();
+
+		if(movesIn) {
+			tiles[movingPiece.getRow()][movingPiece.getCol()].addPiece("" + (movingPiece.getPlayerSide() - 1) + movingPiece.getRank());
+			updateTiles(board, movingPiece, validIDs, 0);
+		} else
+			tiles[movingPiece.getRow()][movingPiece.getCol()]
+				.setBorder(BorderFactory.createEmptyBorder());
+
+		/* switch(inOut) {
 			case 0: // moves out of tile
 				tiles[movingPiece.getRow()][movingPiece.getCol()].removePiece();
 				tiles[movingPiece.getRow()][movingPiece.getCol()]
@@ -647,7 +657,7 @@ public class GameDisplay extends JFrame  {
 
 				updateTiles(board, movingPiece, validIDs, 0);
 				break;
-		}
+		} */
 	}
 
 
@@ -688,6 +698,13 @@ public class GameDisplay extends JFrame  {
 			setEnabled(false);
 			addMouseListener(boardListener);
 		}	
+
+		public boolean hasPiece() {
+			if(animalPiece != null)
+				return true;
+
+			return false;
+		}
 
 		//when animal moves in
 		public void addPiece(String pieceId) {
