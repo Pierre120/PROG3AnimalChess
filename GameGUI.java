@@ -4,7 +4,7 @@ import java.awt.event.*;
 
 
 /**
- * This GameDisplay class is responsible for the displays or outputs in the terminal.
+ * This GameGUI class is responsible for the displays or outputs in the terminal.
  * It is used by the driver class to provide information and UI/UX for the players of 
  * the game.
  * 
