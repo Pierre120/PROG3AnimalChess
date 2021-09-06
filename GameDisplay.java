@@ -454,6 +454,8 @@ public class GameDisplay extends JFrame  {
 				textLabels[1].setText("LOADING ...");
 				break;
 		}
+
+		repaint();
 	}
 
 	public void removeRandomChoices() {
@@ -557,6 +559,7 @@ public class GameDisplay extends JFrame  {
 		playerString[(playerInd + 1) % 2] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>2</HTML>";
 
 		redPlayer.setText(playerString[0]);
+		System.out.println("Assigning players... Red is " + redPlayer.getText());
 
 		bluePlayer.setText(playerString[1]);
 	}
@@ -597,6 +600,16 @@ public class GameDisplay extends JFrame  {
 	}
 
 
+	public void updateColorPanel(int turn) {
+		if(turn == 0) { // 0 - red
+			redPanel.setBackground(Color.RED);
+			bluePanel.setBackground(Color.LIGHT_GRAY);
+		} else { // 1 = blue
+			redPanel.setBackground(Color.LIGHT_GRAY);
+			bluePanel.setBackground(Color.BLUE);
+		}
+	}
+
 	public void updateTiles(Terrain[][] board, Animal movingPiece, String[] validIDs, int move) {
 		for(int m = 0; m < validIDs.length; m++)
 			if(!validIDs[m].equalsIgnoreCase("null")) {
@@ -611,7 +624,7 @@ public class GameDisplay extends JFrame  {
 
 						// if there are no pieces occupying current tile
 						if(!board[Integer.parseInt("" + validIDs[m].charAt(0))]
-							[Integer.parseInt("" + validIDs[m].charAt(1))].getState())
+						[Integer.parseInt("" + validIDs[m].charAt(1))].getState())
 							tiles[Integer.parseInt("" + validIDs[m].charAt(0))]
 								[Integer.parseInt("" + validIDs[m].charAt(1))]
 								.setEnabled(false);
@@ -668,6 +681,22 @@ public class GameDisplay extends JFrame  {
 		
 		// repaint();
 	} */
+
+	public void displayResults(int winningPlayer) {
+		if(winningPlayer == 0) // 0 - red
+			textLabels[0].setText("PLAYER " + redPlayer.getText().charAt(40) + " WINS !!!");
+		else // 1 - blue
+			textLabels[0].setText("PLAYER " + bluePlayer.getText().charAt(40) + " WINS !!!");
+		
+		textLabels[1].setText("WANNA PLAY AGAIN DADDY?");
+
+		lowerContainer.removeAll(); // remove red & blue buttons
+
+		base.add(popupPanel, JLayeredPane.POPUP_LAYER);
+
+		repaint();
+		revalidate();
+	}
 
 	public class RandomPiece extends JLabel {
 

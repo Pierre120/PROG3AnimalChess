@@ -170,6 +170,7 @@ public class Game {
             System.out.println(e.getActionCommand());
 
             gameGUI.initBoardDisplay(gameBoard);
+            gameGUI.updateColorPanel(person);
             gameGUI.displayAnimalChess(person);
         }
         
@@ -186,8 +187,8 @@ public class Game {
         @Override
         public void mousePressed(MouseEvent e) {
             if(SwingUtilities.isRightMouseButton(e) && e.getComponent().isEnabled() && 
-                movingPiece != null && isOwnPiece(e) && isSameChosenPiece(e)) {
-                    
+                movingPiece != null && isSameTerrain(e)) { // && isSameChosenPiece(e)
+                
                 System.out.println("RIGHT");
                 System.out.println("Current chosen animal: " + movingPiece);
                 gameGUI.updateTiles(gameBoard.getTiles().getTerrains(), movingPiece, validTileIDs, 0);
@@ -216,6 +217,7 @@ public class Game {
                     System.out.println(person);
                     // gameGUI.repaint();
                     movingPiece = null;
+
                 }
 
                 System.out.println("Chosen piece: " + movingPiece);
@@ -225,7 +227,17 @@ public class Game {
 
         @Override
         public void mouseReleased(MouseEvent e) {
-           
+           if(gameBoard.getTiles().getTerrains()[0][3].getState() || 
+              gameBoard.getTiles().getTerrains()[8][3].getState() || 
+              Animal.getAnimalCount(0) == 0 || Animal.getAnimalCount(1) == 0) {
+                   // display results and ask player if want to play again
+                   person = (person + 1) % 2; // go back to winning player
+                   gameGUI.displayResults(person);
+            } else {
+                // updateColorPanel
+                gameGUI.updateColorPanel(person);
+            }
+               
         }
 
         @Override
@@ -246,9 +258,10 @@ public class Game {
                 [Integer.parseInt("" + e.getComponent().getName().charAt(1))].getAnimal().getPlayerSide() - 1 == person;
     }
 
-    private boolean isSameChosenPiece(MouseEvent e) {
-        return gameBoard.getTiles().getTerrains()[Integer.parseInt("" + e.getComponent().getName().charAt(0))]
-            [Integer.parseInt("" + e.getComponent().getName().charAt(1))].getAnimal() == movingPiece;
+
+    private boolean isSameTerrain(MouseEvent e) {
+        return e.getComponent().getName().equals("" + movingPiece.getRow() + movingPiece.getCol());
+        
     }
 
     private boolean isValidMove(MouseEvent e) {
