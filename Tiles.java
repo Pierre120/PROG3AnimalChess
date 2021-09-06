@@ -31,7 +31,7 @@ public class Tiles {
                 else if(r == 8 && (c == 2 || c == 4) || r == 7 && c == 3 )
                     terrainTiles[r][c] = new Trap(2);
                 
-                // instantiate Land terrains to the rest of the tiles
+                // instantiate Land terrains to the rest of the TILES
                 else
                     terrainTiles[r][c] = new Land(0);
             }

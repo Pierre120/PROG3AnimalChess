@@ -37,6 +37,12 @@ public class Board {
     public Tiles getTiles() {
         return boardTiles;
     }
+
+    public void setToNull() {
+        animalPieces = null;
+        boardTiles = null;
+       
+    }
     
     private Animal[][] animalPieces;
     private Tiles boardTiles;

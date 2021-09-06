@@ -27,7 +27,7 @@ public class Game {
         gameBoard = board; // instantiate the Board object
         gameGUI = gui;
         // Board object automatically instantiates Tiles and Animal objects it contains
-        gameGUI.setListeners(new StartListener(), new RandomListener(), new ColorListener(), new BoardListener());
+        gameGUI.setListeners(new StartListener(), new RandomListener(), new ChoiceListener(), new BoardListener());
 
         
     }
@@ -157,11 +157,16 @@ public class Game {
     }
 
 
-    private class ColorListener implements ActionListener {
+    private class ChoiceListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getActionCommand().equals("RED"))
+            if(e.getActionCommand().equals("OK")) {
+                
+                System.gc();
+                System.exit(0);
+            }
+            else if(e.getActionCommand().equals("RED"))
                 person = 0;
             else if(e.getActionCommand().equals("BLUE"))
                 person = 1;
@@ -251,6 +256,8 @@ public class Game {
         }
         
     }
+
+    
     
 
     private boolean isOwnPiece(MouseEvent e) {

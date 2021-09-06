@@ -15,40 +15,14 @@ import javax.swing.event.*;
  */
 public class GameDisplay extends JFrame  {
 	
-	private JLayeredPane base;
-
-	private JPanel[] backgrounds; 
-	private JPanel upperContainer; 
-	private JPanel lowerContainer;
 	private JPanel randPieceContainer;
-	private JPanel textPanel;
-	private JPanel textContainer;
-	private JPanel textBoard;
-	private JPanel popupPanel;
-	private JPanel header;
-	private JPanel redPanel;
-	private JPanel bluePanel;
-	private JPanel boardPanel;
-	private JPanel boardContainer;
-	
 	private JLabel startButton;
-	private JLabel[] textLabels;
-	private JLabel popupPaper;
-	private JLabel redPlayer;
-	private JLabel bluePlayer;
 
-	private JButton[] choiceButtons;
-
-	private BoardTile[][] tiles;
-	// private JPanel[][] tiles;
-	private final JLabel[][] animalPiecePics; // final
-	private final ImageIcon[] TERRAIN_PICS;
-	
 	private MouseListener randomPicker; 
 	private MouseListener boardListener;
-	
-	private final Color TRANSPARENT;
 
+	private final Color TRANSPARENT;
+	
 	private final Dimension DEF_FRAME_SIZE;
 	private final Dimension DEFAULT_SIZE;
 	private final Dimension[] LOWER_CONTAINER_SIZE;
@@ -56,7 +30,34 @@ public class GameDisplay extends JFrame  {
 	private final Dimension COLOR_PANEL_SIZE;
 	private final Dimension PIECE_SIZE;
 	private final Dimension TILE_SIZE;
-	private final Dimension BUTTON_SIZE;
+	private final Dimension BUTTON_SIZE; 
+
+	private final JLayeredPane BASE;
+
+	private final JPanel[] BACKGROUNDS; 
+	private final JPanel UPPER_CONTAINER; 
+	private final JPanel LOWER_CONTAINER;
+	private final JPanel TEXT_PANEL;
+	private final JPanel TEXT_CONTAINER;
+	private final JPanel TEXT_BOARD;
+	private final JPanel POPUP_PANEL;
+	private final JPanel HEADER;
+	private final JPanel RED_PANEL;
+	private final JPanel BLUE_PANEL;
+	private final JPanel BOARD_PANEL;
+	private final JPanel BOARD_CONTAINER;
+	
+	private final JLabel[] TEXT_LABELS;
+	private final JLabel POPUP_PAPER;
+	private final JLabel RED_PLAYER;
+	private final JLabel BLUE_PLAYER;
+	private final JLabel[][] PIECE_PICS;
+
+	private final JButton[] CHOICE_BUTTONS;
+
+	private final BoardTile[][] TILES;
+	private final ImageIcon[] TERRAIN_PICS;
+
 	
 	public GameDisplay() {
 		
@@ -75,10 +76,10 @@ public class GameDisplay extends JFrame  {
 		TILE_SIZE = new Dimension(80, 80);
 		BUTTON_SIZE = new Dimension(200, 100);
 
-		base = new JLayeredPane();
+		BASE = new JLayeredPane();
 		
-		backgrounds = new JPanel[2];
-		backgrounds[0] = new JPanel() {
+		BACKGROUNDS = new JPanel[2];
+		BACKGROUNDS[0] = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -86,7 +87,7 @@ public class GameDisplay extends JFrame  {
 				bg.drawImage(new ImageIcon("images\\background.png").getImage(), 0, 0, null);
 			}
 		};
-		backgrounds[1] = new JPanel() {
+		BACKGROUNDS[1] = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -94,7 +95,7 @@ public class GameDisplay extends JFrame  {
 				wood.drawImage(new ImageIcon("images\\boardBackground.jpg").getImage(), 0, 0, null);
 			}
 		};
-		textBoard = new JPanel() {
+		TEXT_BOARD = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -102,7 +103,7 @@ public class GameDisplay extends JFrame  {
 				board.drawImage(new ImageIcon("images\\textBoard.png").getImage(), 0, 0, null);
 			}
 		};
-		header = new JPanel() {
+		HEADER = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -111,33 +112,32 @@ public class GameDisplay extends JFrame  {
 			}
 		};
 		randPieceContainer = new JPanel();
-		textPanel = new JPanel();
-		textContainer = new JPanel(); 
-		upperContainer = new JPanel();
-		lowerContainer = new JPanel();
-		popupPanel = new JPanel();
-		redPanel = new JPanel();
-		bluePanel = new JPanel();
-		boardPanel = new JPanel();
-		boardContainer = new JPanel();
+		TEXT_PANEL = new JPanel();
+		TEXT_CONTAINER = new JPanel(); 
+		UPPER_CONTAINER = new JPanel();
+		LOWER_CONTAINER = new JPanel();
+		POPUP_PANEL = new JPanel();
+		RED_PANEL = new JPanel();
+		BLUE_PANEL = new JPanel();
+		BOARD_PANEL = new JPanel();
+		BOARD_CONTAINER = new JPanel();
 		
 		startButton = new JLabel(new ImageIcon("images\\start.png"));
-		textLabels = new JLabel[2];
-		textLabels[0] = new JLabel();
-		textLabels[1] = new JLabel();
-		popupPaper = new JLabel(new ImageIcon("images\\popup.png"));
-		redPlayer = new JLabel();
-		bluePlayer = new JLabel();
+		TEXT_LABELS = new JLabel[2];
+		TEXT_LABELS[0] = new JLabel();
+		TEXT_LABELS[1] = new JLabel();
+		POPUP_PAPER = new JLabel(new ImageIcon("images\\popup.png"));
+		RED_PLAYER = new JLabel();
+		BLUE_PLAYER = new JLabel();
 
-		choiceButtons = new JButton[4];
-		choiceButtons[0] = new JButton(); // red
-		choiceButtons[1] = new JButton(); // blue
-		choiceButtons[2] = new JButton(); // yes
-		choiceButtons[3] = new JButton(); // no
+		CHOICE_BUTTONS = new JButton[3];
+		CHOICE_BUTTONS[0] = new JButton(); // red
+		CHOICE_BUTTONS[1] = new JButton(); // blue
+		CHOICE_BUTTONS[2] = new JButton(); // ok
 
-		tiles = new BoardTile[9][7];
-		// tiles = new JPanel[9][7];
-		animalPiecePics = new JLabel[2][8];
+		TILES = new BoardTile[9][7];
+		// TILES = new JPanel[9][7];
+		PIECE_PICS = new JLabel[2][8];
 		initPiecePics();
 		TERRAIN_PICS = new ImageIcon[4];
 		TERRAIN_PICS[0] = new ImageIcon("images\\land.png");
@@ -161,27 +161,27 @@ public class GameDisplay extends JFrame  {
 		// set randPieceContainer 
 		setRandPieceContainer();
 
-		// set textBoard, textPanel, & textContainer
+		// set TEXT_BOARD, TEXT_PANEL, & TEXT_CONTAINER
 		setTextPanelComps();
 
-		// set popupPanel
+		// set POPUP_PANEL
 		setPopupPanel();
 
-		// set redPanel & bluePanel for each player
+		// set RED_PANEL & BLUE_PANEL for each player
 		setColorPanels();
 
-		// set header
-		header.setPreferredSize(new Dimension(1017, 114));
+		// set HEADER
+		HEADER.setPreferredSize(new Dimension(1017, 114));
 
 
 		// start button
 		// startButton.setBounds(416, 350, 250, 150);
 		// startButton.setSize(250, 150);
 
-		//	set textLabels
+		//	set TEXT_LABELS
 		setTextLabels();
 
-		// set popupPaper
+		// set POPUP_PAPER
 		setPopupPaper();
 
 		//set blue and red player banners on left and right of the board
@@ -194,11 +194,11 @@ public class GameDisplay extends JFrame  {
 		setFrame();
 		
 		// add the base to this frame
-		this.add(base, BorderLayout.CENTER);
+		this.add(BASE, BorderLayout.CENTER);
 		// add components to the base
-		base.add(backgrounds[0], JLayeredPane.DEFAULT_LAYER);
-		backgrounds[0].add(lowerContainer, BorderLayout.SOUTH);
-		lowerContainer.add(startButton);
+		BASE.add(BACKGROUNDS[0], JLayeredPane.DEFAULT_LAYER);
+		BACKGROUNDS[0].add(LOWER_CONTAINER, BorderLayout.SOUTH);
+		LOWER_CONTAINER.add(startButton);
 
 		// Refresh contents
 		// refresh();
@@ -209,31 +209,31 @@ public class GameDisplay extends JFrame  {
 
 
 	private void setBase() {
-		base.setLayout(null);
-		base.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
-		base.setBackground(TRANSPARENT);
-		// System.out.println(base.getSize());
+		BASE.setLayout(null);
+		BASE.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
+		BASE.setBackground(TRANSPARENT);
+		// System.out.println(BASE.getSize());
 	}
 
 	private void setBackgrounds() {
-		// backgrounds[0].setSize(1033, 772);
-		backgrounds[0].setLayout(new BorderLayout());
-		backgrounds[0].setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
-		// System.out.println(backgrounds[0].getSize());
+		// BACKGROUNDS[0].setSize(1033, 772);
+		BACKGROUNDS[0].setLayout(new BorderLayout());
+		BACKGROUNDS[0].setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
+		// System.out.println(BACKGROUNDS[0].getSize());
 
-		backgrounds[1].setLayout(new BorderLayout());
-		// backgrounds[1].setBounds(0, 0, 777, 618);
+		BACKGROUNDS[1].setLayout(new BorderLayout());
+		// BACKGROUNDS[1].setBounds(0, 0, 777, 618);
 	}
 
 	private void setTransparentContainers() {
 		// set transparent upper container 
-		upperContainer.setLayout(new BorderLayout());
-		upperContainer.setBackground(TRANSPARENT);
+		UPPER_CONTAINER.setLayout(new BorderLayout());
+		UPPER_CONTAINER.setBackground(TRANSPARENT);
 
 		// set transparent lower container
-		lowerContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 56, 20));
-		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); //new Dimension(1017, 400) 
-		lowerContainer.setBackground(TRANSPARENT);
+		LOWER_CONTAINER.setLayout(new FlowLayout(FlowLayout.CENTER, 56, 20));
+		LOWER_CONTAINER.setPreferredSize(LOWER_CONTAINER_SIZE[0]); //new Dimension(1017, 400) 
+		LOWER_CONTAINER.setBackground(TRANSPARENT);
 	}
 	
 	private void setRandPieceContainer() {
@@ -242,97 +242,104 @@ public class GameDisplay extends JFrame  {
 	}
 
 	private void setTextPanelComps() {
-		// set textBoard 
-		textBoard.setLayout(new BorderLayout());
-		textBoard.setPreferredSize(new Dimension(400, 120));
-		textBoard.setBackground(TRANSPARENT);
+		// set TEXT_BOARD 
+		TEXT_BOARD.setLayout(new BorderLayout());
+		TEXT_BOARD.setPreferredSize(new Dimension(400, 120));
+		TEXT_BOARD.setBackground(TRANSPARENT);
 		
-		// set textPanel 
-		textPanel.setLayout(new FlowLayout());
-		textPanel.setBackground(TRANSPARENT);
+		// set TEXT_PANEL 
+		TEXT_PANEL.setLayout(new FlowLayout());
+		TEXT_PANEL.setBackground(TRANSPARENT);
 
-		// set textContainer 
-		textContainer.setLayout(new GridLayout(2, 1));
-		textContainer.setBackground(TRANSPARENT); 
+		// set TEXT_CONTAINER 
+		TEXT_CONTAINER.setLayout(new GridLayout(2, 1));
+		TEXT_CONTAINER.setBackground(TRANSPARENT); 
 	}
 
 	private void setPopupPanel() {
-		popupPanel.setLayout(new BorderLayout());
-		popupPanel.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
-		popupPanel.setBackground(new Color(0, 0, 0, 100));
-		// popupPanel.setOpaque(true);
+		POPUP_PANEL.setLayout(new BorderLayout());
+		POPUP_PANEL.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
+		POPUP_PANEL.setBackground(new Color(0, 0, 0, 100));
+		// POPUP_PANEL.setOpaque(true);
 	}
 
 	private void setColorPanels() {
-		// set redPanel
-		redPanel.setLayout(new BorderLayout());
-		redPanel.setBackground(Color.RED);
-		redPanel.setPreferredSize(COLOR_PANEL_SIZE);
-		redPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-		// System.out.println(redPanel.getSize().toString());
+		// set RED_PANEL
+		RED_PANEL.setLayout(new BorderLayout());
+		RED_PANEL.setBackground(Color.RED);
+		RED_PANEL.setPreferredSize(COLOR_PANEL_SIZE);
+		RED_PANEL.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		// System.out.println(RED_PANEL.getSize().toString());
 
-		// set bluePanel
-		bluePanel.setLayout(new BorderLayout());
-		bluePanel.setBackground(Color.BLUE);
-		bluePanel.setPreferredSize(COLOR_PANEL_SIZE); // new Dimension(120, 620)
-		bluePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-		// System.out.println(bluePanel.getSize().toString());
+		// set BLUE_PANEL
+		BLUE_PANEL.setLayout(new BorderLayout());
+		BLUE_PANEL.setBackground(Color.BLUE);
+		BLUE_PANEL.setPreferredSize(COLOR_PANEL_SIZE); // new Dimension(120, 620)
+		BLUE_PANEL.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		// System.out.println(BLUE_PANEL.getSize().toString());
 	}
 	
 	private void setTextLabels() {
-		// set textLabels[0]
-		textLabels[0].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
-		textLabels[0].setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
-		textLabels[0].setForeground(Color.BLACK);
-		textLabels[0].setHorizontalAlignment(JLabel.CENTER);
-		// System.out.println(textLabels[0].getSize().toString());
+		// set TEXT_LABELS[0]
+		TEXT_LABELS[0].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
+		TEXT_LABELS[0].setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
+		TEXT_LABELS[0].setForeground(Color.BLACK);
+		TEXT_LABELS[0].setHorizontalAlignment(JLabel.CENTER);
+		// System.out.println(TEXT_LABELS[0].getSize().toString());
 
-		// set textLabels[1]
-		textLabels[1].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
-		textLabels[1].setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
-		textLabels[1].setForeground(Color.BLACK);
-		textLabels[1].setHorizontalAlignment(JLabel.CENTER);
-		// System.out.println(textLabels[1].getSize().toString());
+		// set TEXT_LABELS[1]
+		TEXT_LABELS[1].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
+		TEXT_LABELS[1].setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
+		TEXT_LABELS[1].setForeground(Color.BLACK);
+		TEXT_LABELS[1].setHorizontalAlignment(JLabel.CENTER);
+		// System.out.println(TEXT_LABELS[1].getSize().toString());
 	}
 
 	private void setPopupPaper() {
-		popupPaper.setLayout(new BorderLayout());
-		popupPaper.setPreferredSize(new Dimension(600, 484));
-		popupPaper.setBackground(TRANSPARENT);
-		popupPaper.setVerticalAlignment(JLabel.CENTER);
-		popupPaper.setHorizontalAlignment(JLabel.CENTER);
+		POPUP_PAPER.setLayout(new BorderLayout());
+		POPUP_PAPER.setPreferredSize(new Dimension(600, 484));
+		POPUP_PAPER.setBackground(TRANSPARENT);
+		POPUP_PAPER.setVerticalAlignment(JLabel.CENTER);
+		POPUP_PAPER.setHorizontalAlignment(JLabel.CENTER);
 	}
 
 	private void setPlayerBanners() {
-		// set redPlayer
-		redPlayer.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
-		redPlayer.setForeground(Color.BLACK);
-		// redPlayer.setBackground(TRANSPARENT);
-		redPlayer.setVerticalAlignment(JLabel.CENTER);
-		redPlayer.setHorizontalAlignment(JLabel.CENTER);
+		// set RED_PLAYER
+		RED_PLAYER.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
+		RED_PLAYER.setForeground(Color.BLACK);
+		// RED_PLAYER.setBackground(TRANSPARENT);
+		RED_PLAYER.setVerticalAlignment(JLabel.CENTER);
+		RED_PLAYER.setHorizontalAlignment(JLabel.CENTER);
 
-		// set bluePlayer
-		bluePlayer.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
-		bluePlayer.setForeground(Color.BLACK);
-		// bluePlayer.setBackground(TRANSPARENT);
-		bluePlayer.setVerticalAlignment(JLabel.CENTER);
-		bluePlayer.setHorizontalAlignment(JLabel.CENTER);
+		// set BLUE_PLAYER
+		BLUE_PLAYER.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
+		BLUE_PLAYER.setForeground(Color.BLACK);
+		// BLUE_PLAYER.setBackground(TRANSPARENT);
+		BLUE_PLAYER.setVerticalAlignment(JLabel.CENTER);
+		BLUE_PLAYER.setHorizontalAlignment(JLabel.CENTER);
 	}
 
 	private void setChoiceButtons() {
-		// set choiceButtons[0] (red button)
-		choiceButtons[0].setActionCommand("RED");
-		choiceButtons[0].setFocusable(false);
-		choiceButtons[0].setPreferredSize(BUTTON_SIZE);
-		choiceButtons[0].setForeground(TRANSPARENT);
-		choiceButtons[0].setBackground(Color.RED);
+		// set CHOICE_BUTTONS[0] (red button)
+		CHOICE_BUTTONS[0].setActionCommand("RED");
+		CHOICE_BUTTONS[0].setFocusable(false);
+		CHOICE_BUTTONS[0].setPreferredSize(BUTTON_SIZE);
+		CHOICE_BUTTONS[0].setForeground(TRANSPARENT);
+		CHOICE_BUTTONS[0].setBackground(Color.RED);
 
-		// set choiceButtons[1] (blue button)
-		choiceButtons[1].setActionCommand("BLUE");
-		choiceButtons[1].setFocusable(false);
-		choiceButtons[1].setPreferredSize(BUTTON_SIZE);
-		choiceButtons[1].setForeground(TRANSPARENT);
-		choiceButtons[1].setBackground(Color.BLUE);
+		// set CHOICE_BUTTONS[1] (blue button)
+		CHOICE_BUTTONS[1].setActionCommand("BLUE");
+		CHOICE_BUTTONS[1].setFocusable(false);
+		CHOICE_BUTTONS[1].setPreferredSize(BUTTON_SIZE);
+		CHOICE_BUTTONS[1].setForeground(TRANSPARENT);
+		CHOICE_BUTTONS[1].setBackground(Color.BLUE);
+
+		// set CHOICE_BUTTONS[2] (red button)
+		CHOICE_BUTTONS[2].setActionCommand("OK");
+		CHOICE_BUTTONS[2].setFocusable(false);
+		CHOICE_BUTTONS[2].setPreferredSize(BUTTON_SIZE);
+		CHOICE_BUTTONS[2].setForeground(Color.BLACK);
+		CHOICE_BUTTONS[2].setBackground(Color.GREEN);
 	}
 
 	private void setFrame() {
@@ -354,13 +361,14 @@ public class GameDisplay extends JFrame  {
 		this.setSize(1033, 772);
 	}
 
-	public void setListeners(MouseListener start, MouseListener random, ActionListener colorPicker, MouseListener board) {
+	public void setListeners(MouseListener start, MouseListener random, ActionListener choicePicker, MouseListener board) {
 		startButton.addMouseListener(start);
 		// set the listener for other MouseInputListener attributes of this class
 		// implementation of MouseInputListener are in Game class
 		randomPicker = random;
-		choiceButtons[0].addActionListener(colorPicker);
-		choiceButtons[1].addActionListener(colorPicker);
+		CHOICE_BUTTONS[0].addActionListener(choicePicker);
+		CHOICE_BUTTONS[1].addActionListener(choicePicker);
+		CHOICE_BUTTONS[2].addActionListener(choicePicker);
 		boardListener = board;
 	}
 
@@ -376,7 +384,7 @@ public class GameDisplay extends JFrame  {
 	}
 
 	public void removeStartButton() {
-		lowerContainer.remove(startButton);
+		LOWER_CONTAINER.remove(startButton);
 		startButton = null;
 	}
 
@@ -392,54 +400,54 @@ public class GameDisplay extends JFrame  {
 	
 
 	public void displayRandomChoices(int[] randIndexes) {
-		textLabels[0].setText("~ PICK A PIECE ~");
+		TEXT_LABELS[0].setText("~ PICK A PIECE ~");
 		
-		textLabels[1].setText("TURN: PERSON 1");
+		TEXT_LABELS[1].setText("TURN: PERSON 1");
 		
 		initRandomPieces(randIndexes);
 
-		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[1]);
+		LOWER_CONTAINER.setPreferredSize(LOWER_CONTAINER_SIZE[1]);
 
-		backgrounds[0].add(upperContainer, BorderLayout.CENTER);
-		upperContainer.add(textPanel, BorderLayout.SOUTH);
-		textPanel.add(textBoard);
-		textBoard.add(textContainer, BorderLayout.SOUTH);
-		textContainer.add(textLabels[0]);
-		textContainer.add(textLabels[1]);
-		lowerContainer.add(randPieceContainer);
+		BACKGROUNDS[0].add(UPPER_CONTAINER, BorderLayout.CENTER);
+		UPPER_CONTAINER.add(TEXT_PANEL, BorderLayout.SOUTH);
+		TEXT_PANEL.add(TEXT_BOARD);
+		TEXT_BOARD.add(TEXT_CONTAINER, BorderLayout.SOUTH);
+		TEXT_CONTAINER.add(TEXT_LABELS[0]);
+		TEXT_CONTAINER.add(TEXT_LABELS[1]);
+		LOWER_CONTAINER.add(randPieceContainer);
 		revalidate();
-		// lowerContainer.revalidate();
+		// LOWER_CONTAINER.revalidate();
 		//refresh();
 	}
 
 	public void displayColorChoices(int person) {
 		randPieceContainer.removeAll();
 		
-		textPanel.removeAll();
+		TEXT_PANEL.removeAll();
 
-		textLabels[0].setText("~ PICK A COLOR ~");
-		textLabels[1].setText("PERSON " + person + " IS PLAYER 1");
+		TEXT_LABELS[0].setText("~ PICK A COLOR ~");
+		TEXT_LABELS[1].setText("PERSON " + person + " IS PLAYER 1");
 
-		backgrounds[0].removeAll();
+		BACKGROUNDS[0].removeAll();
 
-		upperContainer.removeAll();
+		UPPER_CONTAINER.removeAll();
 		
-		lowerContainer.removeAll();
-		lowerContainer.setPreferredSize(LOWER_CONTAINER_SIZE[0]); // new Dimension(600, 400)
-		// lowerContainer.setBackground(Color.BLACK);
+		LOWER_CONTAINER.removeAll();
+		LOWER_CONTAINER.setPreferredSize(LOWER_CONTAINER_SIZE[0]); // new Dimension(600, 400)
+		// LOWER_CONTAINER.setBackground(Color.BLACK);
 
-		base.add(popupPanel, JLayeredPane.POPUP_LAYER); 
-		popupPanel.add(popupPaper, BorderLayout.CENTER); 
+		BASE.add(POPUP_PANEL, JLayeredPane.POPUP_LAYER); 
+		POPUP_PANEL.add(POPUP_PAPER, BorderLayout.CENTER); 
 		
-		popupPaper.add(lowerContainer, BorderLayout.SOUTH);
-		lowerContainer.add(choiceButtons[0]);
-		lowerContainer.add(choiceButtons[1]);
-		popupPaper.add(upperContainer, BorderLayout.CENTER);
-		upperContainer.add(textPanel, BorderLayout.SOUTH);
-		textPanel.add(textContainer);
+		POPUP_PAPER.add(LOWER_CONTAINER, BorderLayout.SOUTH);
+		LOWER_CONTAINER.add(CHOICE_BUTTONS[0]);
+		LOWER_CONTAINER.add(CHOICE_BUTTONS[1]);
+		POPUP_PAPER.add(UPPER_CONTAINER, BorderLayout.CENTER);
+		UPPER_CONTAINER.add(TEXT_PANEL, BorderLayout.SOUTH);
+		TEXT_PANEL.add(TEXT_CONTAINER);
 
-		// base.repaint();
-		// base.revalidate();
+		// BASE.repaint();
+		// BASE.revalidate();
 		repaint();
 		revalidate();
 	}
@@ -447,11 +455,11 @@ public class GameDisplay extends JFrame  {
 	public void updateTurn(int turn) {
 		switch(turn) {
 			case 1:
-				textLabels[1].setText("TURN: PERSON 2");
+				TEXT_LABELS[1].setText("TURN: PERSON 2");
 				break;
 
 			default:
-				textLabels[1].setText("LOADING ...");
+				TEXT_LABELS[1].setText("LOADING ...");
 				break;
 		}
 
@@ -459,7 +467,7 @@ public class GameDisplay extends JFrame  {
 	}
 
 	public void removeRandomChoices() {
-		lowerContainer.remove(randPieceContainer);
+		LOWER_CONTAINER.remove(randPieceContainer);
 		randPieceContainer = null;
 	}
 
@@ -467,11 +475,11 @@ public class GameDisplay extends JFrame  {
 		
 		for(int i = 0; i < 2; i++) {
 			for(int j = 0; j < 8; j++) {
-				animalPiecePics[i][j] = new JLabel(new ImageIcon("images\\" + i + (j + 1) + ".png"));
-				animalPiecePics[i][j].setPreferredSize(PIECE_SIZE);
-				animalPiecePics[i][j].setHorizontalAlignment(JLabel.CENTER);
-				animalPiecePics[i][j].setVerticalAlignment(JLabel.CENTER);
-				// animalPiecePics[i][j].setBounds(0, 0, 78, 78);
+				PIECE_PICS[i][j] = new JLabel(new ImageIcon("images\\" + i + (j + 1) + ".png"));
+				PIECE_PICS[i][j].setPreferredSize(PIECE_SIZE);
+				PIECE_PICS[i][j].setHorizontalAlignment(JLabel.CENTER);
+				PIECE_PICS[i][j].setVerticalAlignment(JLabel.CENTER);
+				// PIECE_PICS[i][j].setBounds(0, 0, 78, 78);
 			}
 		}
 	}
@@ -480,66 +488,17 @@ public class GameDisplay extends JFrame  {
 
 		for(int row = 0; row < 9; row++) 
 			for(int col = 0; col < 7; col++) {
-				/*
 				if(board.getTiles().getTerrains()[row][col].isLand())
-					tiles[row][col] = new JPanel() {
-						@Override
-						public void paintComponent(Graphics g) {
-							super.paintComponent(g);
-							Graphics2D h = (Graphics2D) g;
-							h.drawImage(new ImageIcon("images\\land.png").getImage(), 0, 0, null);
-						}
-					};
+					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[0]);
 				else if (board.getTiles().getTerrains()[row][col].isRiver())
-					tiles[row][col] = new JPanel() {
-						@Override
-						public void paintComponent(Graphics g) {
-							super.paintComponent(g);
-							Graphics2D h = (Graphics2D) g;
-							h.drawImage(new ImageIcon("images\\river.png").getImage(), 0, 0, null);
-						}
-					};
-				else if(board.getTiles().getTerrains()[row][col].isAnimalDen())
-					tiles[row][col] = new JPanel() {
-						@Override
-						public void paintComponent(Graphics g) {
-							super.paintComponent(g);
-							Graphics2D h = (Graphics2D) g;
-							h.drawImage(new ImageIcon("images\\animalDen.png").getImage(), 0, 0, null);
-						}
-					};
+					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[1]);
 				else if(board.getTiles().getTerrains()[row][col].isTrap())
-					tiles[row][col] = new JPanel() {
-						@Override
-						public void paintComponent(Graphics g) {
-							super.paintComponent(g);
-							Graphics2D h = (Graphics2D) g;
-							h.drawImage(new ImageIcon("images\\trap.png").getImage(), 0, 0, null);
-						}
-					};
-
-				tiles[row][col].setLayout(new BorderLayout());
-
-				tiles[row][col].setPreferredSize(TILE_SIZE);
-
-				if(board.getTiles().getTerrains()[row][col].getState())
-					// tiles[row][col].addAnimal("" + (board.getTiles().getTerrains()[row][col].getAnimal().getPlayerSide() - 1) +
-					// 	board.getTiles().getTerrains()[row][col].getAnimal().getRank());
-					tiles[row][col].add((animalPiecePics[board.getTiles().getTerrains()[row][col].getAnimal().getPlayerSide() - 1]
-						[board.getTiles().getTerrains()[row][col].getAnimal().getRank() - 1]), BorderLayout.CENTER);
-				*/
-
-				if(board.getTiles().getTerrains()[row][col].isLand())
-					tiles[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[0]);
-				else if (board.getTiles().getTerrains()[row][col].isRiver())
-					tiles[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[1]);
-				else if(board.getTiles().getTerrains()[row][col].isTrap())
-					tiles[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[2]);
+					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[2]);
 				else if(board.getTiles().getTerrains()[row][col].isAnimalDen())
-					tiles[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[3]);
+					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[3]);
 				
 				if(board.getTiles().getTerrains()[row][col].getState())
-					tiles[row][col].addPiece("" + (board.getTiles().getTerrains()[row][col].getAnimal().getPlayerSide() - 1) +
+					TILES[row][col].addPiece("" + (board.getTiles().getTerrains()[row][col].getAnimal().getPlayerSide() - 1) +
 					 	board.getTiles().getTerrains()[row][col].getAnimal().getRank());
 			}
 	}
@@ -548,52 +507,52 @@ public class GameDisplay extends JFrame  {
 		
 		for(int col = 6; col >= 0; col--)
 			for(int row = 0; row < 9; row++)
-				boardPanel.add(tiles[row][col]);
+				BOARD_PANEL.add(TILES[row][col]);
 	}
 
 	public void assignPlayers(int playerInd) {
-		// header.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		// HEADER.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		String[] playerString = new String[2];
 
 		playerString[playerInd] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>1</HTML>";
 		playerString[(playerInd + 1) % 2] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>2</HTML>";
 
-		redPlayer.setText(playerString[0]);
-		System.out.println("Assigning players... Red is " + redPlayer.getText());
+		RED_PLAYER.setText(playerString[0]);
+		System.out.println("Assigning players... Red is " + RED_PLAYER.getText());
 
-		bluePlayer.setText(playerString[1]);
+		BLUE_PLAYER.setText(playerString[1]);
 	}
 
 	public void displayAnimalChess(int playerInd) {
 		assignPlayers(playerInd);
 
-		boardPanel.setLayout(new GridLayout(7, 9, 1, 1)); 
-		// boardPanel.setBounds(0, 0, 1017, 734);
-		// boardPanel.setBounds(0, 0, 720, 560);
-		boardPanel.setBackground(Color.BLACK);
-		// backgrounds[1].setLayout(new FlowLayout());
+		BOARD_PANEL.setLayout(new GridLayout(7, 9, 1, 1)); 
+		// BOARD_PANEL.setBounds(0, 0, 1017, 734);
+		// BOARD_PANEL.setBounds(0, 0, 720, 560);
+		BOARD_PANEL.setBackground(Color.BLACK);
+		// BACKGROUNDS[1].setLayout(new FlowLayout());
 		
 		
-		boardContainer.setLayout(new FlowLayout());
-		boardContainer.setPreferredSize(new Dimension(1000, 617));
-		boardContainer.setBackground(TRANSPARENT);
+		BOARD_CONTAINER.setLayout(new FlowLayout());
+		BOARD_CONTAINER.setPreferredSize(new Dimension(1000, 617));
+		BOARD_CONTAINER.setBackground(TRANSPARENT);
 
 		
 
-		// base.removeAll();
-		// base.add(boardPanel, JLayeredPane.DEFAULT_LAYER);
-		base.remove(popupPanel);
+		// BASE.removeAll();
+		// BASE.add(BOARD_PANEL, JLayeredPane.DEFAULT_LAYER);
+		BASE.remove(POPUP_PANEL);
 		
 		addBoardTiles();
 
-		backgrounds[0].add(header, BorderLayout.NORTH);
-		backgrounds[0].add(redPanel, BorderLayout.WEST);
-		backgrounds[0].add(bluePanel, BorderLayout.EAST);
-		backgrounds[0].add(backgrounds[1], BorderLayout.CENTER);
-		backgrounds[1].add(boardContainer, BorderLayout.SOUTH);
-		boardContainer.add(boardPanel);
-		redPanel.add(redPlayer, BorderLayout.CENTER);
-		bluePanel.add(bluePlayer, BorderLayout.CENTER);
+		BACKGROUNDS[0].add(HEADER, BorderLayout.NORTH);
+		BACKGROUNDS[0].add(RED_PANEL, BorderLayout.WEST);
+		BACKGROUNDS[0].add(BLUE_PANEL, BorderLayout.EAST);
+		BACKGROUNDS[0].add(BACKGROUNDS[1], BorderLayout.CENTER);
+		BACKGROUNDS[1].add(BOARD_CONTAINER, BorderLayout.SOUTH);
+		BOARD_CONTAINER.add(BOARD_PANEL);
+		RED_PANEL.add(RED_PLAYER, BorderLayout.CENTER);
+		BLUE_PANEL.add(BLUE_PLAYER, BorderLayout.CENTER);
 
 		repaint();
 		revalidate();
@@ -602,11 +561,11 @@ public class GameDisplay extends JFrame  {
 
 	public void updateColorPanel(int turn) {
 		if(turn == 0) { // 0 - red
-			redPanel.setBackground(Color.RED);
-			bluePanel.setBackground(Color.LIGHT_GRAY);
+			RED_PANEL.setBackground(Color.RED);
+			BLUE_PANEL.setBackground(Color.LIGHT_GRAY);
 		} else { // 1 = blue
-			redPanel.setBackground(Color.LIGHT_GRAY);
-			bluePanel.setBackground(Color.BLUE);
+			RED_PANEL.setBackground(Color.LIGHT_GRAY);
+			BLUE_PANEL.setBackground(Color.BLUE);
 		}
 	}
 
@@ -615,30 +574,30 @@ public class GameDisplay extends JFrame  {
 			if(!validIDs[m].equalsIgnoreCase("null")) {
 				switch(move) {
 					case 0: // done making a move
-						tiles[movingPiece.getRow()][movingPiece.getCol()]
+						TILES[movingPiece.getRow()][movingPiece.getCol()]
 							.setBorder(BorderFactory.createEmptyBorder());
 
-						tiles[Integer.parseInt("" + validIDs[m].charAt(0))]
+						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
 							[Integer.parseInt("" + validIDs[m].charAt(1))]
 							.setBorder(BorderFactory.createEmptyBorder());
 
 						// if there are no pieces occupying current tile
 						if(!board[Integer.parseInt("" + validIDs[m].charAt(0))]
 						[Integer.parseInt("" + validIDs[m].charAt(1))].getState())
-							tiles[Integer.parseInt("" + validIDs[m].charAt(0))]
+							TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
 								[Integer.parseInt("" + validIDs[m].charAt(1))]
 								.setEnabled(false);
 						break;
 
 					case 1: // starting to make a move
-						tiles[movingPiece.getRow()][movingPiece.getCol()]
+						TILES[movingPiece.getRow()][movingPiece.getCol()]
 							.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
 
-						tiles[Integer.parseInt("" + validIDs[m].charAt(0))]
+						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
 							[Integer.parseInt("" + validIDs[m].charAt(1))]
 							.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
 
-						tiles[Integer.parseInt("" + validIDs[m].charAt(0))]
+						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
 							[Integer.parseInt("" + validIDs[m].charAt(1))]
 							.setEnabled(true);
 						break;
@@ -649,54 +608,40 @@ public class GameDisplay extends JFrame  {
 
 
 	public void movePiece(Terrain[][] board, Animal movingPiece, String[] validIDs, boolean movesIn) {
-		if(tiles[movingPiece.getRow()][movingPiece.getCol()].hasPiece())
-			tiles[movingPiece.getRow()][movingPiece.getCol()].removePiece();
+		if(TILES[movingPiece.getRow()][movingPiece.getCol()].hasPiece())
+			TILES[movingPiece.getRow()][movingPiece.getCol()].removePiece();
 
 		if(movesIn) {
-			tiles[movingPiece.getRow()][movingPiece.getCol()].addPiece("" + (movingPiece.getPlayerSide() - 1) + movingPiece.getRank());
+			TILES[movingPiece.getRow()][movingPiece.getCol()].addPiece("" + (movingPiece.getPlayerSide() - 1) + movingPiece.getRank());
 			updateTiles(board, movingPiece, validIDs, 0);
 		} else
-			tiles[movingPiece.getRow()][movingPiece.getCol()]
+			TILES[movingPiece.getRow()][movingPiece.getCol()]
 				.setBorder(BorderFactory.createEmptyBorder());
 
-		/* switch(inOut) {
-			case 0: // moves out of tile
-				tiles[movingPiece.getRow()][movingPiece.getCol()].removePiece();
-				tiles[movingPiece.getRow()][movingPiece.getCol()]
-					.setBorder(BorderFactory.createEmptyBorder());
-				break;
-			case 1: // moves into tile
-				tiles[movingPiece.getRow()][movingPiece.getCol()].addPiece("" + (movingPiece.getPlayerSide() - 1) + movingPiece.getRank());
-
-				updateTiles(board, movingPiece, validIDs, 0);
-				break;
-		} */
+		
 	}
 
 
-	/* public void displayValidMoves(Terrain[][] board, Animal movingPiece, String[] validIDs) {
-		
-		
-		updateTiles(board, movingPiece, validIDs, 1);
-		
-		// repaint();
-	} */
+	
 
 	public void displayResults(int winningPlayer) {
 		if(winningPlayer == 0) // 0 - red
-			textLabels[0].setText("PLAYER " + redPlayer.getText().charAt(40) + " WINS !!!");
+			TEXT_LABELS[0].setText("PLAYER " + RED_PLAYER.getText().charAt(40) + " WINS !!!");
 		else // 1 - blue
-			textLabels[0].setText("PLAYER " + bluePlayer.getText().charAt(40) + " WINS !!!");
+			TEXT_LABELS[0].setText("PLAYER " + BLUE_PLAYER.getText().charAt(40) + " WINS !!!");
 		
-		textLabels[1].setText("WANNA PLAY AGAIN DADDY?");
+		TEXT_LABELS[1].setText("WANNA PLAY AGAIN DADDY?");
 
-		lowerContainer.removeAll(); // remove red & blue buttons
+		LOWER_CONTAINER.removeAll(); // remove red & blue buttons
+		LOWER_CONTAINER.add(CHOICE_BUTTONS[2]);
 
-		base.add(popupPanel, JLayeredPane.POPUP_LAYER);
+		BASE.add(POPUP_PANEL, JLayeredPane.POPUP_LAYER);
 
 		repaint();
 		revalidate();
 	}
+
+
 
 	public class RandomPiece extends JLabel {
 
@@ -737,7 +682,7 @@ public class GameDisplay extends JFrame  {
 
 		//when animal moves in
 		public void addPiece(String pieceId) {
-			animalPiece = animalPiecePics[Integer.parseInt("" + pieceId.charAt(0))][Integer.parseInt("" + pieceId.charAt(1)) - 1];
+			animalPiece = PIECE_PICS[Integer.parseInt("" + pieceId.charAt(0))][Integer.parseInt("" + pieceId.charAt(1)) - 1];
 			
 			setEnabled(true);
 			add(animalPiece);
@@ -760,281 +705,3 @@ public class GameDisplay extends JFrame  {
 	}
 }
 
-// -------------------------- TERMINAL/CONSOLE VERSION --------------------------
-
-
-	// /**	This method updates the contents of the board in the current row.
-	//  * It is responsible for assigning a character to each terrain of the board.
-	//  * For Land terrain it is a space character (' ').<br>For River terrain it is a
-	//  * tilde character ('~').<br>For Animal objects there designated character would 
-	//  * be their first letter in their names (or animal type).
-	//  * 
-	//  * @param rowContents row of the board display
-	//  * @param rowArea row of the game board
-	//  * @param currentRow the current row the method is updating
-	//  */
-// 	public void updateRowContents(char[] rowContents, Terrain[] rowArea, int currentRow) {
-// 		int c;
-// 		// updates all the columns of a specific row
-// 		for(c = 0; c < 7; c++) {
-			
-// 			// assigns a specific character of an animal object when the terrain object is occupied
-// 			if(rowArea[c].getState()) {
-// 				// using the rank of the occupying animal object in the terrain object for
-// 				// assigning their designated characters
-// 				switch(rowArea[c].getAnimal().getRank()) {
-// 					case 1: // for Mouse Objects
-// 						rowContents[c] = MOUSE_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
-// 						break;
-// 					case 2: // for Cat Objects
-// 						rowContents[c] = CAT_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
-// 						break;
-// 					case 3: // for Wolf Objects
-// 						rowContents[c] = WOLF_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
-// 						break;
-// 					case 4: // for Dog Objects
-// 						rowContents[c] = DOG_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
-// 						break;
-// 					case 5: // for Leopard Objects
-// 						rowContents[c] = LEOPARD_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
-// 						break;
-// 					case 6: //for Tiger objects
-// 						rowContents[c] = TIGER_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
-// 						break;
-// 					case 7: // for Lion Objects
-// 						rowContents[c] = LION_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
-// 						break;
-// 					case 8: // for Elephant Objects
-// 						rowContents[c] = ELEPHANT_ICON[rowArea[c].getAnimal().getPlayerSide() - 1];
-// 						break;
-// 				}
-
-// 			} else rowContents[c] = ' '; 
-// 			// if not occupied then it is assumed to be an unoccupied Land terrain
-
-// 			// checks if that unoccupied terrain might be an Animal Den			
-// 			if(rowArea[c].isAnimalDen() && !rowArea[c].getState())
-// 				rowContents[c] = ANIMAL_DEN_ICON;
-			
-// 			// checks if that unoccupied terrain might be a River terrain
-// 			if(rowArea[c].isRiver() && !rowArea[c].getState())
-// 				rowContents[c] = RIVER_ICON;
-
-// 			if(rowArea[c].isTrap() && !rowArea[c].getState())
-// 				rowContents[c] = TRAP_ICON;
-
-// 		}
-// 	}
-
-
-// 	/**	This method updates the contents of the whole board.
-// 	 * 
-// 	 * @param gameArea the game board
-// 	 */
-// 	public void updateDisplayContents(Terrain[][] gameArea) {
-// 		int r;
-// 		for(r = 0; r < 9; r++)
-// 			updateRowContents(boardDisplay[r], gameArea[r], r);
-// 	}
-
-
-// 	/**	This method updates the contents of the whole board when
-// 	 * there is an animal who's going to move. It's going to update
-// 	 * the character assigned to an area into a pound sign or hashtag '#'
-// 	 * character to show to the players that the chosen animal could 
-// 	 * move to that terrain.
-// 	 * 
-// 	 * @param gameArea the game board
-// 	 * @param animalPiece the animal object that is subject to move
-// 	 */
-// 	public void updateDisplayContents(Terrain[][] gameArea, Animal animalPiece) {  
-
-// 		// upward moves
-// 		if(animalPiece.canMoveUp(gameArea))
-// 			boardDisplay[animalPiece.getRow()][animalPiece.getCol() + animalPiece.getUpwardSpace()] = MOVE_ICON;
-
-// 		// downward moves
-// 		if(animalPiece.canMoveDown(gameArea))
-// 			boardDisplay[animalPiece.getRow()][animalPiece.getCol() - animalPiece.getDownwardSpace()] = MOVE_ICON;
-
-// 		// right moves
-// 		if(animalPiece.canMoveRight(gameArea))
-// 			boardDisplay[animalPiece.getRow() + animalPiece.getRightSpace()][animalPiece.getCol()] = MOVE_ICON;
-
-// 		// left moves
-// 		if(animalPiece.canMoveLeft(gameArea))
-// 			boardDisplay[animalPiece.getRow() - animalPiece.getLeftSpace()][animalPiece.getCol()] = MOVE_ICON;
-
-// 	}
-	
-	
-// 	/**	This method displays the column of the game board.
-// 	 * 
-// 	 * @param boardContents contains character representation of the game board
-// 	 * @param currentCol the current column that is being displayed by this method
-// 	 */
-// 	public void displayContents(char[][] boardContents, int currentCol) {
-// 		int row;
-// 		System.out.print("||");
-// 		for(row = 0; row < 9; row++) {
-// 			System.out.print(" " + boardContents[row][currentCol] + " ");
-			
-// 			if(row < 8)
-// 				System.out.print("|");
-// 		}
-		
-// 		System.out.println("||");
-// 	}
-	
-	
-// 	/**	This method displays the contents of the whole board
-// 	 */
-// 	public void displayBoard() {
-// 		int col;
-// 		System.out.println();
-// 		System.out.println("  Red                            Blue");
-// 		System.out.println("======================================="); // borders
-		
-// 		// print out the contents per column
-// 		for(col = 6; col >= 0; col--)
-// 			displayContents(boardDisplay, col); 
-		
-// 		System.out.println("======================================="); // borders
-// 		System.out.println();
-// 	}
-
-
-// 	/**	Displays the random animal choices for the players to pick at
-// 	 * the start of the game. It also displays whether that random animal piece
-// 	 * is already picked by another player.
-// 	 * 
-// 	 * @param numChoices number of Animal objects that is present or implemented in the game
-// 	 * @param validPiece cointains the valid choices of random animal objects. This also helps in determining whether the piece is already taken.
-// 	 */
-// 	public void displayRandomAnimalChoice(int numChoices, int[] validPiece) {
-// 		int p;
-
-// 		System.out.print("Animal pieces:\n\n");
-// 		for(p = 0; p < numChoices; p++) {
-// 			System.out.print(p + 1 + ".) Random animal piece ");
-
-// 			// checks if random animal piece is already taken
-// 			if(validPiece[p] == 0)
-// 				System.out.print("[X]");
-
-// 			System.out.println();
-// 		}
-// 		System.out.println();
-// 	}
-
-
-// 	/**	This method displays the available team colors that the players could choose to side on.
-// 	 */
-// 	public void displayTeamColorChoice() {
-// 		System.out.println("Team Colors:");
-// 		System.out.print("1.) Red\n2.) Blue\n\n");
-// 	}
-
-
-// 	/**	This method displays the available Animal objects that the player could use or move
-// 	 * during the gameplay.
-// 	 * 
-// 	 * @param animalPieces animal objects(pieces) of both players
-// 	 * @param playerTurn index of the player currently playing (contains either 0 (for player in red team), and 1(for player in blue team))
-// 	 */
-// 	public void displayAvailableAnimals(Animal[][] animalPieces, int playerTurn) {
-// 		int a;
-// 		System.out.println("Available animal pieces:");
-// 		for(a = 0; a < animalPieces.length; a++)
-// 			if(animalPieces[a][playerTurn] != null && !animalPieces[a][playerTurn].isCaptured())
-// 				System.out.println("\t" + (a+1) + ".) " + animalPieces[a][playerTurn]);
-		
-// 		System.out.println();
-// 	}
-
-
-// 	/**	This method displays the assigned character inputs for the movement of an animal object.
-// 	 */
-// 	public void displayMovementKeys() {
-// 		System.out.println("Keys for movement:");
-// 		System.out.println("\tL - Left");
-// 		System.out.println("\tR - Right");
-// 		System.out.println("\tU - Up");
-// 		System.out.println("\tD - Down");
-// 		System.out.println("\tX - Cancel");
-// 		System.out.println();
-// 	}
-
-
-// 	/**	This method displays the winner of the Animal Chess round.
-// 	 * 
-// 	 * @param playerSide the player who won (could be player 1 or 2)
-// 	 * @param teamColor the color that the winning player chose or sided on
-// 	 */
-// 	public void displayWinner(int playerSide, String teamColor) {
-// 		System.out.println("CONGRATULATIONS! Player " + playerSide + " ( " + teamColor + " )");
-// 		System.out.print("You have successfully conquered thy land.\n\n");
-// 	}
-	
-	
-// 	/** This constant attribute holds the characters icons for the whole game board.
-// 	 * This is used for displaying the game board.
-// 	 */
-// 	private char[][] boardDisplay = new char[9][7];
-
-// 	/**	This constant attribute contains the character icon for siginifying a terrain is an Animal Den
-// 	 */
-// 	private final char ANIMAL_DEN_ICON = '@';
-
-// 	/** This constant attribute contains the character icon for signifying a terrain is a River object
-// 	 */
-// 	private final char RIVER_ICON = '~';
-
-// 	/**	This constant attribute holds the character icon for the Mouse objects for both players.
-// 	 * Index [0] for player in red team, and index [1] for player in blue team.
-// 	 */
-// 	private final char[] MOUSE_ICON = {'M', 'm'};
-
-// 	/**	This constant attribute holds the character icon for the Cat objects for both players.
-// 	 * Index [0] for player in red team, and index [1] for player in blue team.
-// 	 */
-// 	private final char[] CAT_ICON = {'C', 'c'};
-	
-// 	/**	This constant attribute holds the character icon for the Wolf objects for both players.
-// 	 * Index [0] for player in red team, and index [1] for player in blue team.
-// 	 */
-// 	private final char[] WOLF_ICON = {'W', 'w'};
-
-// 	/** This constant attribute holds the character icon for the Dog objects for both players. 
-// 	 * Index [0] for player in red team, and index [1] for player in blue team.
-// 	 */
-// 	private final char[] DOG_ICON = {'D','d'};
-	 
-// 	/**	This constant attribute holds the character icon for the Leopard objects for both players.
-// 	 * Index [0] for player in red team, and index [1] for player in blue team.
-// 	 */
-// 	private final char[] LEOPARD_ICON = {'O', 'o'};
-
-// 	/**	This constant attribute holds the character icon for the Tiger objects for both players.
-// 	 * Index [0] for player in red team, and index [1] for player in blue team.
-// 	 */
-// 	private final char[] TIGER_ICON = {'T', 't'};
-
-// 	/**	This constant attribute holds the character icon for the Lion objects for both players.
-// 	 * Index [0] for player in red team, and index [1] for player in blue team.
-// 	 */
-// 	private final char[] LION_ICON = {'L','l'};
-
-// 	/**	This constant attribute holds the character icon for the Elephant objects for both players.
-// 	 * Index [0] for player in red team, and index [1] for player in blue team.
-// 	 */
-// 	private final char[] ELEPHANT_ICON = {'E', 'e'};
-
-// 	/** This constant attribute contains the character icon for signifying where the animal object could move
-// 	 */
-// 	private final char MOVE_ICON = '#';
-	
-
-// 	private final char TRAP_ICON = '8';
-// 
-// 
