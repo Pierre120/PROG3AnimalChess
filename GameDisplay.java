@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-// import javax.swing.LayoutStyle.ComponentPlacement;
-// import javax.swing.text.ComponentView;
 
 /**
  * This GameDisplay class is responsible for the displays or outputs in the terminal.
