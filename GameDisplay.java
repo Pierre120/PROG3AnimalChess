@@ -14,9 +14,7 @@ import java.awt.event.*;
  * @author Matthew James Villarica
  */
 public class GameDisplay extends JFrame  {
-	
-	
-	
+
 	public GameDisplay() {
 		
 		randPieceContainer = new JPanel();
@@ -136,6 +134,9 @@ public class GameDisplay extends JFrame  {
 		// set RED_PANEL & BLUE_PANEL for each player
 		setColorPanels();
 
+		// set game board
+		setBoard();
+
 		// set HEADER
 		HEADER.setPreferredSize(new Dimension(1017, 114));
 
@@ -166,8 +167,6 @@ public class GameDisplay extends JFrame  {
 		validate();
 		// System.out.println(this.getSize().toString());
 	}
-	
-	
 
 
 	public void setListeners(MouseListener start, MouseListener random, ActionListener choicePicker, MouseListener board) {
@@ -180,11 +179,6 @@ public class GameDisplay extends JFrame  {
 		CHOICE_BUTTONS[2].addActionListener(choicePicker);
 		boardListener = board;
 	}
-
-	/* public void setTransparentBackground(Component comp) {
-		comp.setBackground(TRANSPARENT);
-		repaint();
-	} */
 
 	
 	public JLabel getStartButton() {
@@ -363,19 +357,6 @@ public class GameDisplay extends JFrame  {
 	public void displayAnimalChess(int playerInd) {
 		assignPlayers(playerInd);
 
-		BOARD_PANEL.setLayout(new GridLayout(7, 9, 1, 1)); 
-		// BOARD_PANEL.setBounds(0, 0, 1017, 734);
-		// BOARD_PANEL.setBounds(0, 0, 720, 560);
-		BOARD_PANEL.setBackground(Color.BLACK);
-		// BACKGROUNDS[1].setLayout(new FlowLayout());
-		
-		
-		BOARD_CONTAINER.setLayout(new FlowLayout());
-		BOARD_CONTAINER.setPreferredSize(new Dimension(1000, 617));
-		BOARD_CONTAINER.setBackground(TRANSPARENT);
-
-		
-
 		// BASE.removeAll();
 		// BASE.add(BOARD_PANEL, JLayeredPane.DEFAULT_LAYER);
 		BASE.remove(POPUP_PANEL);
@@ -511,6 +492,19 @@ public class GameDisplay extends JFrame  {
 		BLUE_PANEL.setPreferredSize(COLOR_PANEL_SIZE); // new Dimension(120, 620)
 		BLUE_PANEL.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		// System.out.println(BLUE_PANEL.getSize().toString());
+	}
+
+	private void setBoard() {
+		BOARD_PANEL.setLayout(new GridLayout(7, 9, 1, 1)); 
+		// BOARD_PANEL.setBounds(0, 0, 1017, 734);
+		// BOARD_PANEL.setBounds(0, 0, 720, 560);
+		BOARD_PANEL.setBackground(Color.BLACK);
+		// BACKGROUNDS[1].setLayout(new FlowLayout());
+		
+		
+		BOARD_CONTAINER.setLayout(new FlowLayout());
+		BOARD_CONTAINER.setPreferredSize(new Dimension(1000, 617));
+		BOARD_CONTAINER.setBackground(TRANSPARENT);
 	}
 	
 	private void setTextLabels() {
