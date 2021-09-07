@@ -671,33 +671,37 @@ public class GameGUI extends JFrame  {
 	 */
 	private void setBoard() {
 		BOARD_PANEL.setLayout(new GridLayout(7, 9, 1, 1)); 
-		// BOARD_PANEL.setBounds(0, 0, 1017, 734);
-		// BOARD_PANEL.setBounds(0, 0, 720, 560);
 		BOARD_PANEL.setBackground(Color.BLACK);
-		// BACKGROUNDS[1].setLayout(new FlowLayout());
-		
 		
 		BOARD_CONTAINER.setLayout(new FlowLayout());
 		BOARD_CONTAINER.setPreferredSize(new Dimension(1000, 600));
 		BOARD_CONTAINER.setBackground(TRANSPARENT);
 	}
 	
+
+	/**
+	 * This method sets the size, font, foreground and horizontal alignment
+	 * of the TEXT_LABELS attribute.
+	 */
 	private void setTextLabels() {
 		// set TEXT_LABELS[0]
 		TEXT_LABELS[0].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
 		TEXT_LABELS[0].setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
 		TEXT_LABELS[0].setForeground(Color.BLACK);
 		TEXT_LABELS[0].setHorizontalAlignment(JLabel.CENTER);
-		// System.out.println(TEXT_LABELS[0].getSize().toString());
 
 		// set TEXT_LABELS[1]
 		TEXT_LABELS[1].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
 		TEXT_LABELS[1].setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
 		TEXT_LABELS[1].setForeground(Color.BLACK);
 		TEXT_LABELS[1].setHorizontalAlignment(JLabel.CENTER);
-		// System.out.println(TEXT_LABELS[1].getSize().toString());
 	}
 
+
+	/**
+	 * This method sets the layout, size, background, vertical and horizontal alignment
+	 * of the POPUP_PAPER attribute.
+	 */
 	private void setPopupPaper() {
 		POPUP_PAPER.setLayout(new BorderLayout());
 		POPUP_PAPER.setPreferredSize(new Dimension(600, 484));
@@ -706,22 +710,30 @@ public class GameGUI extends JFrame  {
 		POPUP_PAPER.setHorizontalAlignment(JLabel.CENTER);
 	}
 
+
+	/**
+	 * This method sets the font, foreground, vertical and horizontal alignment
+	 * of the RED_PLAYER and BLUE_PLAYER attributes.
+	 */
 	private void setPlayerBanners() {
 		// set RED_PLAYER
 		RED_PLAYER.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
 		RED_PLAYER.setForeground(Color.BLACK);
-		// RED_PLAYER.setBackground(TRANSPARENT);
 		RED_PLAYER.setVerticalAlignment(JLabel.CENTER);
 		RED_PLAYER.setHorizontalAlignment(JLabel.CENTER);
 
 		// set BLUE_PLAYER
 		BLUE_PLAYER.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
 		BLUE_PLAYER.setForeground(Color.BLACK);
-		// BLUE_PLAYER.setBackground(TRANSPARENT);
 		BLUE_PLAYER.setVerticalAlignment(JLabel.CENTER);
 		BLUE_PLAYER.setHorizontalAlignment(JLabel.CENTER);
 	}
 
+
+	/**
+	 * This method sets the focus, size, foreground, background, layout and
+	 * action commands of the CHOICE_BUTTONS attribute.
+	 */
 	private void setChoiceButtons() {
 		// set CHOICE_BUTTONS[0] (red button)
 		CHOICE_BUTTONS[0].setActionCommand("RED");
@@ -746,12 +758,16 @@ public class GameGUI extends JFrame  {
 		CHOICE_BUTTONS[2].setLayout(new BorderLayout()); // set layout for "OK" text
 	}
 
+
+	/**
+	 * This method sets the title, icon, size, resizability, location, layout,
+	 * visibility and default close operation of this (GameGUI) extended JFrame class
+	 */
 	private void setFrame() {
 		// setup this frame
 		this.setTitle("Animal Chess"); // title for the window
 		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// this.setSize((int)DEFAULT_SIZE.getWidth() + 16, (int)DEFAULT_SIZE.getHeight() + 40); // original frame size: 1033, 772
 		this.setSize(DEF_FRAME_SIZE);
 		this.setResizable(false); // not resizable
     	this.setLocationRelativeTo(null); // center of screen
@@ -761,13 +777,25 @@ public class GameGUI extends JFrame  {
 	}
 
 
+	/**
+	 * This inner class, RandomPiece, extends the JLabel class and it is responsible for the
+	 * behavior of the random piece objects that will be used in the GUI.
+	 */
 	private class RandomPiece extends JLabel {
 
+		/**
+		 * This contructor is responsible for setting the instantiated object. It sets the
+		 * name, icon (for enabled and disabled), enability, mouse listener and background
+		 * of this object.
+		 * 
+		 * @param name name given this component object
+		 * @param back backside of the random piece
+		 * @param animalPiece assigned animal piece for this random piece object
+		 */
 		public RandomPiece(String name, ImageIcon back, ImageIcon animalPiece) {
 			setName(name);
 			setIcon(back);
 			setDisabledIcon(animalPiece);
-			// setPreferredSize(new Dimension(80, 80));
 			setEnabled(true);
 			addMouseListener(randomPicker);
 			setBackground(TRANSPARENT);
