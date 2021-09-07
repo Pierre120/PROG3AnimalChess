@@ -7,8 +7,9 @@ import java.util.Random;
  * implements listeners for the GUI and makes the corresponding changes on
  * both the model and the GUI depending on how the players interact with
  * the GUI. It follows the MVC archietecture.
+ * 
  * @author Pierre Vincent Hernandez
- * @author Matthew James D. Vilalrica
+ * @author Matthew James D. Villarica
  */
 public class GameController {
     /**
