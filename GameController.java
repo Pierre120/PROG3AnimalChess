@@ -81,7 +81,7 @@ public class GameController {
      * 
      * @param arrIndex the array of index values
      * @param randomIndex the random number produced
-     * @return
+     * @return true if the index is unique, false otherwise
      */
     private boolean isIndexUnique(int[] arrIndex, int randomIndex) {
         int r;
