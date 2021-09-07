@@ -1,15 +1,33 @@
+/**
+ * This class represents tiles on the gameboard, which contains the specific terrain
+ * (trap, animal den, river, land) that animals can occupy.
+ * 
+ * @author Pierre Vincent Hernandez
+ * @author Matthew James D. Villarica
+ */
 public class Tiles {
     
+    /**
+     * This constructor instantiates the Tiles with a 9 x 7 array of Terrain.
+     */
     public Tiles () {
         terrainTiles = new Terrain[9][7];
         //instantiate the elements of terrainTiles with designated Terrain objects
         instantiateTiles();
     }
-
+    /**
+     * This method returns the 9x7 array of Terrain.
+     * @return 9x7 array of Terrain.
+     */
     public Terrain[][] getTerrains() {
         return terrainTiles;
     }
 
+    /**
+     * This method is a supporting method of the constructor, it instantiates the
+     * 9 x 7 array of terrain with the specific sub class (type of Terrain) of
+     * each space in the tiles of the board (animal den, river, land, or trap).
+     */
     private void instantiateTiles() {
         int r;
         int c;
@@ -38,5 +56,8 @@ public class Tiles {
         }
     }
     
+    /**
+     * This attribute is the 9 x 7 array of Terrain.
+     */
     private Terrain[][] terrainTiles;
 }

@@ -280,7 +280,7 @@ public class GameGUI extends JFrame  {
 	 * for random pieces by setting a text to the text labels and displaying it
 	 * for the user to be notified on whose turn it is.
 	 * 
-	 * @param turn index turn of the current person picking (1 - for persson 2)
+	 * @param turn index turn of the current person picking (1 - for person 2)
 	 */
 	public void updateTurn(int turn) {
 		switch(turn) {
