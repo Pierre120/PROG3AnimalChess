@@ -13,32 +13,39 @@ import java.awt.event.*;
  */
 public class GameGUI extends JFrame  {
 
+	/**
+	 * This constructor is responsible for instantiating and setting up this class' attributes.
+	 */
 	public GameGUI() {
 		
-		randPieceContainer = new JPanel();
-		startButton = new JLabel(new ImageIcon("images\\start.png"));
+		randPieceContainer = new JPanel(); // container for the random animal pieces
+		startButton = new JLabel(new ImageIcon("images\\start.png")); // start button for the start of the game
 
-		randomPicker = null;
-		boardListener = null;
+		// temporarily assign null to listeners
+		randomPicker = null; // listener for picking random animal pieces
+		boardListener = null; // listener during the main gameplay
 
-		TRANSPARENT = new Color(0, 0, 0, 0);
+		TRANSPARENT = new Color(0, 0, 0, 0); // transparent background
 
 		DEF_FRAME_SIZE = new Dimension(1033, 772); // allowance of dimension for the frame
 		DEFAULT_SIZE = new Dimension((int)DEF_FRAME_SIZE.getWidth() - 16, (int)DEF_FRAME_SIZE.getHeight() - 40); // 1017 x 732
 		LOWER_CONTAINER_SIZE = new Dimension[2];
 		LOWER_CONTAINER_SIZE[0] = new Dimension((int)DEFAULT_SIZE.getWidth(), 
-									(int)DEFAULT_SIZE.getHeight() - 332); // 1017 x 400
+									(int)DEFAULT_SIZE.getHeight() - 332); // default: 1017 x 400
 		LOWER_CONTAINER_SIZE[1] = new Dimension((int)DEFAULT_SIZE.getWidth(), 
 									(int)LOWER_CONTAINER_SIZE[0].getHeight() - 50); // during random picking size
-		TEXT_LABEL_SIZE = new Dimension(400, 50);
-		COLOR_PANEL_SIZE = new Dimension(120, 618);
-		PIECE_SIZE = new Dimension(78, 78);
-		TILE_SIZE = new Dimension(80, 80);
-		BUTTON_SIZE = new Dimension(200, 100);
+		TEXT_LABEL_SIZE = new Dimension(400, 50); // text labels
+		COLOR_PANEL_SIZE = new Dimension(120, 618); // color panels during main gameplay
+		PIECE_SIZE = new Dimension(78, 78); // piece size
+		TILE_SIZE = new Dimension(80, 80); // tiles size
+		BUTTON_SIZE = new Dimension(200, 100); // size of buttons
 
+		// base for all components
 		BASE = new JLayeredPane();
 		
+		// backgrounds that will be used throughout the game
 		BACKGROUNDS = new JPanel[2];
+		// main background
 		BACKGROUNDS[0] = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
@@ -47,6 +54,7 @@ public class GameGUI extends JFrame  {
 				bg.drawImage(new ImageIcon("images\\background.png").getImage(), 0, 0, null);
 			}
 		};
+		// wooden background of the game board
 		BACKGROUNDS[1] = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
@@ -56,6 +64,7 @@ public class GameGUI extends JFrame  {
 			}
 		};
 
+		// wooden board background for the text labels
 		TEXT_BOARD = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
@@ -65,6 +74,7 @@ public class GameGUI extends JFrame  {
 			}
 		};
 
+		// header during the main game play
 		HEADER = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
@@ -74,38 +84,38 @@ public class GameGUI extends JFrame  {
 			}
 		};
 
-		TEXT_PANEL = new JPanel();
-		TEXT_CONTAINER = new JPanel(); 
-		UPPER_CONTAINER = new JPanel();
-		LOWER_CONTAINER = new JPanel();
-		POPUP_PANEL = new JPanel();
-		RED_PANEL = new JPanel();
-		BLUE_PANEL = new JPanel();
-		BOARD_PANEL = new JPanel();
-		BOARD_CONTAINER = new JPanel();
-		
+		TEXT_PANEL = new JPanel(); // transparent ontainer for text-related components (TEXT_CONTAINER & TEXT_LABELS)
+		TEXT_CONTAINER = new JPanel(); // will hold the TEXT_LABELS
+		UPPER_CONTAINER = new JPanel(); // transparent upper container in the frame to hold components
+		LOWER_CONTAINER = new JPanel(); // transparent lower container in the frame to hold components
+		POPUP_PANEL = new JPanel(); // container for the POPUP_PAPER
+		RED_PANEL = new JPanel(); // color panel for the red player 
+		BLUE_PANEL = new JPanel(); // color panel for the blue player
+		BOARD_PANEL = new JPanel(); // transparent container for the board-related components (BOARD_CONTAINER & TILES)
+		BOARD_CONTAINER = new JPanel(); // will hold the TILES
 		
 		TEXT_LABELS = new JLabel[2];
-		TEXT_LABELS[0] = new JLabel();
-		TEXT_LABELS[1] = new JLabel();
+		TEXT_LABELS[0] = new JLabel(); // serves as heading 1
+		TEXT_LABELS[1] = new JLabel(); // serves as heading 2
 
+		// popup notif
 		POPUP_PAPER = new JLabel(new ImageIcon("images\\popup.png"));
-		RED_PLAYER = new JLabel();
-		BLUE_PLAYER = new JLabel();
+		RED_PLAYER = new JLabel(); // text for the player assigned to red
+		BLUE_PLAYER = new JLabel(); // text for the player assigned to blue
 
 		CHOICE_BUTTONS = new JButton[3];
 		CHOICE_BUTTONS[0] = new JButton(); // red
 		CHOICE_BUTTONS[1] = new JButton(); // blue
 		CHOICE_BUTTONS[2] = new JButton(); // ok
 
-		TILES = new BoardTile[9][7];
-		PIECE_PICS = new JLabel[2][8];
+		TILES = new BoardTile[9][7]; // tiles of the board
+		PIECE_PICS = new JLabel[2][8]; // animal pieces
 		
 		TERRAIN_PICS = new ImageIcon[4];
-		TERRAIN_PICS[0] = new ImageIcon("images\\land.png");
-		TERRAIN_PICS[1] = new ImageIcon("images\\river.png");
-		TERRAIN_PICS[2] = new ImageIcon("images\\trap.png");
-		TERRAIN_PICS[3] = new ImageIcon("images\\animalDen.png");
+		TERRAIN_PICS[0] = new ImageIcon("images\\land.png"); // land
+		TERRAIN_PICS[1] = new ImageIcon("images\\river.png"); // river
+		TERRAIN_PICS[2] = new ImageIcon("images\\trap.png"); // trap
+		TERRAIN_PICS[3] = new ImageIcon("images\\animalDen.png"); // animal den
 
 		
 		// initialize pictures of pieces
@@ -135,7 +145,7 @@ public class GameGUI extends JFrame  {
 		// set game board
 		setBoard();
 
-		// set HEADER
+		// set HEADER for main gameplay
 		HEADER.setPreferredSize(new Dimension(1017, 114));
 
 		//	set TEXT_LABELS
@@ -150,69 +160,106 @@ public class GameGUI extends JFrame  {
 		//set choice buttons on player banner
 		setChoiceButtons();
 		
-		//set main JFrame of GUI and add base
+		//set main JFrame of GUI 
 		setFrame();
 		
 		// add the base to this frame
 		this.add(BASE, BorderLayout.CENTER);
+
 		// add components to the base
 		BASE.add(BACKGROUNDS[0], JLayeredPane.DEFAULT_LAYER);
 		BACKGROUNDS[0].add(LOWER_CONTAINER, BorderLayout.SOUTH);
 		LOWER_CONTAINER.add(startButton);
 
-		
+		// update changes to reflect
 		repaint();
 		validate();
 		// System.out.println(this.getSize().toString());
 	}
 
 
+	/**
+	 * This method is responsible for setting the listeners for this class.
+	 * 
+	 * @param start MouseListener for the start button
+	 * @param random MouseListener for the random pieces
+	 * @param choicePicker ActionListener for the buttons in the game
+	 * @param board MouseListener for the game board tiles
+	 */
 	public void setListeners(MouseListener start, MouseListener random, ActionListener choicePicker, MouseListener board) {
-		startButton.addMouseListener(start);
-		// set the listener for other MouseInputListener attributes of this class
-		// implementation of MouseInputListener are in Game class
-		randomPicker = random;
-		CHOICE_BUTTONS[0].addActionListener(choicePicker);
-		CHOICE_BUTTONS[1].addActionListener(choicePicker);
-		CHOICE_BUTTONS[2].addActionListener(choicePicker);
-		boardListener = board;
+		startButton.addMouseListener(start); // listener for start button
+		CHOICE_BUTTONS[0].addActionListener(choicePicker); // listener for the red button
+		CHOICE_BUTTONS[1].addActionListener(choicePicker); // listener for the blue button
+		CHOICE_BUTTONS[2].addActionListener(choicePicker); // listener for the ok button
+		randomPicker = random; // listener for the random pices
+		boardListener = board; // listener for the board tiles
 	}
 
 	
+	/**
+	 * This method gets the start button component of this GUI class.
+	 * 
+	 * @return returns the start button which is a JLabel type component
+	 */
 	public JLabel getStartButton() {
 		return startButton;
 	}
 
+
+	/**
+	 * This method removes the start button (startButton) from the game after it is used by removing it from
+	 * its container and assigning a null value to it.
+	 */
 	public void removeStartButton() {
-		LOWER_CONTAINER.remove(startButton);
+		LOWER_CONTAINER.remove(startButton); // remove start button from container
 		startButton = null;
 	}
 
+
+	/**
+	 * This method removes the random choices (randPieceContainer) from the game after it is used by removing it 
+	 * from its container and assigning a null value to it.
+	 */
 	public void removeRandomChoices() {
-		LOWER_CONTAINER.remove(randPieceContainer);
+		LOWER_CONTAINER.remove(randPieceContainer); // remove the random pieces from the container
 		randPieceContainer = null;
 	}
 
 	
+	/**
+	 * This method initializes the tiles for the game board.
+	 * 
+	 * @param board game board model which holds the tiles for terrains and the animal pieces
+	 */
 	public void initBoardDisplay(BoardModel board) {
 
 		for(int row = 0; row < 9; row++) 
 			for(int col = 0; col < 7; col++) {
-				if(board.getTiles().getTerrains()[row][col].isLand())
+				if(board.getTiles().getTerrains()[row][col].isLand()) // land terrain
 					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[0]);
-				else if (board.getTiles().getTerrains()[row][col].isRiver())
+
+				else if (board.getTiles().getTerrains()[row][col].isRiver()) // river terrain
 					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[1]);
-				else if(board.getTiles().getTerrains()[row][col].isTrap())
+
+				else if(board.getTiles().getTerrains()[row][col].isTrap()) // trap terrain
 					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[2]);
-				else if(board.getTiles().getTerrains()[row][col].isAnimalDen())
+
+				else if(board.getTiles().getTerrains()[row][col].isAnimalDen()) // animal den
 					TILES[row][col] = new BoardTile("" + row + col, TERRAIN_PICS[3]);
 				
+				// assigns the piece that is currently occupying the terrain
 				if(board.getTiles().getTerrains()[row][col].getState())
 					TILES[row][col].addPiece("" + (board.getTiles().getTerrains()[row][col].getAnimal().getPlayerSide() - 1) +
 					 	board.getTiles().getTerrains()[row][col].getAnimal().getRank());
 			}
 	}
 
+
+	/**
+	 * This method assigns the players to their designated color side.
+	 * 
+	 * @param playerInd chosen side of Player 1 (0 - Red & 1 - Blue)
+	 */
 	public void assignPlayers(int playerInd) {
 		// HEADER.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		String[] playerString = new String[2];
@@ -221,26 +268,42 @@ public class GameGUI extends JFrame  {
 		playerString[(playerInd + 1) % 2] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>2</HTML>";
 
 		RED_PLAYER.setText(playerString[0]);
+
+		// DEBUGGING PURPOSES
 		System.out.println("Assigning players... Red is " + RED_PLAYER.getText());
 
 		BLUE_PLAYER.setText(playerString[1]);
 	}
 
 	
+	/**
+	 * This method updates the turn of the person who's picking
+	 * for random pieces by setting a text to the text labels and displaying it
+	 * for the user to be notified on whose turn it is.
+	 * 
+	 * @param turn index turn of the current person picking (1 - for persson 2)
+	 */
 	public void updateTurn(int turn) {
 		switch(turn) {
-			case 1:
+			case 1: // person 2's turn
 				TEXT_LABELS[1].setText("TURN: PERSON 2");
 				break;
 
-			default:
+			default: // both person 1 & 2 are done picking
 				TEXT_LABELS[1].setText("LOADING ...");
 				break;
 		}
 
-		repaint();
+		repaint(); // update changes
 	}
 
+
+	/**
+	 * This method updates the color panels to show to the user whose turn it is,
+	 * whether if it's the turn of the player in the red side or blue side.
+	 * 
+	 * @param turn current player's turn (0 - Red & 1 - Blue)
+	 */
 	public void updateColorPanel(int turn) {
 		if(turn == 0) { // 0 - red
 			RED_PANEL.setBackground(Color.RED);
@@ -251,19 +314,32 @@ public class GameGUI extends JFrame  {
 		}
 	}
 
+
+	/**
+	 * This method updates the tiles when the player picks an animal piece to show its valid
+	 * moves in the board by setting border highlights to the valid tiles. It removes the 
+	 * border highlights when the player cancels his/her move or made a valid move.
+	 * 
+	 * @param board contains the terrain of the board model
+	 * @param movingPiece the chosen piece of the player
+	 * @param validIDs the valid tile IDs of the valid terrain that the chosen animal can move into
+	 * @param move holds 1 if player has chosen a piece to move, and holds 2 if player cancels his move or a move has been made
+	 */
 	public void updateTiles(Terrain[][] board, Animal movingPiece, String[] validIDs, int move) {
 		for(int m = 0; m < validIDs.length; m++)
 			if(!validIDs[m].equalsIgnoreCase("null")) {
 				switch(move) {
 					case 0: // done making a move
+						// remove highlight border on the tile of the chosen piece
 						TILES[movingPiece.getRow()][movingPiece.getCol()]
 							.setBorder(BorderFactory.createEmptyBorder());
 
+						// remove highlight border on the valid tiles
 						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
 							[Integer.parseInt("" + validIDs[m].charAt(1))]
 							.setBorder(BorderFactory.createEmptyBorder());
 
-						// if there are no pieces occupying current tile
+						// disable tile if there are no pieces occupying current tile
 						if(!board[Integer.parseInt("" + validIDs[m].charAt(0))]
 						[Integer.parseInt("" + validIDs[m].charAt(1))].getState())
 							TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
@@ -272,13 +348,16 @@ public class GameGUI extends JFrame  {
 						break;
 
 					case 1: // starting to make a move
+						// add highlight border on the current tile of the chosen piece
 						TILES[movingPiece.getRow()][movingPiece.getCol()]
 							.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
 
+						// add highlight border to the valid tiles
 						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
 							[Integer.parseInt("" + validIDs[m].charAt(1))]
 							.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 5));
 
+						// enable the valid tiles to perform the actions of its listeners
 						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
 							[Integer.parseInt("" + validIDs[m].charAt(1))]
 							.setEnabled(true);
