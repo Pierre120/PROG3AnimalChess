@@ -277,7 +277,7 @@ public class GameGUI extends JFrame  {
 
 						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
 							[Integer.parseInt("" + validIDs[m].charAt(1))]
-							.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+							.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 5));
 
 						TILES[Integer.parseInt("" + validIDs[m].charAt(0))]
 							[Integer.parseInt("" + validIDs[m].charAt(1))]
