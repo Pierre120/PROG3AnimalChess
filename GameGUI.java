@@ -534,7 +534,13 @@ public class GameGUI extends JFrame  {
 	}
 	
 	/**
-	 * This method initializes and adds the random pieces to its container.
+	 * This method initializes and adds the random pieces to its container.<br>
+	 * 
+	 * Image Sources:
+	 * <ul>
+	 * 	<li><a href = "https://www.pousseurdebois.fr/jeux-de-strategie/doushouqi/">Animal Pieces</a>
+	 * 	<li><a href = "https://www.pinterest.ph/pin/550494754426398874/">Backside of random piece</a>
+	 * </ul>
 	 * 
 	 * @param randIndexes contains the generated random indexes for the animal pieces
 	 */
@@ -550,7 +556,9 @@ public class GameGUI extends JFrame  {
 
 	/**
 	 * This method intializes the animal pieces that will be displayed
-	 * and added to the tiles of the board display.
+	 * and added to the tiles of the board display.<br>
+	 * 
+	 * Image used: <a href = "https://www.pousseurdebois.fr/jeux-de-strategie/doushouqi/">Animal Pieces</a>
 	 */
 	private void initPiecePics() {
 		
@@ -777,6 +785,9 @@ public class GameGUI extends JFrame  {
 	}
 
 
+
+	// ----------------------------- INNER CLASSES -----------------------------
+
 	/**
 	 * This inner class, RandomPiece, extends the JLabel class and it is responsible for the
 	 * behavior of the random piece objects that will be used in the GUI.
@@ -784,7 +795,7 @@ public class GameGUI extends JFrame  {
 	private class RandomPiece extends JLabel {
 
 		/**
-		 * This contructor is responsible for setting the instantiated object. It sets the
+		 * This contructor is responsible for setting and instantiating RandomPiece object. It sets the
 		 * name, icon (for enabled and disabled), enability, mouse listener and background
 		 * of this object.
 		 * 
@@ -803,11 +814,20 @@ public class GameGUI extends JFrame  {
 	}
 
 
+	/**
+	 * This inner class, BoardTile, extends the JPanel class and it is responsible
+	 * for the behavior of the board tiles in the GUI. It displays the graphical representation
+	 * of the tile/terrain and the animal pieces that are still in the board.
+	 */
 	private class BoardTile extends JPanel	{
-		
-		private JLabel animalPiece;
-		private ImageIcon tile;
 
+		/**
+		 * This contructor is responsible for setting and instantiating BoardTile object. It sets
+		 * the name, layout, size, background, enability, mouse listener, animalPiece and tile attribute.
+		 * 
+		 * @param tileID string format of the current terrain's/tile's row and col position (ex. row = [0] and col = [5]; tileID = "05")
+		 * @param tilePic image of the tile
+		 */
 		public BoardTile(String tileID, ImageIcon tilePic) {
 			animalPiece = null;
 			tile = tilePic;
@@ -819,6 +839,11 @@ public class GameGUI extends JFrame  {
 			addMouseListener(boardListener);
 		}	
 
+		/**
+		 * This method checks if it has an animal piece.
+		 * 
+		 * @return true if it has an animal piece, otherwise false.
+		 */
 		public boolean hasPiece() {
 			if(animalPiece != null)
 				return true;
@@ -826,71 +851,263 @@ public class GameGUI extends JFrame  {
 			return false;
 		}
 
-		//when animal moves in
+		/**
+		 * This method adds an animal piece to itself. This happens when a piece is moved to this BoardTile object.
+		 * 
+		 * @param pieceId string format of the current animal piece's color side and rank (ex. Blue = 1 and Rank = 8; tileID = "18")
+		 */
 		public void addPiece(String pieceId) {
+			//when animal moves in
 			animalPiece = PIECE_PICS[Integer.parseInt("" + pieceId.charAt(0))][Integer.parseInt("" + pieceId.charAt(1)) - 1];
 			
 			setEnabled(true);
 			add(animalPiece);
 		}
 
-		//when animal moves out
+		/**
+		 * This method removes its animal piece. This happens when a piece is captured or moves out from this
+		 * BoardTile object.
+		 */
 		public void removePiece() {
+			//when animal moves out
 			remove(animalPiece);
 			animalPiece = null;
 			setEnabled(false);
-			// repaint();
 		}
 
+		/**
+		 * This overriden method is responsible for painting the BoardTile object
+		 * to its designated tile/terrain image.
+		 * 
+		 * @param g responsible for painting this component
+		 */
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D t = (Graphics2D) g;
 			t.drawImage(tile.getImage(), 0, 0, null);
 		}
+
+
+		/**
+		 * This attribute holds the animal piece.
+		 */
+		private JLabel animalPiece;
+
+		/**
+		 * This attribute holds the image of the terrain for this BoardTile object
+		 */
+		private ImageIcon tile;
 	}
 
+
+
+	// ----------------------------- ATTRIBUTES -----------------------------
+
+
+	// ----------------------------- USER-DEFINED
+
+	/**
+	 * This attribute holds the random pieces.
+	 */
 	private JPanel randPieceContainer;
+
+	/**
+	 * This attribute is the start button of the game.
+	 */
 	private JLabel startButton;
 
+
+	/**
+	 * This attribute holds the MouseListener for the random pieces.
+	 */
 	private MouseListener randomPicker; 
+
+	/**
+	 * This attribute holds the MouseListener for the game board.
+	 */
 	private MouseListener boardListener;
 
+
+
+	// ----------------------------- TRANSPARENT COLOR
+
+	/**
+	 * This attribute holds a transparent color. Mostly used by the containers in the game.
+	 */
 	private final Color TRANSPARENT;
 	
+
+
+	// ----------------------------- DIMENSIONS
+
+	/**
+	 * This attribute holds the default frame size of this GameGUI object.
+	 */
 	private final Dimension DEF_FRAME_SIZE;
+
+	/**
+	 * This attribute holds the default size that fills the inside of the frame.
+	 */
 	private final Dimension DEFAULT_SIZE;
+
+	/**
+	 * This attribute holds the sizes of the LOWER_CONTAINER attribute
+	 */
 	private final Dimension[] LOWER_CONTAINER_SIZE;
+
+	/**
+	 * This attribute holds the default size of the TEXT_LABELS attribute.
+	 */
 	private final Dimension TEXT_LABEL_SIZE;
+
+	/**
+	 * This attribute holds the default size of the RED_PANEL and BLUE_PANEL attributes.
+	 */
 	private final Dimension COLOR_PANEL_SIZE;
+
+	/**
+	 * This attribute holds the default size (78 x 78) of the random pieces and animal pieces (PIECE_PICS attribute).
+	 */
 	private final Dimension PIECE_SIZE;
+
+	/**
+	 * This attribute holds the default size (80 x 80) of the TILES attribute.
+	 */
 	private final Dimension TILE_SIZE;
+
+	/**
+	 * This attribute holds the default size of the CHOICE_BUTTONS attribute.
+	 */
 	private final Dimension BUTTON_SIZE; 
 
+
+
+	// ----------------------------- JLAYEREDPANE
+
+	/**
+	 * This JLayeredPane attribute will serve as the base of the components that will
+	 * be shown.
+	 */
 	private final JLayeredPane BASE;
 
+
+
+	// ----------------------------- JPANELS
+
+	/**
+	 * This attribute holds the backgrounds for the whole frame at the earlier parts of the
+	 * game (start, random and color picking) and for the board, which is a wood background.
+	 */
 	private final JPanel[] BACKGROUNDS; 
+
+	/**
+	 * This attribute will act as a transparent container for the upper portion of the frame.
+	 */
 	private final JPanel UPPER_CONTAINER; 
+
+	/**
+	 * This attribute will act as a transparent container for the lower portion of the frame.
+	 */
 	private final JPanel LOWER_CONTAINER;
+
+	/**
+	 * This attribute will act as a transparent container for the text-related components.
+	 */
 	private final JPanel TEXT_PANEL;
+
+	/**
+	 * This attribute will act as a container for the text that will be used in the game.
+	 */
 	private final JPanel TEXT_CONTAINER;
+
+	/**
+	 * This attribute displays a wooden board that will serve as a background base for the text displays.
+	 */
 	private final JPanel TEXT_BOARD;
+
+	/**
+	 * This attribute will act as a container and background dimmer for the popup prompt (POPUP_PAPER attribute).
+	 */
 	private final JPanel POPUP_PANEL;
+
+	/**
+	 * This attribute displays the header of the frame during the main game play.
+	 */
 	private final JPanel HEADER;
+
+	/**
+	 * This attribute holds the text of the current player who sided to the red color side.
+	 * This will also act as an indicator on whose turn is it.
+	 */
 	private final JPanel RED_PANEL;
+
+	/**
+	 * This attribute holds the text of the current player who sided to the blue color side.
+	 * This will also act as an indicator on whose turn is it.
+	 */
 	private final JPanel BLUE_PANEL;
+
+	/**
+	 * This attribute acts as transparent container for the game board.
+	 */
 	private final JPanel BOARD_PANEL;
+
+	/**
+	 * This attribute holds the tiles (BoardTile objects) of the game board.
+	 */
 	private final JPanel BOARD_CONTAINER;
 	
+
+
+	// ----------------------------- JLABELS
+
+	/**
+	 * This attribute holds the String values that will be displayed in the game.
+	 */
 	private final JLabel[] TEXT_LABELS;
+
+	/**
+	 * This attribute will act as a popup prompt display throughout the game.
+	 */
 	private final JLabel POPUP_PAPER;
+
+	/**
+	 * This attribute holds the string value of the player who chose the red side.
+	 */
 	private final JLabel RED_PLAYER;
+
+	/**
+	 * This attribute holds the string value of the player who chose the blue side.
+	 */
 	private final JLabel BLUE_PLAYER;
+
+	/**
+	 * This attribute holds the images of the animal pieces.
+	 */
 	private final JLabel[][] PIECE_PICS;
 
+
+
+	// ----------------------------- JBUTTON
+
+	/**
+	 * This attribute holds the Red, Blue and "OK" button for the game.
+	 */
 	private final JButton[] CHOICE_BUTTONS;
 
+
+
+	// ----------------------------- USER-DEFINED (FINAL)
+
+	/**
+	 * This attribute holds the array of BoardTile objects for the game. 
+	 */
 	private final BoardTile[][] TILES;
+
+	/**
+	 * This attribute holds the images of the terrains for the tiles.
+	 */
 	private final ImageIcon[] TERRAIN_PICS;
 
 }
