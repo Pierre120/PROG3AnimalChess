@@ -375,12 +375,20 @@ public class GameGUI extends JFrame  {
 	}
 
 	public void displayResults(int winningPlayer) {
+		JLabel ok = new JLabel("OK");
+		ok.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
+		ok.setForeground(Color.BLACK);
+		ok.setHorizontalAlignment(JLabel.CENTER);
+		ok.setVerticalAlignment(JLabel.CENTER);
+
+		CHOICE_BUTTONS[2].add(ok);
+		
 		if(winningPlayer == 0) // 0 - red
 			TEXT_LABELS[0].setText("PLAYER " + RED_PLAYER.getText().charAt(40) + " WINS !!!");
 		else // 1 - blue
 			TEXT_LABELS[0].setText("PLAYER " + BLUE_PLAYER.getText().charAt(40) + " WINS !!!");
 		
-		TEXT_LABELS[1].setText("WANNA PLAY AGAIN DADDY?");
+		TEXT_LABELS[1].setText("GAME WILL NOW EXIT");
 
 		LOWER_CONTAINER.removeAll(); // remove red & blue buttons
 		LOWER_CONTAINER.add(CHOICE_BUTTONS[2]);
