@@ -510,7 +510,7 @@ public class GameGUI extends JFrame  {
 		
 		
 		BOARD_CONTAINER.setLayout(new FlowLayout());
-		BOARD_CONTAINER.setPreferredSize(new Dimension(1000, 617));
+		BOARD_CONTAINER.setPreferredSize(new Dimension(1000, 600));
 		BOARD_CONTAINER.setBackground(TRANSPARENT);
 	}
 	
