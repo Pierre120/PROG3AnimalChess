@@ -174,7 +174,6 @@ public class GameGUI extends JFrame  {
 		// update changes to reflect
 		repaint();
 		validate();
-		// System.out.println(this.getSize().toString());
 	}
 
 
@@ -258,14 +257,14 @@ public class GameGUI extends JFrame  {
 	/**
 	 * This method assigns the players to their designated color side.
 	 * 
-	 * @param playerInd chosen side of Player 1 (0 - Red & 1 - Blue)
+	 * @param player1 chosen side of Player 1 (0 - Red & 1 - Blue)
 	 */
-	public void assignPlayers(int playerInd) {
+	public void assignPlayers(int player1) {
 		// HEADER.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		String[] playerString = new String[2];
 
-		playerString[playerInd] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>1</HTML>";
-		playerString[(playerInd + 1) % 2] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>2</HTML>";
+		playerString[player1] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>1</HTML>";
+		playerString[(player1 + 1) % 2] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>2</HTML>";
 
 		RED_PLAYER.setText(playerString[0]);
 
@@ -320,9 +319,9 @@ public class GameGUI extends JFrame  {
 	 * moves in the board by setting border highlights to the valid tiles. It removes the 
 	 * border highlights when the player cancels his/her move or made a valid move.
 	 * 
-	 * @param board contains the terrain of the board model
+	 * @param board contains the terrain tiles of the board model
 	 * @param movingPiece the chosen piece of the player
-	 * @param validIDs the valid tile IDs of the valid terrain that the chosen animal can move into
+	 * @param validIDs valid tile ID array of the valid terrains that the chosen animal can move into
 	 * @param move holds 1 if player has chosen a piece to move, and holds 2 if player cancels his move or a move has been made
 	 */
 	public void updateTiles(Terrain[][] board, Animal movingPiece, String[] validIDs, int move) {
@@ -368,27 +367,48 @@ public class GameGUI extends JFrame  {
 	}
 
 
+	/**
+	 * This method moves the chosen animal piece to its tile destination. First it removes the piece on its
+	 * current tile and adds it on its tile destination. If the tile destination has an opposing side's piece
+	 * it will first remove the opposing side's piece, then adds the chosen piece to that tile.
+	 * 
+	 * @param board contains the terrain tiles of the board model
+	 * @param movingPiece the chosen piece of the player
+	 * @param validIDs valid tile ID array of the valid terrains that the chosen animal can move into
+	 * @param movesIn true if animal is moving in, otherwise false
+	 */
 	public void movePiece(Terrain[][] board, Animal movingPiece, String[] validIDs, boolean movesIn) {
+		// removes piece currently occupying the current tile
 		if(TILES[movingPiece.getRow()][movingPiece.getCol()].hasPiece())
 			TILES[movingPiece.getRow()][movingPiece.getCol()].removePiece();
 
-		if(movesIn) {
+		if(movesIn) { // adds piece to the current tile
 			TILES[movingPiece.getRow()][movingPiece.getCol()].addPiece("" + (movingPiece.getPlayerSide() - 1) + movingPiece.getRank());
 			updateTiles(board, movingPiece, validIDs, 0);
-		} else
+		} else // removes the highlight border
 			TILES[movingPiece.getRow()][movingPiece.getCol()]
 				.setBorder(BorderFactory.createEmptyBorder());
 	}
 
+
+	/**
+	 * This method displays the random animal piece from which both starting players,
+	 * labeled as person 1 and 2, will pick from.
+	 * 
+	 * @param randIndexes contains the generated random indexes for the animal pieces
+	 */
 	public void displayRandomChoices(int[] randIndexes) {
 		TEXT_LABELS[0].setText("~ PICK A PIECE ~");
 		
 		TEXT_LABELS[1].setText("TURN: PERSON 1");
 		
-		initRandomPieces(randIndexes);
+		// intialize the random pieces base from the data in randIndexes
+		initRandomPieces(randIndexes); 
 
+		// lower the height of the LOWER_CONTAINER
 		LOWER_CONTAINER.setPreferredSize(LOWER_CONTAINER_SIZE[1]);
 
+		// add the necessary components for random choices display
 		BACKGROUNDS[0].add(UPPER_CONTAINER, BorderLayout.CENTER);
 		UPPER_CONTAINER.add(TEXT_PANEL, BorderLayout.SOUTH);
 		TEXT_PANEL.add(TEXT_BOARD);
@@ -396,46 +416,56 @@ public class GameGUI extends JFrame  {
 		TEXT_CONTAINER.add(TEXT_LABELS[0]);
 		TEXT_CONTAINER.add(TEXT_LABELS[1]);
 		LOWER_CONTAINER.add(randPieceContainer);
-		revalidate();
+
+		revalidate(); // update changes
 	}
 
+
+	/**
+	 * This method displays the two color sides that the player can choose from.
+	 * 
+	 * @param person the current person who will be player 1
+	 */
 	public void displayColorChoices(int person) {
-		randPieceContainer.removeAll();
-		
 		TEXT_PANEL.removeAll();
 
 		TEXT_LABELS[0].setText("~ PICK A COLOR ~");
-		TEXT_LABELS[1].setText("PERSON " + person + " IS PLAYER 1");
+		TEXT_LABELS[1].setText("PERSON " + person + " IS PLAYER 1"); // display whether person 1 or 2 is player 1
 
 		BACKGROUNDS[0].removeAll();
 
 		UPPER_CONTAINER.removeAll();
 		
 		LOWER_CONTAINER.removeAll();
-		LOWER_CONTAINER.setPreferredSize(LOWER_CONTAINER_SIZE[0]); // new Dimension(600, 400)
-		// LOWER_CONTAINER.setBackground(Color.BLACK);
-
+		LOWER_CONTAINER.setPreferredSize(LOWER_CONTAINER_SIZE[0]); 
+		
+		// add necessary components for the color choices display
 		BASE.add(POPUP_PANEL, JLayeredPane.POPUP_LAYER); 
 		POPUP_PANEL.add(POPUP_PAPER, BorderLayout.CENTER); 
-		
 		POPUP_PAPER.add(LOWER_CONTAINER, BorderLayout.SOUTH);
+		POPUP_PAPER.add(UPPER_CONTAINER, BorderLayout.CENTER);
 		LOWER_CONTAINER.add(CHOICE_BUTTONS[0]);
 		LOWER_CONTAINER.add(CHOICE_BUTTONS[1]);
-		POPUP_PAPER.add(UPPER_CONTAINER, BorderLayout.CENTER);
 		UPPER_CONTAINER.add(TEXT_PANEL, BorderLayout.SOUTH);
 		TEXT_PANEL.add(TEXT_CONTAINER);
+		
+		randPieceContainer = null; // assign null since it will not be used anymore
 
-		// BASE.repaint();
-		// BASE.revalidate();
+		// update changes
 		repaint();
 		revalidate();
 	}
 
-	public void displayAnimalChess(int playerInd) {
-		assignPlayers(playerInd);
 
-		// BASE.removeAll();
-		// BASE.add(BOARD_PANEL, JLayeredPane.DEFAULT_LAYER);
+	/**
+	 * This method displays the main game play which consists of the header title, 
+	 * designated color panel for each player side and the board itself.
+	 * 
+	 * @param player1 chosen side of Player 1 (0 - Red & 1 - Blue)
+	 */
+	public void displayAnimalChess(int player1) {
+		assignPlayers(player1);
+
 		BASE.remove(POPUP_PANEL);
 		
 		addBoardTiles();
@@ -449,18 +479,29 @@ public class GameGUI extends JFrame  {
 		RED_PANEL.add(RED_PLAYER, BorderLayout.CENTER);
 		BLUE_PANEL.add(BLUE_PLAYER, BorderLayout.CENTER);
 
+		// update changes
 		repaint();
 		revalidate();
 	}
 
+
+	/**
+	 * This method displays the results of the game after the game ends. It 
+	 * displays who won the game (Player 1 or 2) and prompts the user that
+	 * the game will exit itself.
+	 * 
+	 * @param winningPlayer the winning player (0 - Red & 1- Blue)
+	 */
 	public void displayResults(int winningPlayer) {
+		
+		// label for the ok button
 		JLabel ok = new JLabel("OK");
 		ok.setFont(new Font("Showcard Gothic", Font.PLAIN, 52));
 		ok.setForeground(Color.BLACK);
 		ok.setHorizontalAlignment(JLabel.CENTER);
 		ok.setVerticalAlignment(JLabel.CENTER);
 
-		CHOICE_BUTTONS[2].setLayout(new BorderLayout());;
+		
 		CHOICE_BUTTONS[2].add(ok, BorderLayout.SOUTH);
 		
 		if(winningPlayer == 0) // 0 - red
@@ -471,15 +512,20 @@ public class GameGUI extends JFrame  {
 		TEXT_LABELS[1].setText("GAME WILL NOW EXIT");
 
 		LOWER_CONTAINER.removeAll(); // remove red & blue buttons
-		LOWER_CONTAINER.add(CHOICE_BUTTONS[2]);
+		LOWER_CONTAINER.add(CHOICE_BUTTONS[2]); // add ok button
 
+		// display popup prompt
 		BASE.add(POPUP_PANEL, JLayeredPane.POPUP_LAYER);
 
+		// update changes
 		repaint();
 		revalidate();
 	}
 
 
+	/**
+	 * This method adds the tiles to the board container
+	 */
 	private void addBoardTiles() {
 		
 		for(int col = 6; col >= 0; col--)
@@ -487,6 +533,17 @@ public class GameGUI extends JFrame  {
 				BOARD_PANEL.add(TILES[row][col]);
 	}
 	
+	/**
+	 * This method initializes and adds the random pieces to its container.<br>
+	 * 
+	 * Image Sources:
+	 * <ul>
+	 * 	<li><a href = "https://www.pousseurdebois.fr/jeux-de-strategie/doushouqi/">Animal Pieces</a>
+	 * 	<li><a href = "https://www.pinterest.ph/pin/550494754426398874/">Backside of random piece</a>
+	 * </ul>
+	 * 
+	 * @param randIndexes contains the generated random indexes for the animal pieces
+	 */
 	private void initRandomPieces(int[] randIndexes) {
 		int n;
 
@@ -496,6 +553,13 @@ public class GameGUI extends JFrame  {
 				new ImageIcon("images\\" + (randIndexes[n] + 1) + ".png")));
 	}
 
+
+	/**
+	 * This method intializes the animal pieces that will be displayed
+	 * and added to the tiles of the board display.<br>
+	 * 
+	 * Image used: <a href = "https://www.pousseurdebois.fr/jeux-de-strategie/doushouqi/">Animal Pieces</a>
+	 */
 	private void initPiecePics() {
 		
 		for(int i = 0; i < 2; i++) {
@@ -509,6 +573,10 @@ public class GameGUI extends JFrame  {
 		}
 	}
 
+
+	/**
+	 * This method sets the layout, bounds and background of the BASE attribute
+	 */
 	private void setBase() {
 		BASE.setLayout(null);
 		BASE.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
@@ -516,6 +584,10 @@ public class GameGUI extends JFrame  {
 		// System.out.println(BASE.getSize());
 	}
 
+
+	/**
+	 * This method sets the layout and bounds of the BACKGROUNDS attribute.
+	 */
 	private void setBackgrounds() {
 		// BACKGROUNDS[0].setSize(1033, 772);
 		BACKGROUNDS[0].setLayout(new BorderLayout());
@@ -526,6 +598,11 @@ public class GameGUI extends JFrame  {
 		// BACKGROUNDS[1].setBounds(0, 0, 777, 618);
 	}
 
+
+	/**
+	 * This method sets the layout, background and size of the UPPER_CONTAINER
+	 * and LOWER_CONTAINER attributes.
+	 */
 	private void setTransparentContainers() {
 		// set transparent upper container 
 		UPPER_CONTAINER.setLayout(new BorderLayout());
@@ -537,11 +614,19 @@ public class GameGUI extends JFrame  {
 		LOWER_CONTAINER.setBackground(TRANSPARENT);
 	}
 	
+	/**
+	 * This method sets the layout and background of the randPieceContainer attribute.
+	 */
 	private void setRandPieceContainer() {
 		randPieceContainer.setLayout(new GridLayout(2, 4, 15, 15));
 		randPieceContainer.setBackground(TRANSPARENT); // Color.BLACK
 	}
 
+
+	/**
+	 * This method sets the layout, background and size of the TEXT_BOARD, 
+	 * TEXT_PANEL and TEXT_CONTAINER attributes.
+	 */
 	private void setTextPanelComps() {
 		// set TEXT_BOARD 
 		TEXT_BOARD.setLayout(new BorderLayout());
@@ -557,6 +642,10 @@ public class GameGUI extends JFrame  {
 		TEXT_CONTAINER.setBackground(TRANSPARENT); 
 	}
 
+
+	/**
+	 * This method sets the layout, bounds and background of the POPUP_PANEL attribute.
+	 */
 	private void setPopupPanel() {
 		POPUP_PANEL.setLayout(new BorderLayout());
 		POPUP_PANEL.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
@@ -564,51 +653,63 @@ public class GameGUI extends JFrame  {
 		// POPUP_PANEL.setOpaque(true);
 	}
 
+
+	/**
+	 * This method sets the layout, background, size and border of the
+	 * RED_PANEL and BLUE_PANEL attributes.
+	 */
 	private void setColorPanels() {
 		// set RED_PANEL
 		RED_PANEL.setLayout(new BorderLayout());
 		RED_PANEL.setBackground(Color.RED);
 		RED_PANEL.setPreferredSize(COLOR_PANEL_SIZE);
 		RED_PANEL.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-		// System.out.println(RED_PANEL.getSize().toString());
 
 		// set BLUE_PANEL
 		BLUE_PANEL.setLayout(new BorderLayout());
 		BLUE_PANEL.setBackground(Color.BLUE);
-		BLUE_PANEL.setPreferredSize(COLOR_PANEL_SIZE); // new Dimension(120, 620)
+		BLUE_PANEL.setPreferredSize(COLOR_PANEL_SIZE); 
 		BLUE_PANEL.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-		// System.out.println(BLUE_PANEL.getSize().toString());
 	}
 
+
+	/**
+	 * This method sets the layout, background and size of the 
+	 * BOARD_PANEL and BOARD_CONTAINER attributes.
+	 */
 	private void setBoard() {
 		BOARD_PANEL.setLayout(new GridLayout(7, 9, 1, 1)); 
-		// BOARD_PANEL.setBounds(0, 0, 1017, 734);
-		// BOARD_PANEL.setBounds(0, 0, 720, 560);
 		BOARD_PANEL.setBackground(Color.BLACK);
-		// BACKGROUNDS[1].setLayout(new FlowLayout());
-		
 		
 		BOARD_CONTAINER.setLayout(new FlowLayout());
 		BOARD_CONTAINER.setPreferredSize(new Dimension(1000, 600));
 		BOARD_CONTAINER.setBackground(TRANSPARENT);
 	}
 	
+
+	/**
+	 * This method sets the size, font, foreground and horizontal alignment
+	 * of the TEXT_LABELS attribute.
+	 */
 	private void setTextLabels() {
 		// set TEXT_LABELS[0]
 		TEXT_LABELS[0].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
 		TEXT_LABELS[0].setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
 		TEXT_LABELS[0].setForeground(Color.BLACK);
 		TEXT_LABELS[0].setHorizontalAlignment(JLabel.CENTER);
-		// System.out.println(TEXT_LABELS[0].getSize().toString());
 
 		// set TEXT_LABELS[1]
 		TEXT_LABELS[1].setPreferredSize(TEXT_LABEL_SIZE); // new Dimension(400, 50)
 		TEXT_LABELS[1].setFont(new Font("Showcard Gothic", Font.PLAIN, 28));
 		TEXT_LABELS[1].setForeground(Color.BLACK);
 		TEXT_LABELS[1].setHorizontalAlignment(JLabel.CENTER);
-		// System.out.println(TEXT_LABELS[1].getSize().toString());
 	}
 
+
+	/**
+	 * This method sets the layout, size, background, vertical and horizontal alignment
+	 * of the POPUP_PAPER attribute.
+	 */
 	private void setPopupPaper() {
 		POPUP_PAPER.setLayout(new BorderLayout());
 		POPUP_PAPER.setPreferredSize(new Dimension(600, 484));
@@ -617,22 +718,30 @@ public class GameGUI extends JFrame  {
 		POPUP_PAPER.setHorizontalAlignment(JLabel.CENTER);
 	}
 
+
+	/**
+	 * This method sets the font, foreground, vertical and horizontal alignment
+	 * of the RED_PLAYER and BLUE_PLAYER attributes.
+	 */
 	private void setPlayerBanners() {
 		// set RED_PLAYER
 		RED_PLAYER.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
 		RED_PLAYER.setForeground(Color.BLACK);
-		// RED_PLAYER.setBackground(TRANSPARENT);
 		RED_PLAYER.setVerticalAlignment(JLabel.CENTER);
 		RED_PLAYER.setHorizontalAlignment(JLabel.CENTER);
 
 		// set BLUE_PLAYER
 		BLUE_PLAYER.setFont(new Font("Showcard Gothic", Font.PLAIN, 36));
 		BLUE_PLAYER.setForeground(Color.BLACK);
-		// BLUE_PLAYER.setBackground(TRANSPARENT);
 		BLUE_PLAYER.setVerticalAlignment(JLabel.CENTER);
 		BLUE_PLAYER.setHorizontalAlignment(JLabel.CENTER);
 	}
 
+
+	/**
+	 * This method sets the focus, size, foreground, background, layout and
+	 * action commands of the CHOICE_BUTTONS attribute.
+	 */
 	private void setChoiceButtons() {
 		// set CHOICE_BUTTONS[0] (red button)
 		CHOICE_BUTTONS[0].setActionCommand("RED");
@@ -648,20 +757,25 @@ public class GameGUI extends JFrame  {
 		CHOICE_BUTTONS[1].setForeground(TRANSPARENT);
 		CHOICE_BUTTONS[1].setBackground(Color.BLUE);
 
-		// set CHOICE_BUTTONS[2] (red button)
+		// set CHOICE_BUTTONS[2] (ok button)
 		CHOICE_BUTTONS[2].setActionCommand("OK");
 		CHOICE_BUTTONS[2].setFocusable(false);
 		CHOICE_BUTTONS[2].setPreferredSize(BUTTON_SIZE);
 		CHOICE_BUTTONS[2].setForeground(Color.BLACK);
 		CHOICE_BUTTONS[2].setBackground(Color.GREEN);
+		CHOICE_BUTTONS[2].setLayout(new BorderLayout()); // set layout for "OK" text
 	}
 
+
+	/**
+	 * This method sets the title, icon, size, resizability, location, layout,
+	 * visibility and default close operation of this (GameGUI) extended JFrame class
+	 */
 	private void setFrame() {
 		// setup this frame
 		this.setTitle("Animal Chess"); // title for the window
 		this.setIconImage(new ImageIcon("images\\AC_icon.png").getImage()); // icon for the frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// this.setSize((int)DEFAULT_SIZE.getWidth() + 16, (int)DEFAULT_SIZE.getHeight() + 40); // original frame size: 1033, 772
 		this.setSize(DEF_FRAME_SIZE);
 		this.setResizable(false); // not resizable
     	this.setLocationRelativeTo(null); // center of screen
@@ -671,13 +785,28 @@ public class GameGUI extends JFrame  {
 	}
 
 
+
+	// ----------------------------- INNER CLASSES -----------------------------
+
+	/**
+	 * This inner class, RandomPiece, extends the JLabel class and it is responsible for the
+	 * behavior of the random piece objects that will be used in the GUI.
+	 */
 	private class RandomPiece extends JLabel {
 
+		/**
+		 * This contructor is responsible for setting and instantiating RandomPiece object. It sets the
+		 * name, icon (for enabled and disabled), enability, mouse listener and background
+		 * of this object.
+		 * 
+		 * @param name name given this component object
+		 * @param back backside of the random piece
+		 * @param animalPiece assigned animal piece for this random piece object
+		 */
 		public RandomPiece(String name, ImageIcon back, ImageIcon animalPiece) {
 			setName(name);
 			setIcon(back);
 			setDisabledIcon(animalPiece);
-			// setPreferredSize(new Dimension(80, 80));
 			setEnabled(true);
 			addMouseListener(randomPicker);
 			setBackground(TRANSPARENT);
@@ -685,11 +814,20 @@ public class GameGUI extends JFrame  {
 	}
 
 
+	/**
+	 * This inner class, BoardTile, extends the JPanel class and it is responsible
+	 * for the behavior of the board tiles in the GUI. It displays the graphical representation
+	 * of the tile/terrain and the animal pieces that are still in the board.
+	 */
 	private class BoardTile extends JPanel	{
-		
-		private JLabel animalPiece;
-		private ImageIcon tile;
 
+		/**
+		 * This contructor is responsible for setting and instantiating BoardTile object. It sets
+		 * the name, layout, size, background, enability, mouse listener, animalPiece and tile attribute.
+		 * 
+		 * @param tileID string format of the current terrain's/tile's row and col position (ex. row = [0] and col = [5]; tileID = "05")
+		 * @param tilePic image of the tile
+		 */
 		public BoardTile(String tileID, ImageIcon tilePic) {
 			animalPiece = null;
 			tile = tilePic;
@@ -701,6 +839,11 @@ public class GameGUI extends JFrame  {
 			addMouseListener(boardListener);
 		}	
 
+		/**
+		 * This method checks if it has an animal piece.
+		 * 
+		 * @return true if it has an animal piece, otherwise false.
+		 */
 		public boolean hasPiece() {
 			if(animalPiece != null)
 				return true;
@@ -708,71 +851,263 @@ public class GameGUI extends JFrame  {
 			return false;
 		}
 
-		//when animal moves in
+		/**
+		 * This method adds an animal piece to itself. This happens when a piece is moved to this BoardTile object.
+		 * 
+		 * @param pieceId string format of the current animal piece's color side and rank (ex. Blue = 1 and Rank = 8; tileID = "18")
+		 */
 		public void addPiece(String pieceId) {
+			//when animal moves in
 			animalPiece = PIECE_PICS[Integer.parseInt("" + pieceId.charAt(0))][Integer.parseInt("" + pieceId.charAt(1)) - 1];
 			
 			setEnabled(true);
 			add(animalPiece);
 		}
 
-		//when animal moves out
+		/**
+		 * This method removes its animal piece. This happens when a piece is captured or moves out from this
+		 * BoardTile object.
+		 */
 		public void removePiece() {
+			//when animal moves out
 			remove(animalPiece);
 			animalPiece = null;
 			setEnabled(false);
-			// repaint();
 		}
 
+		/**
+		 * This overriden method is responsible for painting the BoardTile object
+		 * to its designated tile/terrain image.
+		 * 
+		 * @param g responsible for painting this component
+		 */
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D t = (Graphics2D) g;
 			t.drawImage(tile.getImage(), 0, 0, null);
 		}
+
+
+		/**
+		 * This attribute holds the animal piece.
+		 */
+		private JLabel animalPiece;
+
+		/**
+		 * This attribute holds the image of the terrain for this BoardTile object
+		 */
+		private ImageIcon tile;
 	}
 
+
+
+	// ----------------------------- ATTRIBUTES -----------------------------
+
+
+	// ----------------------------- USER-DEFINED
+
+	/**
+	 * This attribute holds the random pieces.
+	 */
 	private JPanel randPieceContainer;
+
+	/**
+	 * This attribute is the start button of the game.
+	 */
 	private JLabel startButton;
 
+
+	/**
+	 * This attribute holds the MouseListener for the random pieces.
+	 */
 	private MouseListener randomPicker; 
+
+	/**
+	 * This attribute holds the MouseListener for the game board.
+	 */
 	private MouseListener boardListener;
 
+
+
+	// ----------------------------- TRANSPARENT COLOR
+
+	/**
+	 * This attribute holds a transparent color. Mostly used by the containers in the game.
+	 */
 	private final Color TRANSPARENT;
 	
+
+
+	// ----------------------------- DIMENSIONS
+
+	/**
+	 * This attribute holds the default frame size of this GameGUI object.
+	 */
 	private final Dimension DEF_FRAME_SIZE;
+
+	/**
+	 * This attribute holds the default size that fills the inside of the frame.
+	 */
 	private final Dimension DEFAULT_SIZE;
+
+	/**
+	 * This attribute holds the sizes of the LOWER_CONTAINER attribute
+	 */
 	private final Dimension[] LOWER_CONTAINER_SIZE;
+
+	/**
+	 * This attribute holds the default size of the TEXT_LABELS attribute.
+	 */
 	private final Dimension TEXT_LABEL_SIZE;
+
+	/**
+	 * This attribute holds the default size of the RED_PANEL and BLUE_PANEL attributes.
+	 */
 	private final Dimension COLOR_PANEL_SIZE;
+
+	/**
+	 * This attribute holds the default size (78 x 78) of the random pieces and animal pieces (PIECE_PICS attribute).
+	 */
 	private final Dimension PIECE_SIZE;
+
+	/**
+	 * This attribute holds the default size (80 x 80) of the TILES attribute.
+	 */
 	private final Dimension TILE_SIZE;
+
+	/**
+	 * This attribute holds the default size of the CHOICE_BUTTONS attribute.
+	 */
 	private final Dimension BUTTON_SIZE; 
 
+
+
+	// ----------------------------- JLAYEREDPANE
+
+	/**
+	 * This JLayeredPane attribute will serve as the base of the components that will
+	 * be shown.
+	 */
 	private final JLayeredPane BASE;
 
+
+
+	// ----------------------------- JPANELS
+
+	/**
+	 * This attribute holds the backgrounds for the whole frame at the earlier parts of the
+	 * game (start, random and color picking) and for the board, which is a wood background.
+	 */
 	private final JPanel[] BACKGROUNDS; 
+
+	/**
+	 * This attribute will act as a transparent container for the upper portion of the frame.
+	 */
 	private final JPanel UPPER_CONTAINER; 
+
+	/**
+	 * This attribute will act as a transparent container for the lower portion of the frame.
+	 */
 	private final JPanel LOWER_CONTAINER;
+
+	/**
+	 * This attribute will act as a transparent container for the text-related components.
+	 */
 	private final JPanel TEXT_PANEL;
+
+	/**
+	 * This attribute will act as a container for the text that will be used in the game.
+	 */
 	private final JPanel TEXT_CONTAINER;
+
+	/**
+	 * This attribute displays a wooden board that will serve as a background base for the text displays.
+	 */
 	private final JPanel TEXT_BOARD;
+
+	/**
+	 * This attribute will act as a container and background dimmer for the popup prompt (POPUP_PAPER attribute).
+	 */
 	private final JPanel POPUP_PANEL;
+
+	/**
+	 * This attribute displays the header of the frame during the main game play.
+	 */
 	private final JPanel HEADER;
+
+	/**
+	 * This attribute holds the text of the current player who sided to the red color side.
+	 * This will also act as an indicator on whose turn is it.
+	 */
 	private final JPanel RED_PANEL;
+
+	/**
+	 * This attribute holds the text of the current player who sided to the blue color side.
+	 * This will also act as an indicator on whose turn is it.
+	 */
 	private final JPanel BLUE_PANEL;
+
+	/**
+	 * This attribute acts as transparent container for the game board.
+	 */
 	private final JPanel BOARD_PANEL;
+
+	/**
+	 * This attribute holds the tiles (BoardTile objects) of the game board.
+	 */
 	private final JPanel BOARD_CONTAINER;
 	
+
+
+	// ----------------------------- JLABELS
+
+	/**
+	 * This attribute holds the String values that will be displayed in the game.
+	 */
 	private final JLabel[] TEXT_LABELS;
+
+	/**
+	 * This attribute will act as a popup prompt display throughout the game.
+	 */
 	private final JLabel POPUP_PAPER;
+
+	/**
+	 * This attribute holds the string value of the player who chose the red side.
+	 */
 	private final JLabel RED_PLAYER;
+
+	/**
+	 * This attribute holds the string value of the player who chose the blue side.
+	 */
 	private final JLabel BLUE_PLAYER;
+
+	/**
+	 * This attribute holds the images of the animal pieces.
+	 */
 	private final JLabel[][] PIECE_PICS;
 
+
+
+	// ----------------------------- JBUTTON
+
+	/**
+	 * This attribute holds the Red, Blue and "OK" button for the game.
+	 */
 	private final JButton[] CHOICE_BUTTONS;
 
+
+
+	// ----------------------------- USER-DEFINED (FINAL)
+
+	/**
+	 * This attribute holds the array of BoardTile objects for the game. 
+	 */
 	private final BoardTile[][] TILES;
+
+	/**
+	 * This attribute holds the images of the terrains for the tiles.
+	 */
 	private final ImageIcon[] TERRAIN_PICS;
 
 }
