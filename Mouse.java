@@ -46,6 +46,8 @@ public class Mouse extends Animal {
      * the animal rank and current terrain.
      * 
      * @param enemyAnimal the enemy animal 
+     * @param toOccupy the Terrain the mouse will occupy
+     * @param currentArea the current Terrain the mouse is on 
      * @return true if the enemy animal is capturable, false otherwise
      */
     public boolean canCapture(Animal enemyAnimal, Terrain toOccupy, Terrain currentArea) {
@@ -62,7 +64,8 @@ public class Mouse extends Animal {
 
     /** This method determines if the player's animal could occupy the terrain it will go to.
      * 
-     * @param specificArea
+     * @param toOccupy the Terrain the animal will move to 
+     * @param currentArea the Terrain the animal is currently in
      * @return true if the area doesn't have any animal occupying it or if it can capture the animal occupying the area, otherwise false.
      */
     public boolean canOccupy(Terrain toOccupy, Terrain currentArea) {
@@ -75,7 +78,7 @@ public class Mouse extends Animal {
 
     /** This method determines if the animal can move up one space on the board.
      * 
-     * @param gameArea the 9x7 2d array that represents the gameboard 
+     * @param gameArea the 9x7 2D array that represents the gameboard 
      * @return false if the position does not exist in the game board or if there is an animal that can't be captured in t
      * the way, true otherwise
      * 
