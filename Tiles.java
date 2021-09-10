@@ -17,7 +17,7 @@ public class Tiles {
     }
     /**
      * This method returns the 9x7 array of Terrain.
-     * @return 9x7 array of Terrain.
+     * @return 9 x 7 array of Terrain.
      */
     public Terrain[][] getTerrains() {
         return terrainTiles;

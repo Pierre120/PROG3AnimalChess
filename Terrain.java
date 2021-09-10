@@ -8,6 +8,8 @@ public class Terrain {
     
     /** This constructor initializes a Terrain object that has no 
      * occupants or inhabitants yet in its area.
+     * 
+     * @param playerSide the player who owns this terrain
      */
     public Terrain(int playerSide) {
         animalInhabiting = null;

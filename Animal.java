@@ -69,7 +69,7 @@ public class Animal {
 
     /** This method determines if the player's animal could occupy the terrain it will go to.
      * 
-     * @param specificArea
+     * @param specificArea the terrain that is being checked
      * @return true if the area doesn't have any animal occupying it or if it can capture the animal occupying the area, otherwise false.
      */
     public boolean canOccupy(Terrain specificArea) {
@@ -103,7 +103,7 @@ public class Animal {
 
      /** This method determines if the animal can move down one space on the board.
      * 
-     * @param gameArea the 9x7 2d array that represents the gameboard 
+     * @param gameArea the 9x7 2D array that represents the gameboard 
      * @return false if the position does not exist in the game board or if there is an animal that can't be captured in t
      * the way, true otherwise
      * 
@@ -147,7 +147,7 @@ public class Animal {
 
     /** This method determines if the animal can move right once on the gameboard.
      * 
-     * @param gameArea the 9x7 2d array that represents the gameboard 
+     * @param gameArea the 9x7 2D array that represents the gameboard 
      * @return false if the position does not exist in the game board (index out of bounds) or if there is an animal that can't be captured in t
      * the way, true otherwise
      * 
@@ -355,11 +355,13 @@ public class Animal {
     }
 
 
-    /** This method returns the number of animal pieces that a player still has.<br>
-     * animalCount[0] - animal count for Player in team red<br>
-     * animalCount[1] - animal count for Player in team blue
+    /** This method returns the number of animal pieces that a player still has.
+     * <ul style = "list-style-type:none;">
+     *   <li>animalCount[0] - animal count for Player in team red
+     *   <li>animalCount[1] - animal count for Player in team blue
+     * </ul>
      * 
-     * @param playerNumIndex
+     * @param playerNumIndex can be 0 or 1 depending on player (0 - Red & 1 -Blue)
      * @return number of animal pieces that a player still has
      */
     public static int getAnimalCount(int playerNumIndex) {

@@ -6,6 +6,8 @@
 public class River extends Terrain {
 
     /** This constructor instantiates a River object that has no animal objects occupying or inhabiting it.
+     * 
+     * @param playerSide the value of this is always zero since this River terrain is neutral
      */
     public River(int playerSide) {
         super(playerSide);

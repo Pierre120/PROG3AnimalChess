@@ -1,5 +1,7 @@
 /**
- * This Lion class is a subclass of Animal class that represents the Lion piece on the gameboard.
+ * This Lion class is a subclass of Animal class that represents the Lion piece on the gameboard. 
+ * The Lion can jump over the river horizontically and vertically as long as there is no mouse in the way,
+ * and it can capture the animal on the other side of the river if there is one.
  * 
  * @author Pierre Vincent Hernandez
  * @author Matthew James Villarica
@@ -7,7 +9,7 @@
 public class Lion extends Animal { 
     
     /** This contructor instantiates which side the Lion object is, and where its starting
-     * position in row and column format..
+     * position in row and column format.
      * 
      * @param playerNum player side the animal is on, which can be 1 (player 1) or 2 (player 2)
      * @param startingRow the starting row position of the animal in the 9x7 gamebaord

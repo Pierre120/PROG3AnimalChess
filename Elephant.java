@@ -1,3 +1,10 @@
+/**
+ * This Elephant class is a subclass of Animal class that represents the Elephant piece on the gameboard. 
+ * The Elephant can not capture a Mouse despite it having a higher rank than the Mouse.
+ *
+ * @author Pierre Vincent Hernandez
+ * @author Matthew James Villarica
+ */
 public class Elephant extends Animal {
 
    /** This contructor instantiates which side the Elephant object is, and where its starting

@@ -1,3 +1,11 @@
+/**
+ * This Mouse class is a subclass of Animal class that represents the Mouse piece on the gameboard. The Mouse can capture the 
+ * Elephant. It can also move in the River terrain. When capturing an opposing side's piece, it should be in the same terrain
+ * as that piece.
+ * 
+ * @author Pierre Vincent Hernandez
+ * @author Matthew James Villarica
+ */
 public class Mouse extends Animal {
 
     /** This constructor instantiates a mouse object given it's starting position in row and column format, and player side.

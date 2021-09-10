@@ -5,7 +5,9 @@
 public class Land extends Terrain {
 
     /**This constructor instantiates a Land object that has no animal objects occupying or inhabiting it.
-    */
+     * 
+     * @param playerSide the value of this is always 0 since this Land terrain is neutral
+     */
     public Land(int playerSide) {
         super(playerSide);
     }
