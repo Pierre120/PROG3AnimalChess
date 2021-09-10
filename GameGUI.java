@@ -7,7 +7,7 @@ import java.awt.event.*;
  * This GameGUI class is responsible for the displays or outputs in the terminal.
  * It is used by the driver class to provide information and UI/UX for the players of 
  * the game.
- * animal piece pictures source: https://www.pousseurdebois.fr/jeux-de-strategie/doushouqi/
+ * 
  * @author Pierre Vincent Hernandez
  * @author Matthew James Villarica
  */
@@ -537,9 +537,9 @@ public class GameGUI extends JFrame  {
 	 * This method initializes and adds the random pieces to its container.<br>
 	 * 
 	 * Image Sources:
-	 * <ul>
-	 * 	<li><a href = "https://www.pousseurdebois.fr/jeux-de-strategie/doushouqi/">Animal Pieces</a>
-	 * 	<li><a href = "https://www.pinterest.ph/pin/550494754426398874/">Backside of random piece</a>
+	 * <ul>  https://www.pinterest.ph/pin/550494754426398874/
+	 * 	<li>Dou Shou Qi. (n.d.). Pousseur de Bois. Retrieved August 30, 2021, from <a href = "https://www.pousseurdebois.fr/jeux-de-strategie/doushouqi/">https://www.pousseurdebois.fr/jeux-de-strategie/doushouqi/</a>.
+	 * 	<li>Pin by Jork on PNW - Plaques, Panels Carvings Native art, Pacific northwest art, Art history major. (n.d.). Retrieved August 30, 2021, from <a href = "https://www.pinterest.ph/pin/550494754426398874/">https://www.pinterest.ph/pin/550494754426398874/</a>.
 	 * </ul>
 	 * 
 	 * @param randIndexes contains the generated random indexes for the animal pieces
@@ -558,7 +558,7 @@ public class GameGUI extends JFrame  {
 	 * This method intializes the animal pieces that will be displayed
 	 * and added to the tiles of the board display.<br>
 	 * 
-	 * Image used: <a href = "https://www.pousseurdebois.fr/jeux-de-strategie/doushouqi/">Animal Pieces</a>
+	 * Image used: Dou Shou Qi. (n.d.). Pousseur de Bois. Retrieved August 30, 2021, from <a href = "https://www.pousseurdebois.fr/jeux-de-strategie/doushouqi/">https://www.pousseurdebois.fr/jeux-de-strategie/doushouqi/</a>.
 	 */
 	private void initPiecePics() {
 		
