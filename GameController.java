@@ -128,10 +128,12 @@ public class GameController {
      * tile the player can move the piece to. (i.e. if the player can move his animal piece
      * into row 2 and column 4 in array index notation of the board, "24" is in the array).
      * 
-     * validTileIDs[0] - contains tileID of upward movement if it is a valid move
-     * validTileIDs[1] - contains tileID of downward movement if its a valid move
-     * validTileIDs[3] - contains tileID of left movement if its a valid move
-     * validTileIDs[4] - contains tileID of right movement if its a valid move
+     * <ul style="list-style-type:none;">
+     *  <li>validTileIDs[0] - contains tileID of upward movement if it is a valid move
+     *  <li>validTileIDs[1] - contains tileID of downward movement if its a valid move
+     *  <li>validTileIDs[3] - contains tileID of left movement if its a valid move
+     *  <li>validTileIDs[4] - contains tileID of right movement if its a valid move
+     * </ul>
      * 
      * If its not a valid move, the element in the array will contain the String "null" .
      */
@@ -152,6 +154,7 @@ public class GameController {
    
     /**
      * This method executes the movements (up, down, left, right) of the animal in the BoardModel class.
+     *
      * @param e a mouse event, which is the tile (BoardTile) the player chose for his chosen piece
      *          to move into
      */
@@ -196,18 +199,18 @@ public class GameController {
          * This overriden method is responsible for what will happen
          * when the start button is clicked. In this case, it does nothing.
          * 
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mouseClicked(MouseEvent e) {
-            
+            //do nothing
         }
 
         /**
          * This overriden method is responsible for responding to mouse presses by the user
          * on the start button. The picture changes and the GUI is repainted.
          * 
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mousePressed(MouseEvent e) {
@@ -222,7 +225,7 @@ public class GameController {
          * This overriden method is responsible for responding to the mouse being released
          * after the start button is pressed by the user with the mouse pointer.
          * 
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mouseReleased(MouseEvent e) {
@@ -241,7 +244,7 @@ public class GameController {
         /**
          * This overiden method responds to the mouse hovering over the start button.
          * 
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mouseEntered(MouseEvent e) {
@@ -253,7 +256,7 @@ public class GameController {
         /**
          * This overriden method respnds to the mouse exiting after hovering over the start button.
          * 
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mouseExited(MouseEvent e) {
@@ -273,7 +276,7 @@ public class GameController {
          * This overriden method responds to the user clicking on the GUI during random piece
          * selection.
          * 
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -284,7 +287,7 @@ public class GameController {
          * This overriden method responds to mouse presses on the random
          * pieces the players choose.
          * 
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mousePressed(MouseEvent e) {
@@ -304,11 +307,12 @@ public class GameController {
                 gameGUI.repaint();
             }
         }
+        
         /**
          * This overriden method is responsible for responses to the mouse being released
          * on enabled components, which are the 8 random pieces in the gui.
          * 
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mouseReleased(MouseEvent e) {
@@ -333,12 +337,13 @@ public class GameController {
             }
             
         }
+
         /**
          * This overriden method is responsible for responding to the mouse pointer hovering over
          * the enabled components of the GUI, which are the 8 random mystery pieces for the players
          * to pick.
          * 
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mouseEntered(MouseEvent e) {
@@ -348,11 +353,12 @@ public class GameController {
                 gameGUI.repaint();
             }
         }
+
         /**
          * This overriden method is responsible for the mouse exiting an enabled piece after
          * hovering over it with the mouse pointer.
          * 
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mouseExited(MouseEvent e) {
@@ -370,11 +376,12 @@ public class GameController {
      * in the GUI, which are JPanels that visually represent the GUI of the game board.
      */
     private class BoardListener implements MouseListener {
+
         /**
          * This overriden method responds to the user clicking on the GUI during random piece
          * selection.
          * 
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -386,7 +393,7 @@ public class GameController {
          * This overriden method responds to mouse presses (both left and right) 
          * on the BoardTiles.
          * 
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mousePressed(MouseEvent e) {
@@ -439,10 +446,11 @@ public class GameController {
             }
                 
         }
+
         /**
          * This overriden method is responsible for responding to the mouse being released on
          * the BoardTiles.
-         * @param e the mouse event
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mouseReleased(MouseEvent e) {
@@ -460,17 +468,25 @@ public class GameController {
             }
                
         }
-        /*This overriden method responds to the mouse hovering over BoardTiles */
+
+        /**
+         * This overriden method responds to the mouse hovering over BoardTiles 
+         * 
+         * @param e event which indicates that a mouse action occurred in a component
+         */
         @Override
         public void mouseEntered(MouseEvent e) {
-            
+            // do nothing
         }
+
         /**
          * This overriden method responds to the mouse exiting after hovering over BoardTiles
+         * 
+         * @param e event which indicates that a mouse action occurred in a component
          */
         @Override
         public void mouseExited(MouseEvent e) {
-           
+           //do nothing
         }
         
     }
@@ -514,31 +530,37 @@ public class GameController {
      * This attribute contains the BoardModel, which contains the data and behaviors the GUI will reflect.
      */
     private BoardModel gameBoard;
+
     /**
      * This attribute contains the GameGUI, which is responsible for the visualization of the user interface.
      */
     private GameGUI gameGUI; 
+
     /**
      * This attribute is the array of numbers that contains the randomly generated numbers for
      * random piece picking (contains numbers 0-7 in a random order).
      */
     private int[] randIndexes;
+
     /**
      * This attribute is the array of numbers containing the rank of the animal chosen randomly 
      * by the player.
      */
     private int[] randPick;
+
     /**
      * This attribute contains either contains 0 or 1, overseas the switching of player turns.
      */
     private int person;
+
     /**
      * This attribute contains a reference to the Animal being moved by the players.
      */
     private Animal movingPiece;
+    
    /**
     * This attribute holds the validTileIDs generated. Contains the String "null" if the tile
-    is an invalid destination.
+    * is an invalid destination.
     */
     private String[] validTileIDs; //[0]/1-Up; [1]/2-Down; [2]/3-Left; [3]/4-Right
     
