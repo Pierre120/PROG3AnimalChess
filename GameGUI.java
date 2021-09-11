@@ -257,7 +257,7 @@ public class GameGUI extends JFrame  {
 	/**
 	 * This method assigns the players to their designated color side.
 	 * 
-	 * @param player1 chosen side of Player 1 (0 - Red & 1 - Blue)
+	 * @param player1 chosen side of Player 1 (0 - Red and 1 - Blue)
 	 */
 	public void assignPlayers(int player1) {
 		String[] playerString = new String[2];
@@ -297,7 +297,7 @@ public class GameGUI extends JFrame  {
 	 * This method updates the color panels to show to the user whose turn it is,
 	 * whether if it's the turn of the player in the red side or blue side.
 	 * 
-	 * @param turn current player's turn (0 - Red & 1 - Blue)
+	 * @param turn current player's turn (0 - Red and 1 - Blue)
 	 */
 	public void updateColorPanel(int turn) {
 		if(turn == 0) { // 0 - red
@@ -457,7 +457,7 @@ public class GameGUI extends JFrame  {
 	 * This method displays the main game play which consists of the header title, 
 	 * designated color panel for each player side and the board itself.
 	 * 
-	 * @param player1 chosen side of Player 1 (0 - Red & 1 - Blue)
+	 * @param player1 chosen side of Player 1 (0 - Red and 1 - Blue)
 	 */
 	public void displayAnimalChess(int player1) {
 		assignPlayers(player1);
@@ -486,7 +486,7 @@ public class GameGUI extends JFrame  {
 	 * displays who won the game (Player 1 or 2) and prompts the user that
 	 * the game will exit itself.
 	 * 
-	 * @param winningPlayer the winning player (0 - Red & 1- Blue)
+	 * @param winningPlayer the winning player (0 - Red and 1- Blue)
 	 */
 	public void displayResults(int winningPlayer) {
 		
