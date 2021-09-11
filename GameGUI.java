@@ -260,16 +260,12 @@ public class GameGUI extends JFrame  {
 	 * @param player1 chosen side of Player 1 (0 - Red & 1 - Blue)
 	 */
 	public void assignPlayers(int player1) {
-		// HEADER.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		String[] playerString = new String[2];
 
 		playerString[player1] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>1</HTML>";
 		playerString[(player1 + 1) % 2] = "<HTML>P<br>L<br>A<br>Y<br>E<br>R<br><br>2</HTML>";
 
 		RED_PLAYER.setText(playerString[0]);
-
-		// DEBUGGING PURPOSES
-		System.out.println("Assigning players... Red is " + RED_PLAYER.getText());
 
 		BLUE_PLAYER.setText(playerString[1]);
 	}
@@ -568,7 +564,6 @@ public class GameGUI extends JFrame  {
 				PIECE_PICS[i][j].setPreferredSize(PIECE_SIZE);
 				PIECE_PICS[i][j].setHorizontalAlignment(JLabel.CENTER);
 				PIECE_PICS[i][j].setVerticalAlignment(JLabel.CENTER);
-				// PIECE_PICS[i][j].setBounds(0, 0, 78, 78);
 			}
 		}
 	}
@@ -581,7 +576,6 @@ public class GameGUI extends JFrame  {
 		BASE.setLayout(null);
 		BASE.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
 		BASE.setBackground(TRANSPARENT);
-		// System.out.println(BASE.getSize());
 	}
 
 
@@ -589,13 +583,10 @@ public class GameGUI extends JFrame  {
 	 * This method sets the layout and bounds of the BACKGROUNDS attribute.
 	 */
 	private void setBackgrounds() {
-		// BACKGROUNDS[0].setSize(1033, 772);
 		BACKGROUNDS[0].setLayout(new BorderLayout());
 		BACKGROUNDS[0].setBounds(0, 0, (int)DEFAULT_SIZE.getWidth(), (int)DEFAULT_SIZE.getHeight());
-		// System.out.println(BACKGROUNDS[0].getSize());
 
 		BACKGROUNDS[1].setLayout(new BorderLayout());
-		// BACKGROUNDS[1].setBounds(0, 0, 777, 618);
 	}
 
 
@@ -650,7 +641,6 @@ public class GameGUI extends JFrame  {
 		POPUP_PANEL.setLayout(new BorderLayout());
 		POPUP_PANEL.setBounds(0, 0, (int)DEFAULT_SIZE.getWidth() - 1, (int)DEFAULT_SIZE.getHeight()); // 1016, 732
 		POPUP_PANEL.setBackground(new Color(0, 0, 0, 100));
-		// POPUP_PANEL.setOpaque(true);
 	}
 
 

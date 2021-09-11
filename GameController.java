@@ -216,9 +216,7 @@ public class GameController {
         public void mousePressed(MouseEvent e) {
             gameGUI.getStartButton().setIcon(new ImageIcon("images\\startPressed.png"));
            
-            gameGUI.repaint();
-
-            
+            gameGUI.repaint();         
         }
 
         /**
@@ -229,10 +227,6 @@ public class GameController {
          */
         @Override
         public void mouseReleased(MouseEvent e) {
-            // do nothing
-            System.out.println("You just clicked the start button.");
-            System.out.println("Game will start now.");
-
             person = 0;
             
             gameGUI.removeStartButton();
@@ -299,7 +293,7 @@ public class GameController {
                 /*Disable piece after it is picked to prevent duplicates */
                 e.getComponent().setEnabled(false);
                 
-                System.out.println("Index = " + randPick[person]);
+                // next person's turn
                 person++;
 
                 //update text prompts
@@ -318,7 +312,6 @@ public class GameController {
         public void mouseReleased(MouseEvent e) {
            
             if(person == 2) {
-                System.out.println("Congrats! Picking of random animal successful");
                 person %= 2; // assume person 1 has a higher rank piece
 
                 // check if person 2 has a higher rank piece
@@ -405,15 +398,12 @@ public class GameController {
                 /*If the player right pressed on the same piece after selecting a piece to move by left clicking
                  a piece, cancel the move and update the GUI. 
                 */
-                
-                System.out.println("RIGHT");
-                System.out.println("Current chosen animal: " + movingPiece);
                 gameGUI.updateTiles(gameBoard.getTiles().getTerrains(), movingPiece, validTileIDs, 0);
                 movingPiece = null;
                 
             }
             else if(SwingUtilities.isLeftMouseButton(e) && e.getComponent().isEnabled()) {
-                System.out.println("LEFT");
+                
                 /*If the player left clicks on a valid piece without a previously selected piece
                 being enabled, assign that piece to movingPiece and generate valid moves.  */
                 if(movingPiece == null && isOwnPiece(e)) {
@@ -435,14 +425,11 @@ public class GameController {
                     gameGUI.movePiece(gameBoard.getTiles().getTerrains(), movingPiece, validTileIDs, true); // into the chosen tile of movement
 
                   
-                    person = (person + 1) % 2;
-                    System.out.println(person);
+                    person = (person + 1) % 2; // next player
                    
                     movingPiece = null;
 
                 }
-
-                System.out.println("Chosen piece: " + movingPiece);
             }
                 
         }
@@ -517,8 +504,7 @@ public class GameController {
                 person = 1;
 
             
-            System.out.println(e.getActionCommand());
-            //after color selection, start the game 
+            // after color selection, start the game 
             gameGUI.initBoardDisplay(gameBoard);
             gameGUI.updateColorPanel(person);
             gameGUI.displayAnimalChess(person);
